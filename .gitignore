@@ -1,0 +1,5 @@
+samples/*.bin
+samples/*.head.bin
+samples/*.tail.bin
+__pycache__/
+*.pyc
