@@ -1,5 +1,4 @@
 samples/*.bin
-samples/*.head.bin
-samples/*.tail.bin
+samples.manifest/
 __pycache__/
 *.pyc

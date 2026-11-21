@@ -1,0 +1,153 @@
+# Command: python3 script analyzing 4KB entropy, encrypted regions, AES ECB/CBC/CTR indicators, RPF7/candidate keys, and tail name-table checks on /home/sistver/proyectos/rpf9-research/samples/
+# Generated for Fase 2 (raw/toc.txt)
+
+=== 1. 4KB BLOCK ENTROPY IN FIRST 4MB (.head.bin) & ENCRYPTED TOC BOUNDARIES ===
+anim         file_len=4194304 toc=[0x40..0x04660) toc_len= 17952 toc_ent=7.9912 | total_4k=1024 high_ent(>=7.5)= 730 low_ent(<7.5)=294
+  first_8_4k_blocks: [('0x0', 7.945), ('0x1000', 7.949), ('0x2000', 7.952), ('0x3000', 7.957), ('0x4000', 4.095), ('0x5000', 1.736), ('0x6000', 2.19), ('0x7000', 7.951)]
+  first_8_low_blocks: [('0x4000', 4.095), ('0x5000', 1.736), ('0x6000', 2.19), ('0x13000', 1.446), ('0x17000', 5.16), ('0x1a000', 5.949), ('0x1e000', 6.448), ('0x21000', 5.844)]
+appdata0     file_len=   8880 toc=[0x40..0x00360) toc_len=   800 toc_ent=7.7452 | total_4k=   3 high_ent(>=7.5)=   2 low_ent(<7.5)=  1
+  first_8_4k_blocks: [('0x0', 3.437), ('0x1000', 7.952), ('0x2000', 7.73)]
+  first_8_low_blocks: [('0x0', 3.437)]
+audio        file_len=4194304 toc=[0x40..0x01350) toc_len=  4880 toc_ent=7.9631 | total_4k=1024 high_ent(>=7.5)=1015 low_ent(<7.5)=  9
+  first_8_4k_blocks: [('0x0', 7.946), ('0x1000', 2.336), ('0x2000', 7.954), ('0x3000', 7.95), ('0x4000', 0.455), ('0x5000', 7.864), ('0x6000', 2.135), ('0x7000', 2.235)]
+  first_8_low_blocks: [('0x1000', 2.336), ('0x4000', 0.455), ('0x6000', 2.135), ('0x7000', 2.235), ('0x2d000', 4.591), ('0x34000', 3.94), ('0x36000', 0.612), ('0x5f000', 1.303)]
+common       file_len=4194304 toc=[0x40..0x09580) toc_len= 38208 toc_ent=7.9950 | total_4k=1024 high_ent(>=7.5)= 788 low_ent(<7.5)=236
+  first_8_4k_blocks: [('0x0', 7.95), ('0x1000', 7.96), ('0x2000', 7.954), ('0x3000', 7.951), ('0x4000', 7.949), ('0x5000', 7.955), ('0x6000', 7.953), ('0x7000', 7.954)]
+  first_8_low_blocks: [('0x9000', 6.794), ('0xa000', 2.904), ('0xb000', 7.0), ('0xc000', 4.293), ('0xd000', 1.21), ('0xe000', 1.848), ('0xf000', 2.18), ('0x10000', 6.976)]
+data         file_len=4194304 toc=[0x40..0x11060) toc_len= 69664 toc_ent=7.9977 | total_4k=1024 high_ent(>=7.5)= 646 low_ent(<7.5)=378
+  first_8_4k_blocks: [('0x0', 7.952), ('0x1000', 7.951), ('0x2000', 7.95), ('0x3000', 7.949), ('0x4000', 7.952), ('0x5000', 7.947), ('0x6000', 7.949), ('0x7000', 7.954)]
+  first_8_low_blocks: [('0x11000', 0.308), ('0x12000', 3.414), ('0x13000', 3.014), ('0x14000', 3.265), ('0x20000', 7.314), ('0x24000', 2.146), ('0x27000', 4.302), ('0x28000', 6.343)]
+levels       file_len=4194304 toc=[0x40..0x1b070) toc_len=110640 toc_ent=7.9983 | total_4k=1024 high_ent(>=7.5)= 947 low_ent(<7.5)= 77
+  first_8_4k_blocks: [('0x0', 7.95), ('0x1000', 7.954), ('0x2000', 7.961), ('0x3000', 7.955), ('0x4000', 7.954), ('0x5000', 7.954), ('0x6000', 7.956), ('0x7000', 7.951)]
+  first_8_low_blocks: [('0x1b000', 0.354), ('0x1c000', 3.27), ('0x1d000', 4.337), ('0x1e000', 6.636), ('0x20000', 4.178), ('0x21000', 6.839), ('0x22000', 3.424), ('0x23000', 6.821)]
+movies       file_len=4194304 toc=[0x40..0x06ac0) toc_len= 27264 toc_ent=7.9939 | total_4k=1024 high_ent(>=7.5)=1015 low_ent(<7.5)=  9
+  first_8_4k_blocks: [('0x0', 7.947), ('0x1000', 7.952), ('0x2000', 7.958), ('0x3000', 7.946), ('0x4000', 7.954), ('0x5000', 7.953), ('0x6000', 6.219), ('0x7000', 7.737)]
+  first_8_low_blocks: [('0x6000', 6.219), ('0x3b0000', 0.743), ('0x3b1000', 7.379), ('0x3b8000', 6.922), ('0x3b9000', 6.103), ('0x3bb000', 7.304), ('0x3bc000', 7.483), ('0x3c0000', 7.142)]
+navmeshes    file_len=4194304 toc=[0x40..0x00780) toc_len=  1856 toc_ent=7.8852 | total_4k=1024 high_ent(>=7.5)= 897 low_ent(<7.5)=127
+  first_8_4k_blocks: [('0x0', 4.614), ('0x1000', 7.947), ('0x2000', 7.953), ('0x3000', 7.952), ('0x4000', 7.957), ('0x5000', 7.959), ('0x6000', 7.957), ('0x7000', 7.958)]
+  first_8_low_blocks: [('0x0', 4.614), ('0x36000', 6.224), ('0x38000', 2.064), ('0x3c000', 0.541), ('0x40000', 1.239), ('0x46000', 6.701), ('0x49000', 0.83), ('0x4d000', 3.147)]
+packs        file_len=4194304 toc=[0x40..0x04550) toc_len= 17680 toc_ent=7.9888 | total_4k=1024 high_ent(>=7.5)= 878 low_ent(<7.5)=146
+  first_8_4k_blocks: [('0x0', 7.947), ('0x1000', 7.958), ('0x2000', 7.958), ('0x3000', 7.953), ('0x4000', 3.518), ('0x5000', 7.95), ('0x6000', 7.951), ('0x7000', 7.505)]
+  first_8_low_blocks: [('0x4000', 3.518), ('0x8000', 5.799), ('0x9000', 5.689), ('0xa000', 5.883), ('0xb000', 2.53), ('0xc000', 2.614), ('0xd000', 3.357), ('0xe000', 3.11)]
+script       file_len=4194304 toc=[0x40..0x00260) toc_len=   544 toc_ent=7.6043 | total_4k=1024 high_ent(>=7.5)= 358 low_ent(<7.5)=666
+  first_8_4k_blocks: [('0x0', 1.649), ('0x1000', 2.97), ('0x2000', 7.954), ('0x3000', 7.956), ('0x4000', 7.948), ('0x5000', 7.948), ('0x6000', 7.948), ('0x7000', 7.947)]
+  first_8_low_blocks: [('0x0', 1.649), ('0x1000', 2.97), ('0x57000', 7.198), ('0x58000', 7.42), ('0x59000', 7.438), ('0x5a000', 7.408), ('0x5b000', 7.426), ('0x5c000', 7.348)]
+shaders      file_len=4194304 toc=[0x40..0x08640) toc_len= 34304 toc_ent=7.9938 | total_4k=1024 high_ent(>=7.5)= 645 low_ent(<7.5)=379
+  first_8_4k_blocks: [('0x0', 7.943), ('0x1000', 7.957), ('0x2000', 7.957), ('0x3000', 7.955), ('0x4000', 7.957), ('0x5000', 7.954), ('0x6000', 7.952), ('0x7000', 7.959)]
+  first_8_low_blocks: [('0x8000', 4.035), ('0x9000', 6.681), ('0xa000', 6.664), ('0xb000', 6.619), ('0xc000', 6.546), ('0xd000', 6.492), ('0xe000', 4.342), ('0xf000', 4.365)]
+textures     file_len=4194304 toc=[0x40..0x00790) toc_len=  1872 toc_ent=7.9108 | total_4k=1024 high_ent(>=7.5)=1014 low_ent(<7.5)= 10
+  first_8_4k_blocks: [('0x0', 4.662), ('0x1000', 1.658), ('0x2000', 7.934), ('0x3000', 7.939), ('0x4000', 7.93), ('0x5000', 7.942), ('0x6000', 7.939), ('0x7000', 7.928)]
+  first_8_low_blocks: [('0x0', 4.662), ('0x1000', 1.658), ('0x226000', 2.778), ('0x227000', 2.981), ('0x228000', 3.056), ('0x229000', 7.301), ('0x2f8000', 7.248), ('0x2fc000', 7.402)]
+
+=== 2. INTRA-TOC & CROSS-TOC 16-BYTE BLOCK REPETITIONS (AES ECB vs CBC TEST) ===
+outer anim         toc_len= 17952 ( 1122 blks) unique= 1122 intra_dups=0
+outer appdata0     toc_len=   800 (   50 blks) unique=   50 intra_dups=0
+outer audio        toc_len=  4880 (  305 blks) unique=  305 intra_dups=0
+outer common       toc_len= 38208 ( 2388 blks) unique= 2388 intra_dups=0
+outer data         toc_len= 69664 ( 4354 blks) unique= 4354 intra_dups=0
+outer levels       toc_len=110640 ( 6915 blks) unique= 6915 intra_dups=0
+outer movies       toc_len= 27264 ( 1704 blks) unique= 1704 intra_dups=0
+outer navmeshes    toc_len=  1856 (  116 blks) unique=  116 intra_dups=0
+outer packs        toc_len= 17680 ( 1105 blks) unique= 1105 intra_dups=0
+outer script       toc_len=   544 (   34 blks) unique=   34 intra_dups=0
+outer shaders      toc_len= 34304 ( 2144 blks) unique= 2144 intra_dups=0
+outer textures     toc_len=  1872 (  117 blks) unique=  117 intra_dups=0
+nested navmeshes.head.bin @0x001000 toc_len=219776 (13736 blks) unique=13736 intra_dups=0
+nested packs.head.bin     @0x306000 toc_len=195200 (12200 blks) unique=12200 intra_dups=0
+nested script.head.bin    @0x0c4000 toc_len= 73424 ( 4589 blks) unique= 4589 intra_dups=0
+nested anim.head.bin      @0x007000 toc_len= 49584 ( 3099 blks) unique= 3099 intra_dups=0
+nested data.head.bin      @0x015000 toc_len= 48448 ( 3028 blks) unique= 3028 intra_dups=0
+nested levels.head.bin    @0x04d000 toc_len= 42944 ( 2684 blks) unique= 2684 intra_dups=0
+
+Cross-file matching 16-byte blocks across outer TOCs:
+  blk=5f08daabecbdd40258c3516807024c24 matches 12 archives at [('anim', '0x40'), ('appdata0', '0x40'), ('audio', '0x40'), ('common', '0x40')]...
+  blk=fb9f756755ef4be458785bfed8aa6989 matches 12 archives at [('anim', '0x50'), ('appdata0', '0x50'), ('audio', '0x50'), ('common', '0x50')]...
+
+=== 3. STREAM CIPHER / AES-CTR REFUTATION TEST (XOR OF TOC CIPHERTEXTS FROM 0x60) ===
+appdata0 ^ script (0x60..0x260, 512 B): zero_bytes=2 (0.39%) entropy=7.5682
+appdata0 ^ textures (0x60..0x360, 768 B): zero_bytes=3 (0.39%) entropy=7.7715
+script ^ textures (0x60..0x260, 512 B): zero_bytes=1 (0.20%) entropy=7.5614
+levels ^ data (0x60..0x4040, 16352 B): zero_bytes=48 (0.29%) entropy=7.9890
+
+=== 4. 16-BYTE BLOCK REPETITIONS ACROSS FULL 47 SAMPLE WINDOWS (PAYLOADS) ===
+anim.head.bin          nz_blks=220750 unique=210052 dup_patterns= 5665 top=[('78dacd570d505455147e2cebbac00acb', 11), ('80ba0ae9e262e2b22982c8d22eb28112', 11)]
+anim.q1.bin            nz_blks=129361 unique=129349 dup_patterns=   11 top=[('00000000000000000000000078daec5b', 3), ('00000000000000000000000078dac5d9', 2)]
+anim.q3.bin            nz_blks=129757 unique=129757 dup_patterns=    0 top=[]
+anim.tail.bin          nz_blks=260462 unique=260441 dup_patterns=   16 top=[('834f834f834f834f834f834f834f834f', 5), ('44f744f744f744f744f744f744f744f7', 4)]
+appdata0.head.bin      nz_blks=   384 unique=   384 dup_patterns=    0 top=[]
+appdata0.q1.bin        nz_blks=   299 unique=   299 dup_patterns=    0 top=[]
+appdata0.q3.bin        nz_blks=   138 unique=   138 dup_patterns=    0 top=[]
+audio.head.bin         nz_blks=260390 unique=260317 dup_patterns=   70 top=[('239de84c17bad28deef4a027bde84d1f', 3), ('719c139ce414a739c359ce719e0b5ce4', 3)]
+audio.q1.bin           nz_blks=124216 unique=123285 dup_patterns=   74 top=[('0000000000000000000000004001fcee', 85), ('0000000000000000000000004001fc8a', 66)]
+audio.q3.bin           nz_blks=124596 unique=120379 dup_patterns= 1297 top=[('00000000000000000100000000000000', 97), ('00000000000000000000000001000000', 61)]
+audio.tail.bin         nz_blks=207655 unique=121226 dup_patterns=33544 top=[('44a2d69a5ad348685f00685f05f32f99', 20), ('44a2d69a5ad34904c4c104c4c5f32f99', 20)]
+common.head.bin        nz_blks=224529 unique=223787 dup_patterns=  621 top=[('78dac4985d8aa4301485df07660fbd82', 12), ('78dac4d8db8aab301805e0fb0dfb1dfa', 9)]
+common.q1.bin          nz_blks=117473 unique=117395 dup_patterns=   31 top=[('00000000000000000000000078daec57', 8), ('00000000000000000000000078daec97', 7)]
+common.q3.bin          nz_blks=100861 unique=100848 dup_patterns=   13 top=[('dc83d00db8ce0788bdcbc2bbdc4150e4', 2), ('0000000078dadc9b4baaa6c97186e706', 2)]
+common.tail.bin        nz_blks=246507 unique=245602 dup_patterns=  770 top=[('78dac4985d8aa4301485df07660fbd82', 16), ('78dac4d8db8aab301805e0fb0dfb1dfa', 12)]
+data.head.bin          nz_blks=202380 unique=202343 dup_patterns=   25 top=[('78dad559095493c7169e842541838426', 5), ('78dad495794814511cc7dfcc6a9a9647', 5)]
+data.q1.bin            nz_blks=108928 unique=108925 dup_patterns=    3 top=[('0000000078da945acd8e1bc71126823c', 2), ('0000000078da7c59cd8e1bc71126823c', 2)]
+data.q3.bin            nz_blks=127450 unique=127241 dup_patterns=  179 top=[('92244992244992244992244992244992', 7), ('00000000000000000000000078dad559', 6)]
+data.tail.bin          nz_blks=261465 unique=260326 dup_patterns=  169 top=[('5ccaa55ccaa55ccaa55ccaa55ccaa55c', 55), ('b9944bb9944bb9944bb9944bb9944bb9', 39)]
+levels.head.bin        nz_blks=260012 unique=259158 dup_patterns=  767 top=[('6f3e6f3e6f3e6f3e6f3e6f3e6f3e6f3e', 13), ('de4abe066fc73bf02e5c8bf7e103ec3f', 4)]
+levels.q1.bin          nz_blks=130617 unique=130401 dup_patterns=  208 top=[('a2fec7a2fec7a2fec7a2fec7a2fec7a2', 4), ('fec7a2fec7a2fec7a2fec7a2fec7a2fe', 4)]
+levels.q3.bin          nz_blks=130651 unique=130629 dup_patterns=   20 top=[('f9833d0b7b0ef63cec05d88bb09760cf', 3), ('0ff62cec39d8f3b017602fc25e823d33', 3)]
+levels.tail.bin        nz_blks=258236 unique=258213 dup_patterns=   20 top=[('8f1f3f7efcf8f1e3c78f1f3f7efcf8f1', 4), ('3f7efcf8f1e3c78f1f3f7efcf8f1e3c7', 3)]
+movies.head.bin        nz_blks=261821 unique=261500 dup_patterns=   28 top=[('abd56ab55aad56abd56ab55aad56abd5', 29), ('5aad56abd56ab55aad56abd56ab55aad', 28)]
+movies.q1.bin          nz_blks=131072 unique=131072 dup_patterns=    0 top=[]
+movies.q3.bin          nz_blks=131072 unique=130952 dup_patterns=   38 top=[('f0ffffffffffff7ff8ffffffffffff3f', 22), ('ffffff3ffcffffffffffff1ffeffffff', 16)]
+movies.tail.bin        nz_blks=261536 unique=261535 dup_patterns=    1 top=[('0100000013000400000000000005e987', 2)]
+navmeshes.head.bin     nz_blks=244086 unique=243982 dup_patterns=   41 top=[('82200882200882200882200882200882', 9), ('08822008822008822008822008822008', 9)]
+navmeshes.q1.bin       nz_blks=130635 unique=130633 dup_patterns=    1 top=[('88888888888888888888888888888888', 3)]
+navmeshes.q3.bin       nz_blks=130726 unique=130725 dup_patterns=    1 top=[('00000000000000000000000078da94dd', 2)]
+navmeshes.tail.bin     nz_blks=246400 unique=196746 dup_patterns=30234 top=[('44444444444444444444444444444444', 25), ('04411004411004411004411004411004', 24)]
+packs.head.bin         nz_blks=243665 unique=230581 dup_patterns= 6318 top=[('78da6380820d0c0c0120da078a13407c', 35), ('78da63808206068600102d03c509203e', 30)]
+packs.q1.bin           nz_blks=129275 unique=129202 dup_patterns=   46 top=[('15151515151515151515151515151515', 10), ('00000000000000000000000078da6c98', 8)]
+packs.q3.bin           nz_blks=129658 unique=129635 dup_patterns=   20 top=[('f90933e1249aa5f01366a2b90a4be127', 4), ('9a9f30134ea2590a3f61269aabb0147e', 3)]
+packs.tail.bin         nz_blks=254488 unique=254467 dup_patterns=    6 top=[('000000084c5253430000005830445250', 5), ('00000000bbbbbbbbbbbbbbbbbbbbbbbb', 5)]
+script.head.bin        nz_blks=180876 unique=177152 dup_patterns=  559 top=[('beaa00966741911783ea6fffd6e06100', 45), ('78da0b08f6f463606034106360609000', 44)]
+script.q1.bin          nz_blks= 76271 unique= 75041 dup_patterns=  219 top=[('0000000078da8593095053571486efcb', 41), ('0000000078da85930b34946918c7df6f', 32)]
+script.q3.bin          nz_blks= 45642 unique= 39816 dup_patterns=  330 top=[('c02052fff0d98d057e3718a1fc588948', 121), ('f6f463606034106360609000e2555060', 120)]
+script.tail.bin        nz_blks=178898 unique=171893 dup_patterns=  565 top=[('beaa00966741911783ea6fffd6e06100', 121), ('88cdcac8c02052fff0d98d057e3718a1', 121)]
+shaders.head.bin       nz_blks=259192 unique=234569 dup_patterns= 5383 top=[('00000000000000000000000000010000', 60), ('00000000000000000001000000000000', 57)]
+shaders.q1.bin         nz_blks=130674 unique=123982 dup_patterns= 2921 top=[('0f000000000000000000000000000000', 15), ('0000000f000000000000000000000000', 12)]
+shaders.q3.bin         nz_blks=131072 unique=131071 dup_patterns=    1 top=[('00000000000000000000000078daa47b', 2)]
+shaders.tail.bin       nz_blks=262144 unique=262141 dup_patterns=    3 top=[('3a000000000000000000000000000000', 2), ('7a0fa41f85f43e48ef87f463903e04e9', 2)]
+textures.head.bin      nz_blks=261420 unique=260716 dup_patterns=   39 top=[('66666666666666666666666666666666', 155), ('ffffffffffffffffffffffffffffffff', 107)]
+textures.q1.bin        nz_blks=131070 unique=130875 dup_patterns=  111 top=[('77777777777777777777777777777777', 31), ('66666666666666666666666666666666', 10)]
+textures.q3.bin        nz_blks=130471 unique=130435 dup_patterns=   31 top=[('e4f268bf992f72f345fb4d1eb93cea33', 3), ('5fe4e68bfae491cba33ef3456ebea84f', 3)]
+textures.tail.bin      nz_blks=210954 unique=208154 dup_patterns=  158 top=[('78da638002054686000624c008a51ba0', 279), ('e24c40080205a87c046061601060e060', 279)]
+
+=== 5. TAIL CHECKS (NAME TABLE AT EOF vs ENCRYPTED [EOF - w0c .. EOF) TRAILER) ===
+appdata0     w24=   2 w0c=    64 trailer_ent=5.676 last4k_ent=7.951 intra_dups=0 pre_zeros=    0 ascii_pathlike_last64k=1 first16=b7da7c1d963787c846fe15fd0e243364
+anim         w24= 265 w0c= 10896 trailer_ent=7.981 last4k_ent=7.951 intra_dups=0 pre_zeros= 2894 ascii_pathlike_last64k=8 first16=c2736b24d4d7276db87c656a6a6a7d60
+audio        w24= 103 w0c=  3536 trailer_ent=7.951 last4k_ent=7.416 intra_dups=0 pre_zeros= 2400 ascii_pathlike_last64k=12 first16=b5150dbc7af7f6c5cea06910ff9aee05
+common       w24= 418 w0c= 14864 trailer_ent=7.989 last4k_ent=7.949 intra_dups=0 pre_zeros= 1137 ascii_pathlike_last64k=8 first16=6fe61cc781cff74cfecf033e9d449a2e
+data         w24= 699 w0c= 22640 trailer_ent=7.992 last4k_ent=7.958 intra_dups=0 pre_zeros= 1550 ascii_pathlike_last64k=15 first16=ccf32ba871ce4c0bbb60aa75df677616
+levels       w24=2078 w0c=119520 trailer_ent=7.999 last4k_ent=7.956 intra_dups=0 pre_zeros= 1325 ascii_pathlike_last64k=11 first16=911d8284af13b19bbeeaff0af6bcab84
+movies       w24= 515 w0c= 18928 trailer_ent=7.990 last4k_ent=7.957 intra_dups=0 pre_zeros= 3886 ascii_pathlike_last64k=18 first16=38d6260a494bcbb7c2799e32db5e9433
+navmeshes    w24=  29 w0c=  1152 trailer_ent=7.820 last4k_ent=7.929 intra_dups=0 pre_zeros=    8 ascii_pathlike_last64k=18 first16=bf7411de20719335b4c9c97b301075f7
+packs        w24= 172 w0c=  7312 trailer_ent=7.974 last4k_ent=7.958 intra_dups=0 pre_zeros= 2523 ascii_pathlike_last64k=9 first16=f390b0978bb4d7c15a7a948a9a1b5619
+script       w24=   2 w0c=   128 trailer_ent=6.598 last4k_ent=7.962 intra_dups=0 pre_zeros=    0 ascii_pathlike_last64k=15 first16=b7da7c1d963787c846fe15fd0e243364
+shaders      w24=   3 w0c=   160 trailer_ent=6.734 last4k_ent=7.913 intra_dups=0 pre_zeros=    5 ascii_pathlike_last64k=10 first16=f11ce775de6373e9dcc1007ab315d7eb
+textures     w24=  22 w0c=   544 trailer_ent=7.621 last4k_ent=7.960 intra_dups=0 pre_zeros=    4 ascii_pathlike_last64k=17 first16=bae2486fd69205dfa8ffffea0db521e8
+
+Cross-file matching 16-byte blocks in [EOF - w0c .. EOF) trailers:
+  blk=b7da7c1d963787c846fe15fd0e243364 -> [('appdata0', 0), ('script', 0)]
+
+=== 6. RPF7 PUBLIC KEY & CANDIDATE AES KEY TESTS ON ENCRYPTED TOC (appdata0 [0x40..0x360)) ===
+RPF7_PUBLIC_KEY_STATUS: NO_VERIFICADO (open-source RPF7 tools CodeWalker/RageLib/LibertyV do not embed static GTA V AES keys; keys are extracted from local GTA5.exe / gta5keys.bin, which are absent from this environment).
+  candidate=all_zero_256     mode=ECB     printable=296/800 zeros=1 ent=7.7245 -> FAIL
+  candidate=all_zero_256     mode=CBC_IV0 printable=293/800 zeros=1 ent=7.7706 -> FAIL
+  candidate=all_zero_128     mode=ECB     printable=282/800 zeros=4 ent=7.7290 -> FAIL
+  candidate=all_zero_128     mode=CBC_IV0 printable=313/800 zeros=3 ent=7.7792 -> FAIL
+  candidate=RPF9_ascii_rep   mode=ECB     printable=296/800 zeros=2 ent=7.7391 -> FAIL
+  candidate=RPF9_ascii_rep   mode=CBC_IV0 printable=292/800 zeros=4 ent=7.7509 -> FAIL
+  candidate=RPF7_ascii_rep   mode=ECB     printable=305/800 zeros=3 ent=7.7841 -> FAIL
+  candidate=RPF7_ascii_rep   mode=CBC_IV0 printable=299/800 zeros=1 ent=7.7328 -> FAIL
+  candidate=hdr_00_32        mode=ECB     printable=266/800 zeros=2 ent=7.7420 -> FAIL
+  candidate=hdr_00_32        mode=CBC_IV0 printable=294/800 zeros=2 ent=7.7588 -> FAIL
+  candidate=hdr_32_64        mode=ECB     printable=303/800 zeros=1 ent=7.7271 -> FAIL
+  candidate=hdr_32_64        mode=CBC_IV0 printable=292/800 zeros=4 ent=7.7806 -> FAIL
+  candidate=sha256_hdr       mode=ECB     printable=282/800 zeros=4 ent=7.7337 -> FAIL
+  candidate=sha256_hdr       mode=CBC_IV0 printable=286/800 zeros=3 ent=7.7388 -> FAIL
