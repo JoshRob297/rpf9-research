@@ -68,3 +68,21 @@ Every RPF9 container (outer and nested) follows a 5-region physical layout (`raw
 | H11 | `w24` is the exact entry count of an RPF9 container | Countable payloads in complete containers equal `w24` | Verified `4==4` (`story000_bvh4`), `2==2` (`appdata0`), `4==4` (`core_licenses_data`), `2==2` (`core_licenses_data @0x1000`), `6==6` (`core_restofworld001`), `22==22` groups (`core_restofworld001 @0x1000`) (`raw/cabeceras2.txt` §6) | **confirmed** |
 | H12 | Small complete files store plaintext `u16`/`u32` sizes or offsets in TOC/trailer | Known sizes (`433`, `496`, `4720`, `0x340`, `0x1000`) appear in `[0x40..w04)` or `[EOF-w0c..EOF)` | 0 `u32le`/`u32be`/`u16le` matches across 4 small complete containers; 1 random `u16be` hit (`raw/toc-chico.txt` H-C2) | **refuted** |
 | H13 | Trailer `[0..32)` encodes `(w24, w20_hi, w0c)` and `[32..)` holds archive-specific names | Same `(w24, w20_hi)` share `blk0`; same `(w24, w20_hi, w0c)` share `blk0..1` and diverge at `blk2`; `32 + sum(len(path)+1) <= w0c` | Confirmed on `(2,64)` `appdata0` vs `script @0x1000`, `(4,144)` `core_licenses` vs `story000_bvh4`, and path-length sums `137<=144`, `143<=144`, `215<=240` (`raw/toc-chico.txt` H-C4, H-C5) | **confirmed** (32B header role & capacity); exact string encoding **indeterminate** without key |
+
+## Payload alignment (measured 2026-11-21)
+
+Not every archive page-aligns its zlib streams. Counted on 4 MiB windows by trying to inflate
+every `78 01/5e/9c/da` candidate:
+
+| window | valid streams | at a 0x1000 boundary | loose |
+|---|---|---|---|
+| `data.head.bin` | 301 | 295 (98%) | 6 |
+| `levels.head.bin` | 26 | 8 (31%) | 18 |
+| `packs.head.bin` | 301 | 0 (0%) | 301 |
+| `textures.head.bin` | 3 | 0 (0%) | 3 |
+
+Consequence for carving: alignment can be used as a fast path in `data.rpf`, but a carver that
+assumes it will miss `packs`, `textures` and two thirds of `levels`. The walker has to advance by
+the inflated length, not by page boundaries.
+
+Transcript: `raw/alineacion.txt`.

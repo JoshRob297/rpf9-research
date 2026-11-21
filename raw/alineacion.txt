@@ -1,0 +1,5 @@
+medido con python3 sobre samples/*.head.bin
+levels.head.bin: validos 26, alineados 8 (31%), sueltos 18
+data.head.bin:   validos 301, alineados 295 (98%), sueltos 6
+packs.head.bin:  validos 301, alineados 0 (0%), sueltos 301
+textures.head.bin: validos 3, alineados 0 (0%), sueltos 3
