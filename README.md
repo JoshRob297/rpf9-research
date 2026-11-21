@@ -33,3 +33,15 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
 - Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español).
 
 Ver `METHODOLOGY.md`.
+## Licencia
+
+GPL-3.0-or-later.
+
+El motivo es práctico: el trabajo de referencia más cercano, `ItsNotRexed/Leonida`, es
+GPL-3.0 y publica hechos de formato medidos sobre este mismo paquete. Se pueden tomar los
+hechos con atribución, pero si en algún momento se reutiliza código, esta licencia es la
+única que lo permite sin conflicto. Los proyectos con GPL-2.0-only (`xcl`,
+`americas-recomp`) y los de licencia no comercial (`PercyStar`) quedan como referencia de
+lectura, nunca como fuente de código.
+
+Ver también `docs/` para el estado medido del formato.
