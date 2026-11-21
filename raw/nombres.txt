@@ -1,0 +1,102 @@
+# Command: python3 tools/name_recover.py /home/sistver/proyectos/rpf9-research/samples --validate --out /tmp/opencode/index.json
+# Generated for T-RPF9-3 (raw/nombres.txt)
+
+=== 1. CLI SUMMARY & MANDATORY PAYLOAD VALIDATION ===
+Target: /home/sistver/proyectos/rpf9-research/samples (78 files)
+Total streams: 17082 | named: 1509 (8.83%) | unnamed (sin nombre): 15573
+Unique full_paths: 13402 | Unique identifiers: 14282
+
+Coverage by stream_type:
+  0DRP                   total=  872 named=    8 unnamed=  864 (  0.92%)
+  PSIN                   total= 4066 named=    6 unnamed= 4060 (  0.15%)
+  raw                    total= 5512 named=   69 unnamed= 5443 (  1.25%)
+  rsc50                  total= 4357 named=  197 unnamed= 4160 (  4.52%)
+  sgd5_shader_dxbc       total=  867 named=  867 unnamed=    0 (100.00%)
+  sgd5_shader_truncated  total=    2 named=    2 unnamed=    0 (100.00%)
+  xml                    total=  477 named=  181 unnamed=  296 ( 37.95%)
+  xml_chunk              total=  929 named=  179 unnamed=  750 ( 19.27%)
+
+Candidate mentions by source: {'raw_stream': 10239, 'rsc50': 1665, 'xml': 26257, 'psin': 414, 'sgd5': 869, '0drp': 43}
+Target extension mentions: {'.dat': 15, '.meta': 142, '.rpf': 7592, '.xml': 221}
+
+Payload validation (checked=6, all_verified=True):
+  [xml] common.head.bin @0xb000 (xml) -> 'core_binks' verified=True payload_off=141
+  [psin] data.head.bin @0x13000 (PSIN) -> 'TEMP_0653AU_AAAA' verified=True payload_off=464
+  [0drp] story000.head.bin @0xbe010 (0DRP) -> 'cutscene_exclusive/AIR_TAIL_INT' verified=True payload_off=169584
+  [sgd5] shaders.head.bin @0x10e3e (sgd5_shader_dxbc) -> 'VS_AlphaTransmissionFullScreenTri_4f16bf6c_Wrapped' verified=True payload_off=0
+  [rsc50] anim.q1.bin @0x5cd6c (rsc50) -> 'pack:/biped_q5' verified=True payload_off=304952
+  [raw_stream] anim.q1.bin @0x53b5c (raw) -> 'pack:/biped_q5' verified=True payload_off=39992
+
+=== 2. COVERAGE BY ARCHIVE GROUP ===
+  anim                     files= 4 streams=  475 named=  52 unnamed=  423 ( 10.95%) uniq_paths= 3645 uniq_ids=    4
+  audio                    files= 1 streams=  250 named=   7 unnamed=  243 (  2.80%) uniq_paths=   16 uniq_ids= 3049
+  common                   files= 4 streams= 1735 named= 315 unnamed= 1420 ( 18.16%) uniq_paths= 8249 uniq_ids= 7104
+  core_bvh4                files= 4 streams= 5794 named=  11 unnamed= 5783 (  0.19%) uniq_paths= 1278 uniq_ids=    2
+  core_licenses_data       files= 1 streams=    3 named=   3 unnamed=    0 (100.00%) uniq_paths=    3 uniq_ids=    2
+  core_restofworld         files= 2 streams=   66 named=  31 unnamed=   35 ( 46.97%) uniq_paths=    1 uniq_ids=   22
+  core_restofworld001      files= 1 streams=   33 named=  33 unnamed=    0 (100.00%) uniq_paths=   22 uniq_ids=    5
+  data                     files= 4 streams=  729 named=  33 unnamed=  696 (  4.53%) uniq_paths=    0 uniq_ids=   74
+  levels                   files= 4 streams=  252 named=   5 unnamed=  247 (  1.98%) uniq_paths=    0 uniq_ids=    5
+  navmeshes                files= 4 streams=  291 named=   2 unnamed=  289 (  0.69%) uniq_paths=    0 uniq_ids=  227
+  packs                    files= 4 streams=  534 named=  20 unnamed=  514 (  3.75%) uniq_paths=    0 uniq_ids=  189
+  script                   files= 4 streams= 2977 named=   0 unnamed= 2977 (  0.00%) uniq_paths=    0 uniq_ids=    0
+  shaders                  files= 4 streams= 1044 named= 869 unnamed=  175 ( 83.24%) uniq_paths=    0 uniq_ids=  467
+  shared_minigame000       files= 3 streams=  250 named=  53 unnamed=  197 ( 21.20%) uniq_paths=   72 uniq_ids= 3054
+  shared_minigame000_bvh4  files= 4 streams=  898 named=   5 unnamed=  893 (  0.56%) uniq_paths=   12 uniq_ids=    4
+  story000                 files= 3 streams=  383 named=  11 unnamed=  372 (  2.87%) uniq_paths=    5 uniq_ids=   42
+  story000_bvh4            files= 1 streams=    4 named=   4 unnamed=    0 (100.00%) uniq_paths=   63 uniq_ids=    3
+  story000_restofworld     files= 2 streams=  107 named=  50 unnamed=   57 ( 46.73%) uniq_paths=   47 uniq_ids=    4
+  story000_script          files= 2 streams=  673 named=   0 unnamed=  673 (  0.00%) uniq_paths=    0 uniq_ids=    0
+  textures                 files= 3 streams=  584 named=   5 unnamed=  579 (  0.86%) uniq_paths=    0 uniq_ids=   25
+
+=== 3. REAL EXAMPLES BY SOURCE (NAMED & UNNAMED) ===
+[xml] named=181 unnamed=296
+  NAMED   common.head.bin @0xb000 comp=2568 inf=65536 paths=['$(common)/movies/ArcadeGames/BFYB_IDLE_SCREEN_BINK.bk2', '$(common)/movies/ArcadeGames/BFYB_INTRO_BINK.bk2', '$(common)/movies/ArcadeGames/BFYB_LEVEL_01_INTRO.bk2'] ids=['core_binks']
+  NAMED   common.head.bin @0xbba0 comp=311 inf=549 paths=['$(target)/data/buildingMoviePresets'] ids=['core_buildingMoviePreset']
+  NAMED   common.head.bin @0xc000 comp=342 inf=648 paths=['$(target)/data/credits/credits.rpf'] ids=['core_credits']
+  NAMED   common.head.bin @0xc160 comp=316 inf=546 paths=['$(target)/data/creditsMovieHashStrings'] ids=['core_credits_movie']
+  UNNAMED common.head.bin @0x15770 comp=254 inf=547 status=unnamed
+  UNNAMED common.head.bin @0x1a000 comp=408 inf=2717 status=unnamed
+[xml_chunk] named=179 unnamed=750
+  NAMED   common.head.bin @0xba10 comp=397 inf=8732 paths=['$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_11.bk2', '$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_12.bk2', '$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_13.bk2'] ids=[]
+  NAMED   common.head.bin @0x21c20 comp=2989 inf=65536 paths=[] ids=['AVERAGE_MELEE_STANDARD_PED_AGGRESSIVE', 'CONVINCE_LEGENDS_PED', 'Dirty_Cop']
+  NAMED   common.head.bin @0x227d0 comp=2772 inf=65536 paths=[] ids=['COMBAT_ANIMAL', 'GANG_3AMCLUB', 'GANG_FAP']
+  NAMED   common.head.bin @0x232b0 comp=2196 inf=41013 paths=[] ids=['BOUNCER_STRONG', 'CRIMINAL_PED', 'GANG_AVERAGE']
+  UNNAMED common.head.bin @0x17250 comp=274 inf=1813 status=unnamed
+  UNNAMED common.head.bin @0x2fd00 comp=3651 inf=65536 status=unnamed
+[PSIN] named=6 unnamed=4060
+  NAMED   data.head.bin @0x13000 comp=1138 inf=2568 paths=[] ids=['TEMP_0653AU_AAAA', 'TEMP_0653_TEMP_1']
+  NAMED   data.head.bin @0x14000 comp=1121 inf=2552 paths=[] ids=['TEMP_0658AU_AAAA', 'TEMP_0658_TEMP_1']
+  NAMED   levels.tail.bin @0x1f4d20 comp=6955 inf=65536 paths=[] ids=['sc_ForceShopDiscovery']
+  NAMED   navmeshes.tail.bin @0x3cdb50 comp=43614 inf=65536 paths=[] ids=['ambrosiaraceway_dirtracerfinalemission', 'ambrosiaraceway_figure8brace', 'ambrosiaraceway_ovalrace']
+  UNNAMED anim.head.bin @0x6000 comp=732 inf=2808 status=unnamed
+  UNNAMED anim.tail.bin @0x1d7570 comp=5425 inf=65536 status=unnamed
+[0DRP] named=8 unnamed=864
+  NAMED   story000.head.bin @0xbe010 comp=18794 inf=196608 paths=['cutscene_exclusive/AIR_TAIL_INT'] ids=[]
+  NAMED   story000.head.bin @0xc5010 comp=7812 inf=131072 paths=['cutscene_exclusive/AIR_TRAIN_INT_PHONE.bk2'] ids=[]
+  NAMED   story000.head.bin @0x17d010 comp=30599 inf=196608 paths=['cutscene_exclusive/SOFT_MSC_MIX'] ids=[]
+  NAMED   story000.head.bin @0x212010 comp=55139 inf=524288 paths=[] ids=['CSC_DRT_FINALAU', 'CSC_DRT_FINAL_LI_INT_STORY_1', 'CSC_DRT_FINAL_LI_INT_STORY_2']
+  UNNAMED anim.head.bin @0x14010 comp=10479 inf=131072 status=unnamed
+  UNNAMED anim.head.bin @0x18010 comp=10791 inf=57936 status=unnamed
+[sgd5_shader_dxbc] named=867 unnamed=0
+  NAMED   shaders.head.bin @0x10e3e comp=2321 inf=2640 paths=[] ids=['VS_AlphaTransmissionFullScreenTri_4f16bf6c_Wrapped']
+  NAMED   shaders.head.bin @0x1182d comp=2340 inf=2640 paths=[] ids=['VS_AlphaTransmissionFullScreenTri_ab6941f7_Wrapped']
+  NAMED   shaders.head.bin @0x1222f comp=2340 inf=2644 paths=[] ids=['VS_AlphaTransmissionFullScreenTri_3a57a806_Wrapped']
+  NAMED   shaders.head.bin @0x12c31 comp=603 inf=820 paths=[] ids=['VS_BlitGenAmbCube_0cfdb358_Wrapped']
+[sgd5_shader_truncated] named=2 unnamed=0
+  NAMED   shaders.head.bin @0x3ff36c comp=3734 inf=None paths=[] ids=['VS_TransformSkin_PositionOnly_4b73ea93_Wrapped']
+  NAMED   shaders.q1.bin @0x1facd3 comp=32456 inf=None paths=[] ids=['PS_MirrorPedTextured_Eight_bae8f8d0_Wrapped']
+[rsc50] named=197 unnamed=4160
+  NAMED   anim.q1.bin @0x5cd6c comp=168223 inf=327680 paths=['pack:/biped_q5', 'pack:/exit_front.clip', 'pack:/exit_left.clip'] ids=[]
+  NAMED   anim.q1.bin @0x86d6c comp=27006 inf=56112 paths=['pack:/a_trans_cower_beachchair_flat_low_a.clip', 'pack:/biped_q5'] ids=[]
+  NAMED   anim.q1.bin @0x8dd6c comp=12199 inf=42992 paths=['pack:/base.clip', 'pack:/biped_q5'] ids=[]
+  NAMED   anim.q1.bin @0x90d6c comp=4031 inf=7904 paths=['pack:/base.clip', 'pack:/zzz_lod_biped_q5'] ids=[]
+  UNNAMED anim.q1.bin @0x91d6c comp=49796 inf=131072 status=unnamed
+  UNNAMED anim.q1.bin @0xa0d6c comp=56770 inf=131072 status=unnamed
+[raw] named=69 unnamed=5443
+  NAMED   anim.q1.bin @0x53b5c comp=33279 inf=40928 paths=['pack:/biped_q5', 'pack:/enter_front_lf.clip', 'pack:/enter_front_rf.clip'] ids=[]
+  NAMED   anim.q1.bin @0x9dffc comp=11130 inf=16432 paths=['pack:/biped_q5', 'pack:/idle_a.clip', 'pack:/idle_b.clip'] ids=[]
+  NAMED   anim.q1.bin @0xaeb3c comp=33149 inf=45056 paths=['pack:/biped_q5', 'pack:/idle_d.clip', 'pack:/idle_e.clip'] ids=[]
+  NAMED   anim.q1.bin @0xc2e5c comp=11088 inf=17616 paths=['pack:/biped_q5', 'pack:/idle_a.clip', 'pack:/idle_b.clip'] ids=[]
+  UNNAMED anim.head.bin @0x16900 comp=3980 inf=9904 status=unnamed
+  UNNAMED anim.head.bin @0x1e190 comp=2508 inf=6160 status=unnamed

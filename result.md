@@ -1,6 +1,6 @@
 ---
-id: T-RPF9-2
-run: R-20261121-131054-8939
+id: T-RPF9-3
+run: R-20261121-145315-61c2
 role: heavy
 status: done
 verdict: null
@@ -9,39 +9,38 @@ refused: false
 
 ## Que hice
 
-- **Objetivo A (`raw/cabeceras2.txt`)**: Extendida la tabla de cabeceras a los **22** RPF9 y **78** ficheros `.bin` en `/home/sistver/proyectos/rpf9-research/samples/` (sin subcarpeta `pack/`), validando **77** cabeceras RPF9 (**76** `archive_id` unicos). Verificada la regla exacta de `[w08..w04)`: `ceil(9*w24/16)*16` (`54/54` cuando `w20_hi==1` y `w2c_b0==1`, `w24<=194`) y `ceil(10*w24/16)*16` (`15/15` cuando `w20_hi==1` y `w2c_b0==2`, `w24>=265`). Confirmado `w24` contra conteo de payloads en los 4 archivos completos y 2 anidados acotados (`4==4` en `story000_bvh4.full.bin`, `2==2` en `appdata0.head.bin`, `4==4` en `core_licenses_data.full.bin` + `2==2` en su RPF9 `@0x1000`, `6==6` en `core_restofworld001.full.bin` + `22==22` grupos en su RPF9 `@0x1000`).
-- **Objetivo B (`raw/payload.txt`, `tools/rpf9.py --payload`, `tests/test_rpf9.py`)**: Escaneados e inflados **16,213** flujos zlib `78 da` validos (477 XML, 4,066 `PSIN`, 872 `0DRP`, 4,357 `rsc50`, 6,441 otros/microcodigo shader); parseada la cabecera `SGD5` en `shaders.head.bin @0x9000` (`sub_count=33`, `first_section_bytes=2112`, 31 tablas secuenciales de 8 B con 2,419 registros y 737 simbolos `[VDHGMCP]S_*_Wrapped`); enumerados los **55** `RPF9` anidados (**54** unicos) con tamano exacto reconstruido en **29** de ellos; detectado `EDUP` (`core_restofworld001 @0xc14a0`). Extendido `tools/rpf9.py` con `--payload` para listar entradas legibles y reportar explicitamente TOC, traileres y regiones no legibles.
-- **Objetivo C (`raw/toc-chico.txt`)**: Probadas 6 hipotesis estructurales (`H-C1`..`H-C6`) en archivos completos chicos (`w24=1..6`). Refutadas rutas ASCII en claro (`H-C1`), tamanos/offsets `u16`/`u32` en claro (`H-C2`) y reutilizacion de flujo en `[0x60..w04)` (`H-C6`); confirmada la regla de paso 9/10 B en `[w08..w04)` (`H-C3`), las colisiones exactas de bloque 0 del trailer por `(w24, w20_hi)` y de 32 B (`blk0+blk1`) por `(w24, w20_hi, w0c)` (`appdata0` vs `script @0x1000`, `core_licenses_data` vs `story000_bvh4`) con divergencia en `blk2` (`H-C4`), y capacidad de `w0c` para `32 B + rutas XML` (`H-C5`).
-- **Documentacion (`docs/RPF9.md`, `docs/RPF9.es.md`)**: Actualizadas las especificaciones bilingues con los 22 archivos, 77 cabeceras, hallazgos de payload e hipotesis `H1`..`H13` citando `raw/cabeceras2.txt`, `raw/payload.txt` y `raw/toc-chico.txt`.
+- **Extractor multifuente (`tools/name_recover.py`)**: Implementado pipeline que escanea archivos `.bin`/`.rpf`, infla flujos zlib `78 da` (`xml`, `xml_chunk`, `PSIN`, `0DRP`, `rsc50`, `raw`) y entradas de shaders `SGD5` (`[VDHGMCP]S_*_Wrapped\0` + cabecera de 17 B + deflate crudo `wbits=-15` hacia `DXBC`), extrae rutas completas e identificadores con procedencia ordenada (`xml` -> `psin`/`0drp` -> `sgd5` -> `rsc50`/`raw_stream`), deduplica y separa `full_paths` de `identifiers`, y marca todo flujo sin cadenas legibles como `status="unnamed"` (sin inventar nombres).
+- **Medicion y transcripcion (`raw/nombres.txt`)**: Ejecutado sobre los 78 archivos de muestra en `/home/sistver/proyectos/rpf9-research/samples` (`17,082` flujos: `1,509` con nombre = `8.83%`; `15,573` sin nombre = `91.17%`; `13,402` rutas unicas y `14,282` identificadores unicos). Verificada la presencia exacta byte a byte dentro de los payloads inflados para 6 nombres de las distintas fuentes (`--validate`).
+- **Documentacion bilingue (`docs/NAMES.md`, `docs/NAMES.es.md`)**: Documentadas las 3 alternativas de diseno con trade-offs, cobertura medida por tipo de flujo y archivo, ejemplos reales con citas a `raw/nombres.txt`, limitaciones y comparacion contra el enfoque por offset de `ItsNotRexed/Leonida` (`docs/rpf.md`, `tools/rpf9_carve.py`, `tools/shader_carve.py`).
+- **Pruebas (`tests/test_name_recover.py`)**: Anadidas 5 pruebas (4 sobre muestras reales + 1 sintetica con separacion `full_paths`/`identifiers`, filtrado de ruido binario/dialogos, `SGD5` `DXBC` y flujos `unnamed`).
+- **Sincronizacion de worktree**: Restaurado `result.md` borrado al inicio y avanzado `JoshRob297/task-t-rpf9-3` por fast-forward (`git merge --ff-only origin/main`) desde `3d9384c` hasta `72d1969` para disponer de `docs/RPF9.md` y `raw/payload.txt` de T-RPF9-2 sin tocar `main` ni hacer commit/push.
 
 ## Evidencia
 
-- `python3 -m unittest -v tests/test_rpf9.py` -> `Ran 10 tests in 0.746s` / `OK` (10/10 pass).
-- `python3 tools/rpf9.py /home/sistver/proyectos/rpf9-research/samples/story000_bvh4.full.bin --payload` -> 4 streams XML inflados (`story000_environment_bvh`, `story000_terrain_bvh`, `CDataFileMgr__ContentDef`, `SSetupData`), 2 regiones no legibles explicitadas (`head_toc` `0x40..0x340`, `archive_trailer` `0x1570..0x1600`).
-- `python3 tools/rpf9.py /home/sistver/proyectos/rpf9-research/samples/shaders.head.bin --payload` -> `SGD5 @0x9000..0x400000 sub_count=33 sec0=2112B tables=31 recs=2419 syms=737` y regiones no legibles explicitadas.
-- Transcripciones en `raw/cabeceras2.txt`, `raw/payload.txt`, `raw/toc-chico.txt`.
-- Worktree `JoshRob297/task-t-rpf9-2` avanzado por fast-forward (`git merge --ff-only origin/main`) desde `eac3f6c` hasta `9b113cb` (`origin/main`) antes de iniciar ediciones, sin tocar la rama base `main` ni hacer commit/push.
+- **E1 (Ejecucion real en 78 muestras + validacion en payload)**: `python3 tools/name_recover.py /home/sistver/proyectos/rpf9-research/samples --validate --out /tmp/opencode/index.json` -> `Total streams: 17082 | named: 1509 (8.83%) | unnamed (sin nombre): 15573`; `Payload validation (checked=6, all_verified=True)` (`raw/nombres.txt`, lineas 4–34).
+- **E1 (Suite de pruebas con `unittest`)**: `python3 -m unittest discover -s tests -v` -> `Ran 15 tests in 3.056s` / `OK` (`tests/test_name_recover.py` 5/5 pass + `tests/test_rpf9.py` 10/10 pass).
+- **E1 (Cobertura por fuente medida)**: `sgd5_shader_dxbc` `867/867` (`100.00%`), `sgd5_shader_truncated` `2/2` (`100.00%`), `xml` `181/477` (`37.95%`), `xml_chunk` `179/929` (`19.27%`), `rsc50` `197/4357` (`4.52%`), `raw` `69/5512` (`1.25%`), `0DRP` `8/872` (`0.92%`), `PSIN` `6/4066` (`0.15%`) (`raw/nombres.txt`, lineas 10–18).
+- **No verificado (`pytest`)**: `python3 -m pytest --version` -> `No module named pytest`; ejecutadas exactamente las mismas pruebas compatibles con `pytest` mediante `python3 -m unittest`.
 
 ## Requisitos cubiertos
 
-- [x] Objetivo A: tabla extendida a 22 archivos, validacion de campos y `w24` en completos -> `raw/cabeceras2.txt`
-- [x] Objetivo B: inflado zlib `78 da`, parseo `SGD5`, enumeracion de `RPF9` anidados -> `raw/payload.txt`, `tools/rpf9.py --payload`, `tests/test_rpf9.py`
-- [x] Objetivo C: hipotesis en completos/chicos (`w24` 1..6) con prediccion, prueba y veredicto -> `raw/toc-chico.txt`
-- [x] Documentacion actualizada en `docs/RPF9.md` y `docs/RPF9.es.md` sin push ni PR
+- [x] `tools/name_recover.py` infla flujos de muestra o RPF completo y genera `index.json` (`file`, `offset`, `compressed_bytes`, `inflated_bytes`, `stream_type`, `candidates`, procedencia, deduplicacion y separacion `full_paths` / `identifiers`) — evidencia: `tools/name_recover.py:242-371`
+- [x] Fuentes ordenadas (XML con extensiones objetivo e identificadores -> PSIN/0DRP -> tabla SGD5) y flujos sin nombre marcados `unnamed` sin inventar datos — evidencia: `tools/name_recover.py:113-295`, `raw/nombres.txt:10-20`
+- [x] Validacion obligatoria (>=3 nombres comprobados dentro del payload inflado + % de cobertura medido) — evidencia: `raw/nombres.txt:23-30` (6/6 verificados, 8.83% global)
+- [x] Documentacion bilingue `docs/NAMES.md` y `docs/NAMES.es.md` con cobertura, ejemplos reales, limitaciones y comparacion contra Leonida — evidencia: `docs/NAMES.md:1-101`, `docs/NAMES.es.md:1-101`
+- [x] Transcripciones en `raw/nombres.txt` y pruebas en `tests/test_name_recover.py` — evidencia: `raw/nombres.txt:1-108`, `tests/test_name_recover.py:1-169`
 
 ## Pendientes y riesgos
 
-- Sin la clave AES de RPF9 (ausente del entorno), la disposicion interna de registros dentro de `[0x60..w04)` y el formato exacto de cadenas en `[EOF-w0c+32..EOF)` permanecen `indeterminada`s.
-- El prompt menciona `samples/.../pack/`, pero las 78 muestras binarias estan ubicadas directamente en `/home/sistver/proyectos/rpf9-research/samples/` (no dentro de `pack/` ni del worktree, que solo contiene `samples/MANIFEST.md`).
-- Para `26/55` contenedores `RPF9` anidados, su tamano exacto queda sin cota superior porque la ventana `.head`/`.q3`/`.tail` de 2–4 MiB los trunca antes de su trailer `w0c`.
+- `pytest` no esta instalado en `/usr/bin/python3`; las pruebas se verificaron con `unittest` (`15/15 OK`).
+- Sin la clave AES de RPF9, `15,573` de `17,082` flujos (`91.17%`) carecen de cadenas en claro (`LSNS` opaco en `PSIN`, paginas `0DRP`/`rsc50`, tuning XML) y permanecen como `unnamed`.
+- Existen `2` entradas `SGD5` truncadas al borde de las ventanas `.bin` de 2–4 MiB (`shaders.head.bin @0x3ff36c`, `shaders.q1.bin @0x1facd3`).
 
 ## Archivos modificados
 
-- `raw/cabeceras2.txt`
-- `raw/payload.txt`
-- `raw/toc-chico.txt`
-- `tools/rpf9.py`
-- `tests/test_rpf9.py`
-- `docs/RPF9.md`
-- `docs/RPF9.es.md`
-- `result.md`
+- `tools/name_recover.py` (nuevo)
+- `raw/nombres.txt` (nuevo)
+- `docs/NAMES.md` (nuevo)
+- `docs/NAMES.es.md` (nuevo)
+- `tests/test_name_recover.py` (nuevo)
+- `result.md` (actualizado para T-RPF9-3)
