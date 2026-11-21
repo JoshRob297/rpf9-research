@@ -1,0 +1,194 @@
+# Command: python3 script inspecting all 22 outer/pack RPF9 archives and 78 .bin windows in /home/sistver/proyectos/rpf9-research/samples/
+# Generated for T-RPF9-2 Objetivo A (raw/cabeceras2.txt)
+
+BIN_FILES_FOUND: 78
+OUTER_AND_PACK_HEADERS_FOUND: 22
+
+=== 1. ALL 22 OUTER/PACK 64-BYTE HEADERS (16 x uint32 LE) ===
+archive                    sample_bytes       0x00       0x04       0x08       0x0c       0x10       0x14       0x18       0x1c       0x20       0x24       0x28       0x2c       0x30       0x34       0x38       0x3c
+anim                           4194304 0x52504639 0x00004660 0x00003c00 0x00002a90 0x695e8679 0x48f438f6 0x00047a00 0x00000150 0x00010006 0x00000109 0xd98004d5 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+appdata0                          8880 0x52504639 0x00000360 0x00000340 0x00000040 0x24e63799 0xb766df72 0x00047a00 0x00000150 0x00010006 0x00000002 0xda72573e 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+audio                          4194304 0x52504639 0x00001350 0x00000fb0 0x00000dd0 0xeb8f299f 0x2bf6a003 0x00047a00 0x00000150 0x00010003 0x00000067 0xc0a92754 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+common                         4194304 0x52504639 0x00009580 0x00008520 0x00003a10 0x0d68945c 0x4913ebcd 0x00047a00 0x00000150 0x00010006 0x000001a2 0xda72573e 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+core_bvh4                      4194304 0x52504639 0x0000fe00 0x0000cbc0 0x00011bf0 0xff7fb31c 0x560c66f0 0x00047a00 0x00000150 0x00010005 0x00000506 0xd98004d5 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+core_licenses_data               13536 0x52504639 0x00000330 0x00000300 0x00000090 0xafa8be45 0x91959f37 0x00047a00 0x00000150 0x00010005 0x00000004 0xd98004d5 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+core_restofworld               4194304 0x52504639 0x00000aa0 0x00000940 0x00000570 0x76a5b6c8 0xd909d075 0x00047a00 0x00000150 0x00010005 0x00000027 0xd5c19f6b 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+core_restofworld001             791984 0x52504639 0x000003b0 0x00000370 0x000000f0 0x22071e9f 0xce81b8e6 0x00047a00 0x00000150 0x00010005 0x00000006 0xd98004d5 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+data                           4194304 0x52504639 0x00011060 0x0000f510 0x00005870 0xfe559378 0xc54a08a9 0x00047a00 0x00000150 0x00010007 0x000002bb 0xd5c19f6b 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+levels                         4194304 0x52504639 0x0001b070 0x00015f40 0x0001d2e0 0xe1680e90 0x18a27ac6 0x00047a00 0x00000150 0x00010006 0x0000081e 0xd98004d5 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+movies                         4194304 0x52504639 0x00006ac0 0x000056a0 0x000049f0 0xa0cd2948 0x4fb588c5 0x00047a00 0x00000150 0x00010004 0x00000203 0xda72573e 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+navmeshes                      4194304 0x52504639 0x00000780 0x00000670 0x00000480 0x2aa150d7 0x456156e5 0x00047a00 0x00000150 0x00010005 0x0000001d 0xd98004d5 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+packs                          4194304 0x52504639 0x00004550 0x00003f40 0x00001c90 0x57fb6798 0x706499ba 0x00047a00 0x00000150 0x00010006 0x000000ac 0xd98004d5 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+script                         4194304 0x52504639 0x00000260 0x00000240 0x00000080 0x52bb1570 0x86f88eae 0x00047a00 0x00000150 0x00010003 0x00000002 0xc0a92754 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+shaders                        4194304 0x52504639 0x00008640 0x00008620 0x000000a0 0x0d31e3f9 0xefb33e67 0x00047a00 0x00000150 0x00010005 0x00000003 0xda72573e 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+shared_minigame000             4194304 0x52504639 0x00000fb0 0x00000d40 0x00000c10 0x9211348b 0x34679e22 0x00047a00 0x00000150 0x00010005 0x00000044 0xd5c19f6b 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+shared_minigame000_bvh4        4194304 0x52504639 0x000004f0 0x00000470 0x00000280 0x7786531f 0x2dbf946f 0x00047a00 0x00000150 0x00010005 0x0000000d 0xd98004d5 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+story000                       4194304 0x52504639 0x0000a120 0x00008350 0x00007c80 0xf528e22d 0xf84c087f 0x00047a00 0x00000150 0x00010005 0x000002fb 0xd5c19f6b 0x00090f02 0x00000010 0x00000000 0x00000000 0x00000000
+story000_bvh4                     5632 0x52504639 0x00000340 0x00000310 0x00000090 0x7362b367 0xd9aa45b7 0x00047a00 0x00000150 0x00010005 0x00000004 0xda72573e 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+story000_restofworld           4194304 0x52504639 0x00000a40 0x000008e0 0x00000630 0xa1fa9639 0x96f071c2 0x00047a00 0x00000150 0x00010005 0x00000027 0xd5c19f6b 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+story000_script                4194304 0x52504639 0x000002b0 0x00000280 0x000000e0 0x562c2c25 0xb6a07daf 0x00047a00 0x00000150 0x00010003 0x00000004 0xc0a92754 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+textures                       4194304 0x52504639 0x00000790 0x000006c0 0x00000220 0x0d7631ea 0x21d5b011 0x00047a00 0x00000150 0x00010006 0x00000016 0xd5c19f6b 0x00090f01 0x00000010 0x00000000 0x00000000 0x00000000
+
+=== 2. ALL 22 HEADERS (DECIMAL INTERPRETATION OF KEY FIELDS) ===
+archive                        magic      w04      w08      w0c  w04-w08      w18   w1c w20_lo w20_hi    w24        w28        w2c  w30   z34_3c
+anim                      0x52504639    18016    15360    10896     2656   293376   336      6      1    265 0xd98004d5 0x00090f02   16     True
+appdata0                  0x52504639      864      832       64       32   293376   336      6      1      2 0xda72573e 0x00090f01   16     True
+audio                     0x52504639     4944     4016     3536      928   293376   336      3      1    103 0xc0a92754 0x00090f01   16     True
+common                    0x52504639    38272    34080    14864     4192   293376   336      6      1    418 0xda72573e 0x00090f02   16     True
+core_bvh4                 0x52504639    65024    52160    72688    12864   293376   336      5      1   1286 0xd98004d5 0x00090f02   16     True
+core_licenses_data        0x52504639      816      768      144       48   293376   336      5      1      4 0xd98004d5 0x00090f01   16     True
+core_restofworld          0x52504639     2720     2368     1392      352   293376   336      5      1     39 0xd5c19f6b 0x00090f01   16     True
+core_restofworld001       0x52504639      944      880      240       64   293376   336      5      1      6 0xd98004d5 0x00090f01   16     True
+data                      0x52504639    69728    62736    22640     6992   293376   336      7      1    699 0xd5c19f6b 0x00090f02   16     True
+levels                    0x52504639   110704    89920   119520    20784   293376   336      6      1   2078 0xd98004d5 0x00090f02   16     True
+movies                    0x52504639    27328    22176    18928     5152   293376   336      4      1    515 0xda72573e 0x00090f02   16     True
+navmeshes                 0x52504639     1920     1648     1152      272   293376   336      5      1     29 0xd98004d5 0x00090f01   16     True
+packs                     0x52504639    17744    16192     7312     1552   293376   336      6      1    172 0xd98004d5 0x00090f01   16     True
+script                    0x52504639      608      576      128       32   293376   336      3      1      2 0xc0a92754 0x00090f01   16     True
+shaders                   0x52504639    34368    34336      160       32   293376   336      5      1      3 0xda72573e 0x00090f01   16     True
+shared_minigame000        0x52504639     4016     3392     3088      624   293376   336      5      1     68 0xd5c19f6b 0x00090f01   16     True
+shared_minigame000_bvh4   0x52504639     1264     1136      640      128   293376   336      5      1     13 0xd98004d5 0x00090f01   16     True
+story000                  0x52504639    41248    33616    31872     7632   293376   336      5      1    763 0xd5c19f6b 0x00090f02   16     True
+story000_bvh4             0x52504639      832      784      144       48   293376   336      5      1      4 0xda72573e 0x00090f01   16     True
+story000_restofworld      0x52504639     2624     2272     1584      352   293376   336      5      1     39 0xd5c19f6b 0x00090f01   16     True
+story000_script           0x52504639      688      640      224       48   293376   336      3      1      4 0xc0a92754 0x00090f01   16     True
+textures                  0x52504639     1936     1728      544      208   293376   336      6      1     22 0xd5c19f6b 0x00090f01   16     True
+
+=== 3. ALL VALIDATED RPF9 HEADERS ACROSS ALL 78 SAMPLE FILES (OUTER + NESTED) ===
+TOTAL_VALIDATED_RPF9_HEADERS: 77
+UNIQUE_ARCHIVE_IDS: 76
+file                                 offset      w04      w08      w0c  w04-w08 w10_w14_hex           w20   w24        w28        w2c w30 z34_3c
+anim.head.bin                      0x000000    18016    15360    10896     2656 48f438f6695e8679 00010006   265 0xd98004d5 0x00090f02  16 True
+anim.head.bin                      0x005000      640      624       64       16 7834a6f2619f3f88 00010005     1 0xda72573e 0x00090f01  16 True
+anim.head.bin                      0x007000    49648    42416    76432     7232 15730a34e4431974 00010005   722 0xda72573e 0x00090f02  16 True
+appdata0.head.bin                  0x000000      864      832       64       32 b766df7224e63799 00010006     2 0xda72573e 0x00090f01  16 True
+audio.head.bin                     0x000000     4944     4016     3536      928 2bf6a003eb8f299f 00010003   103 0xc0a92754 0x00090f01  16 True
+audio.head.bin                     0x002000     8336     8160      624      176 3fd2c43b1569f655 00010005    18 0xda72573e 0x00090f01  16 True
+common.head.bin                    0x000000    38272    34080    14864     4192 4913ebcd0d68945c 00010006   418 0xda72573e 0x00090f02  16 True
+core_bvh4.head.bin                 0x000000    65024    52160    72688    12864 560c66f0ff7fb31c 00010005  1286 0xd98004d5 0x00090f02  16 True
+core_bvh4.head.bin                 0x010000     1184     1088      336       96 d15bcfe5b19d4d38 00010004    10 0xc0a92754 0x00090f01  16 True
+core_bvh4.head.bin                 0x0b1000     1136     1040      240       96 3116b37cb34af661 00010004     9 0xc0a92754 0x00090f01  16 True
+core_bvh4.head.bin                 0x12a000     4512     3952     1648      560 99130ed34611e06f 00010004    62 0xc0a92754 0x00090f01  16 True
+core_bvh4.head.bin                 0x26d000     1760     1584      464      176 542b2153dde7865f 00010004    19 0xc0a92754 0x00090f01  16 True
+core_bvh4.head.bin                 0x2c3000     2848     2512      832      336 ab6af104f1b08647 00010004    36 0xc0a92754 0x00090f01  16 True
+core_bvh4.q3.bin                   0x0d430c     4624     4048      992      576 84e8521e38234f21 00010004    64 0xc0a92754 0x00090f01  16 True
+core_bvh4.tail.bin                 0x1e3410   155984   133120   135600    22864 4905dc86e165a38e 00010004  2286 0xc0a92754 0x00090f02  16 True
+core_bvh4.tail.bin                 0x3a9410     2656     2352     1872      304 6148fde96d68b565 00010004    33 0xc0a92754 0x00090f01  16 True
+core_bvh4.tail.bin                 0x3b0410    19984    17120     7536     2864 d372f57c1ec58b8c 00010004   286 0xc0a92754 0x00090f02  16 True
+core_licenses_data.full.bin        0x000000      816      768      144       48 91959f37afa8be45 00010005     4 0xd98004d5 0x00090f01  16 True
+core_licenses_data.full.bin        0x001000      800      768       80       32 541009fd3268bc3e 00010006     2 0xda72573e 0x00090f01  16 True
+core_restofworld.head.bin          0x000000     2720     2368     1392      352 d909d07576a5b6c8 00010005    39 0xd5c19f6b 0x00090f01  16 True
+core_restofworld.head.bin          0x000aa0      704      672      112       32 162b7cc3d164fea3 00010005     2 0xda72573e 0x00090f01  16 True
+core_restofworld.head.bin          0x001000    10032     8720     4944     1312 8d808d50af36b746 00010004   145 0xc0a92754 0x00090f01  16 True
+core_restofworld001.full.bin       0x000000      944      880      240       64 ce81b8e622071e9f 00010005     6 0xd98004d5 0x00090f01  16 True
+core_restofworld001.full.bin       0x001000     1968     1760     1616      208 a9c15aec74a20665 00010005    22 0xda72573e 0x00090f01  16 True
+data.head.bin                      0x000000    69728    62736    22640     6992 c54a08a9fe559378 00010007   699 0xd5c19f6b 0x00090f02  16 True
+data.head.bin                      0x012000      816      768      128       48 066f4100fa0dcc2b 00020006     3 0xda72573e 0x00090f01  16 True
+data.head.bin                      0x015000    48512    41680    36416     6832 de905eb0826cc03a 00010005   683 0xda72573e 0x00090f02  16 True
+levels.head.bin                    0x000000   110704    89920   119520    20784 18a27ac6e1680e90 00010006  2078 0xd98004d5 0x00090f02  16 True
+levels.head.bin                    0x01c000     1280     1136      624      144 7f3dd0948173a215 00020006     8 0xda72573e 0x00090f01  16 True
+levels.head.bin                    0x04d000    43008    36640    11376     6368 4b61e13c15dbdac2 00010005   636 0xda72573e 0x00090f02  16 True
+movies.head.bin                    0x000000    27328    22176    18928     5152 4fb588c5a0cd2948 00010004   515 0xda72573e 0x00090f02  16 True
+navmeshes.head.bin                 0x000000     1920     1648     1152      272 456156e52aa150d7 00010005    29 0xd98004d5 0x00090f01  16 True
+navmeshes.head.bin                 0x001000   219840   187600    70960    32240 d7b56f9c491d59bb 00010005  3224 0xda72573e 0x00090f02  16 True
+packs.head.bin                     0x000000    17744    16192     7312     1552 706499ba57fb6798 00010006   172 0xd98004d5 0x00090f01  16 True
+packs.head.bin                     0x005000    11808    10048     1840     1760 3ced1125459275e9 00010005   194 0x5a5b4c6f 0x00090f01  16 True
+packs.head.bin                     0x2d6000     6544     5648     1856      896 e567c178eea449a3 00010005    98 0xda72573e 0x00090f01  16 True
+packs.head.bin                     0x306000   195264   168112    67488    27152 3f6314f3b6172d35 00010005  2715 0xda72573e 0x00090f02  16 True
+script.head.bin                    0x000000      608      576      128       32 86f88eae52bb1570 00010003     2 0xc0a92754 0x00090f01  16 True
+script.head.bin                    0x001000     1152     1120       64       32 12808742c60a5047 00010007     2 0x5a5b4c6f 0x00090f01  16 True
+script.head.bin                    0x0c4000    73488    61328    25264    12160 b1fa1a6ebed3d833 00020006  1012 0xda72573e 0x00090f02  16 True
+script.tail.bin                    0x09bcd0    73488    61328    25264    12160 b1fa1a6ebed3d833 00020006  1012 0xda72573e 0x00090f02  16 True
+shaders.head.bin                   0x000000    34368    34336      160       32 efb33e670d31e3f9 00010005     3 0xda72573e 0x00090f01  16 True
+shared_minigame000.head.bin        0x000000     4016     3392     3088      624 34679e229211348b 00010005    68 0xd5c19f6b 0x00090f01  16 True
+shared_minigame000.head.bin        0x001000     1024      944      192       80 7a2c3b4ff73b2b9f 00020006     6 0xda72573e 0x00090f01  16 True
+shared_minigame000.head.bin        0x027000     1328     1232      464       96 1a3bf0392e42ee8b 00010005    10 0xda72573e 0x00090f01  16 True
+shared_minigame000.head.bin        0x094000     2224     1904     1648      320 9daa91a3aeb989ea 00010004    35 0xda72573e 0x00090f01  16 True
+shared_minigame000.tail.bin        0x2c23f0      688      656       80       32 30c0f87309d84507 00020006     1 0xda72573e 0x00090f01  16 True
+shared_minigame000.tail.bin        0x2c73f0      640      624       64       16 1994ca982c0d5a98 00010005     1 0xda72573e 0x00090f01  16 True
+shared_minigame000.tail.bin        0x2c93f0      608      592       64       16 33170487b6e2d07c 00010004     1 0xc0a92754 0x00090f01  16 True
+shared_minigame000.tail.bin        0x347b80      640      624       96       16 ca81b719442e711f 00010005     1 0xda72573e 0x00090f01  16 True
+shared_minigame000.tail.bin        0x3483f0     2560     2224     1472      336 55acb52851136a8c 00010004    36 0xc0a92754 0x00090f01  16 True
+shared_minigame000.tail.bin        0x3773f0      736      704      128       32 de2040163388caa1 00010004     3 0xc0a92754 0x00090f01  16 True
+shared_minigame000.tail.bin        0x3863f0      736      704      112       32 349d3b09c51df790 00010004     3 0xc0a92754 0x00090f01  16 True
+shared_minigame000.tail.bin        0x38a3f0     1264     1152      400      112 28202a46063dc1c1 00010004    11 0xc0a92754 0x00090f01  16 True
+shared_minigame000_bvh4.head.bin   0x000000     1264     1136      640      128 2dbf946f7786531f 00010005    13 0xd98004d5 0x00090f01  16 True
+shared_minigame000_bvh4.head.bin   0x001000    11152     9648     4688     1504 0d1cae10f8559f6a 00010004   167 0xc0a92754 0x00090f01  16 True
+shared_minigame000_bvh4.q3.bin     0x024d58    10528     9104     3376     1424 cccbe2cf31014782 00010004   158 0xc0a92754 0x00090f01  16 True
+shared_minigame000_bvh4.tail.bin   0x24b720     8720     7568     2944     1152 9c997b7d37cca36f 00010004   128 0xc0a92754 0x00090f01  16 True
+shared_minigame000_bvh4.tail.bin   0x37c720     6752     5872     1936      880 20aa8c1c716f9498 00010004    97 0xc0a92754 0x00090f01  16 True
+story000.head.bin                  0x000000    41248    33616    31872     7632 f84c087ff528e22d 00010005   763 0xd5c19f6b 0x00090f02  16 True
+story000.head.bin                  0x00b000    25104    21632    17776     3472 3d1503400b3f74cc 00010005   346 0xda72573e 0x00090f02  16 True
+story000_bvh4.full.bin             0x000000      832      784      144       48 d9aa45b77362b367 00010005     4 0xda72573e 0x00090f01  16 True
+story000_restofworld.head.bin      0x000000     2624     2272     1584      352 96f071c2a1fa9639 00010005    39 0xd5c19f6b 0x00090f01  16 True
+story000_restofworld.head.bin      0x001000      720      688      112       32 fc93283891713032 00010004     3 0xc0a92754 0x00090f01  16 True
+story000_restofworld.head.bin      0x008000     2016     1824     1792      192 be45ed60ea21e87d 00010005    21 0xda72573e 0x00090f01  16 True
+story000_restofworld.head.bin      0x0f7000      848      800      320       48 eeeda6162a1d9680 00010005     4 0xda72573e 0x00090f01  16 True
+story000_restofworld.head.bin      0x109000     5808     5040     2448      768 ecd46a1471760528 00010005    84 0x5a5b4c6f 0x00090f01  16 True
+story000_script.head.bin           0x000000      688      640      224       48 b6a07daf562c2c25 00010003     4 0xc0a92754 0x00090f01  16 True
+story000_script.head.bin           0x001000     2208     2064      320      144 24f2f1a844d0b6fc 00020007    13 0xda72573e 0x00090f01  16 True
+story000_script.head.bin           0x018000    58864    47984    15920    10880 9f2512d8886d847e 00020007   745 0xda72573e 0x00090f02  16 True
+story000_script.tail.bin           0x3ce3d0      816      800       80       16 aff06b1f4c7fd7ef 00010006     1 0xda72573e 0x00090f01  16 True
+textures.head.bin                  0x000000     1936     1728      544      208 21d5b0110d7631ea 00010006    22 0xd5c19f6b 0x00090f01  16 True
+textures.head.bin                  0x001000      608      592       48       16 ad3eb42a93ce59f2 00010004     1 0xc0a92754 0x00090f01  16 True
+textures.head.bin                  0x227000     1152     1056      144       96 4fb3e8222f774fae 00010004     9 0xc0a92754 0x00090f01  16 True
+textures.q3.bin                    0x169a10      624      608       48       16 5cd222d9c7ed1a76 00010004     1 0xc0a92754 0x00090f01  16 True
+textures.q3.bin                    0x16ba10      608      592       48       16 0530dbe2446a232b 00010004     1 0xc0a92754 0x00090f01  16 True
+textures.tail.bin                  0x2572c0      608      592       48       16 170265b40bfa5258 00010004     1 0xc0a92754 0x00090f01  16 True
+
+=== 4. SUBTABLE WIDTH RULE (w04 - w08 vs w24, w20_hi, w2c_b0) ===
+w20_hi==1 & w2c_b0==1 (w24<=194): ceil(9*w24/16)*16 exact match = 54/54
+w20_hi==1 & w2c_b0==2 (w24>=265): ceil(10*w24/16)*16 exact match = 15/15
+w20_hi==2 exceptions (8/77 headers):
+  data.head.bin                      @0x012000 w20=0x00020006 w2c=0x00090f01 w24=   3 w04-w08=   48 bytes_per_w24=16.00
+  levels.head.bin                    @0x01c000 w20=0x00020006 w2c=0x00090f01 w24=   8 w04-w08=  144 bytes_per_w24=18.00
+  script.head.bin                    @0x0c4000 w20=0x00020006 w2c=0x00090f02 w24=1012 w04-w08=12160 bytes_per_w24=12.02
+  script.tail.bin                    @0x09bcd0 w20=0x00020006 w2c=0x00090f02 w24=1012 w04-w08=12160 bytes_per_w24=12.02
+  shared_minigame000.head.bin        @0x001000 w20=0x00020006 w2c=0x00090f01 w24=   6 w04-w08=   80 bytes_per_w24=13.33
+  shared_minigame000.tail.bin        @0x2c23f0 w20=0x00020006 w2c=0x00090f01 w24=   1 w04-w08=   32 bytes_per_w24=32.00
+  story000_script.head.bin           @0x001000 w20=0x00020007 w2c=0x00090f01 w24=  13 w04-w08=  144 bytes_per_w24=11.08
+  story000_script.head.bin           @0x018000 w20=0x00020007 w2c=0x00090f02 w24= 745 w04-w08=10880 bytes_per_w24=14.60
+
+=== 5. REAL FILE SIZE RECONSTRUCTION & COMPLETE FILE ENTRY COUNT VALIDATION ===
+  anim                      w04=0x04660 w0c=0x02a90 w24= 265 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  appdata0                  w04=0x00360 w0c=0x00040 w24=   2 | FULL size=8880 (0x22b0) size_in_hdr=False w04+w0c<=real_size=True z_after_w04=0 z_before_trailer=0
+  audio                     w04=0x01350 w0c=0x00dd0 w24= 103 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  common                    w04=0x09580 w0c=0x03a10 w24= 418 | OVERLAP head->tail rel=0x255a10 real_size=6642192 (0x655a10) size_in_hdr=False w04+w0c<=real_size=True
+  core_bvh4                 w04=0x0fe00 w0c=0x11bf0 w24=1286 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  core_licenses_data        w04=0x00330 w0c=0x00090 w24=   4 | FULL size=13536 (0x34e0) size_in_hdr=False w04+w0c<=real_size=True z_after_w04=3280 z_before_trailer=11
+  core_restofworld          w04=0x00aa0 w0c=0x00570 w24=  39 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  core_restofworld001       w04=0x003b0 w0c=0x000f0 w24=   6 | FULL size=791984 (0xc15b0) size_in_hdr=False w04+w0c<=real_size=True z_after_w04=3152 z_before_trailer=4
+  data                      w04=0x11060 w0c=0x05870 w24= 699 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  levels                    w04=0x1b070 w0c=0x1d2e0 w24=2078 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  movies                    w04=0x06ac0 w0c=0x049f0 w24= 515 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  navmeshes                 w04=0x00780 w0c=0x00480 w24=  29 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  packs                     w04=0x04550 w0c=0x01c90 w24= 172 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  script                    w04=0x00260 w0c=0x00080 w24=   2 | OVERLAP head->tail rel=0x28330 real_size=4358960 (0x428330) size_in_hdr=False w04+w0c<=real_size=True
+  shaders                   w04=0x08640 w0c=0x000a0 w24=   3 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  shared_minigame000        w04=0x00fb0 w0c=0x00c10 w24=  68 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  shared_minigame000_bvh4   w04=0x004f0 w0c=0x00280 w24=  13 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  story000                  w04=0x0a120 w0c=0x07c80 w24= 763 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  story000_bvh4             w04=0x00340 w0c=0x00090 w24=   4 | FULL size=5632 (0x1600) size_in_hdr=False w04+w0c<=real_size=True z_after_w04=0 z_before_trailer=12
+  story000_restofworld      w04=0x00a40 w0c=0x00630 w24=  39 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  story000_script           w04=0x002b0 w0c=0x000e0 w24=   4 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+  textures                  w04=0x00790 w0c=0x00220 w24=  22 | NO_OVERLAP (4MB head/tail + 2MB q1/q3) -> real_size > 16 MiB
+
+=== 6. COMPLETE CONTAINERS: PAYLOAD SEGMENTATION vs w24 ===
+story000_bvh4.full.bin (5,632 B, w24=4):
+  counted_payloads=4: zlib@0x00340 (433->800 B XML), zlib@0x01000 (657->14426 B XML), zlib@0x012a0 (285->622 B XML), zlib@0x013c0 (420->829 B XML)
+  verdict: counted_payloads (4) == w24 (4)
+appdata0.head.bin (8,880 B, w24=2):
+  counted_payloads=2: enc_blob@[0x00360..0x00550) (496 B), enc_blob@[0x01000..0x02270) (4,720 B)
+  verdict: counted_payloads (2) == w24 (2)
+core_licenses_data.full.bin (13,536 B, w24=4):
+  counted_payloads=4: nested_rpf9@[0x01000..0x02e50) (7,760 B, trailer@0x02e00..0x02e50), zlib@0x03000 (406->763 B XML), zlib@0x031a0 (263->455 B XML), zlib@0x032b0 (405->786 B XML)
+  verdict: counted_payloads (4) == w24 (4)
+core_licenses_data.full.bin @0x001000 nested (7,760 B, w24=2):
+  counted_payloads=2: enc_blob@[0x01320..0x01520) (512 B), enc_blob@[0x02000..0x02e00) (3,584 B), trailer@[0x02e00..0x02e50) (80 B = w0c)
+  verdict: counted_payloads (2) == w24 (2)
+core_restofworld001.full.bin (791,984 B, w24=6):
+  counted_payloads=6: nested_rpf9@[0x01000..0xc0b30) (785,200 B, trailer@0xc04e0..0xc0b30), zlib@0xc0b30 (426->777 B XML), zlib@0xc1000 (438->961 B XML), zlib@0xc11c0 (290->638 B XML), zlib@0xc12f0 (428->859 B XML), EDUP@[0xc14a0..0xc14c0) (32 B)
+  verdict: counted_payloads (6) == w24 (6)
+core_restofworld001.full.bin @0x001000 nested (785,200 B, w24=22):
+  counted_payloads=22: 22 page-aligned resource groups starting at 0x02000..0xbb000 (each starts with 16 zero bytes + 1..2 zlib streams at 0x..010, totaling 29 zlib chunks)
+  verdict: counted_payloads (22) == w24 (22)

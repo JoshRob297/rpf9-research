@@ -1,0 +1,220 @@
+# Command: python3 script scanning all 78 .bin files in /home/sistver/proyectos/rpf9-research/samples/ for zlib (78 da), SGD5 shader blocks, nested RPF9 containers, and unencrypted magic signatures
+# Generated for T-RPF9-2 Objetivo B (raw/payload.txt)
+
+=== 1. VALID ZLIB STREAMS (78 da) ACROSS ALL 78 SAMPLE FILES ===
+  anim.head.bin                     : total= 371 | xml=  0 psin=   1 0drp=315 rsc50=   0 other=  55
+  anim.q1.bin                       : total=  31 | xml=  0 psin=   0 0drp=  0 rsc50=  19 other=  12
+  anim.q3.bin                       : total=  17 | xml=  0 psin=   0 0drp=  0 rsc50=  10 other=   7
+  anim.tail.bin                     : total=  56 | xml=  0 psin=   8 0drp=  0 rsc50=   0 other=  48
+  audio.head.bin                    : total= 250 | xml=  0 psin=   0 0drp=  0 rsc50=   0 other= 250
+  common.head.bin                   : total= 586 | xml=225 psin=   0 0drp=  0 rsc50=   0 other= 361
+  common.q1.bin                     : total= 277 | xml=100 psin=   0 0drp=  0 rsc50=   0 other= 177
+  common.q3.bin                     : total= 251 | xml= 10 psin=   0 0drp=  0 rsc50=   0 other= 241
+  common.tail.bin                   : total= 621 | xml=102 psin=   0 0drp=  0 rsc50=   0 other= 519
+  core_bvh4.head.bin                : total= 221 | xml=  0 psin=   0 0drp=  0 rsc50= 111 other= 110
+  core_bvh4.q1.bin                  : total=  15 | xml=  0 psin=   0 0drp=  0 rsc50=   8 other=   7
+  core_bvh4.q3.bin                  : total=  43 | xml=  0 psin=   0 0drp=  0 rsc50=  22 other=  21
+  core_bvh4.tail.bin                : total=5515 | xml=  5 psin=   0 0drp=  0 rsc50=2752 other=2758
+  core_licenses_data.full.bin       : total=   3 | xml=  3 psin=   0 0drp=  0 rsc50=   0 other=   0
+  core_restofworld.head.bin         : total=  64 | xml=  0 psin=   0 0drp=  0 rsc50=  30 other=  34
+  core_restofworld.tail.bin         : total=   2 | xml=  1 psin=   0 0drp=  0 rsc50=   0 other=   1
+  core_restofworld001.full.bin      : total=  33 | xml=  4 psin=   0 0drp=  0 rsc50=  22 other=   7
+  data.head.bin                     : total= 459 | xml=  0 psin= 454 0drp=  0 rsc50=   0 other=   5
+  data.q1.bin                       : total= 167 | xml=  0 psin=   0 0drp=167 rsc50=   0 other=   0
+  data.q3.bin                       : total=  65 | xml=  0 psin=   0 0drp=  0 rsc50=  30 other=  35
+  data.tail.bin                     : total=  38 | xml=  0 psin=   4 0drp=  0 rsc50=   0 other=  34
+  levels.head.bin                   : total=  26 | xml=  0 psin=   8 0drp=  5 rsc50=   0 other=  13
+  levels.q1.bin                     : total=  11 | xml=  0 psin=   0 0drp=  0 rsc50=   4 other=   7
+  levels.q3.bin                     : total=  15 | xml=  0 psin=   0 0drp=  0 rsc50=   5 other=  10
+  levels.tail.bin                   : total= 200 | xml=  0 psin=  27 0drp=  0 rsc50=   0 other= 173
+  navmeshes.head.bin                : total= 165 | xml=  0 psin=   0 0drp=149 rsc50=   0 other=  16
+  navmeshes.q1.bin                  : total=   3 | xml=  0 psin=   0 0drp=  0 rsc50=   2 other=   1
+  navmeshes.q3.bin                  : total=   2 | xml=  0 psin=   0 0drp=  0 rsc50=   1 other=   1
+  navmeshes.tail.bin                : total= 121 | xml=  0 psin=   1 0drp=  0 rsc50= 119 other=   1
+  packs.head.bin                    : total= 377 | xml=  0 psin=   0 0drp= 11 rsc50= 292 other=  74
+  packs.q1.bin                      : total=  28 | xml=  0 psin=   0 0drp=  0 rsc50=  13 other=  15
+  packs.q3.bin                      : total=  23 | xml=  0 psin=   0 0drp=  0 rsc50=  10 other=  13
+  packs.tail.bin                    : total= 106 | xml=  0 psin=  47 0drp=  0 rsc50=   0 other=  59
+  script.head.bin                   : total= 972 | xml=  0 psin= 928 0drp=  0 rsc50=   0 other=  44
+  script.q1.bin                     : total= 577 | xml=  0 psin= 577 0drp=  0 rsc50=   0 other=   0
+  script.q3.bin                     : total= 371 | xml=  0 psin= 369 0drp=  0 rsc50=   0 other=   2
+  script.tail.bin                   : total=1057 | xml=  0 psin=1012 0drp=  0 rsc50=   0 other=  45
+  shaders.q3.bin                    : total=  53 | xml=  0 psin=   0 0drp=  0 rsc50=   0 other=  53
+  shaders.tail.bin                  : total= 122 | xml=  0 psin=   0 0drp=  0 rsc50=   0 other= 122
+  shared_minigame000.head.bin       : total=  34 | xml=  0 psin=   6 0drp=  0 rsc50=   0 other=  28
+  shared_minigame000.q3.bin         : total=  33 | xml=  0 psin=   0 0drp=  0 rsc50=  12 other=  21
+  shared_minigame000.tail.bin       : total= 183 | xml= 16 psin=   2 0drp=  2 rsc50=  94 other=  69
+  shared_minigame000_bvh4.head.bin  : total=  93 | xml=  0 psin=   0 0drp=  0 rsc50=  47 other=  46
+  shared_minigame000_bvh4.q1.bin    : total=  83 | xml=  0 psin=   0 0drp=  0 rsc50=  42 other=  41
+  shared_minigame000_bvh4.q3.bin    : total= 224 | xml=  0 psin=   0 0drp=  0 rsc50= 118 other= 106
+  shared_minigame000_bvh4.tail.bin  : total= 498 | xml=  5 psin=   0 0drp=  0 rsc50= 254 other= 239
+  story000.head.bin                 : total= 356 | xml=  0 psin=   0 0drp=195 rsc50=   0 other= 161
+  story000.q3.bin                   : total=  26 | xml=  0 psin=   0 0drp=  0 rsc50=   9 other=  17
+  story000.tail.bin                 : total=   1 | xml=  1 psin=   0 0drp=  0 rsc50=   0 other=   0
+  story000_bvh4.full.bin            : total=   4 | xml=  4 psin=   0 0drp=  0 rsc50=   0 other=   0
+  story000_restofworld.head.bin     : total= 106 | xml=  0 psin=   0 0drp= 28 rsc50=  45 other=  33
+  story000_restofworld.tail.bin     : total=   1 | xml=  1 psin=   0 0drp=  0 rsc50=   0 other=   0
+  story000_script.q3.bin            : total= 136 | xml=  0 psin=  99 0drp=  0 rsc50=   0 other=  37
+  story000_script.tail.bin          : total= 537 | xml=  0 psin= 523 0drp=  0 rsc50=   0 other=  14
+  textures.head.bin                 : total=   3 | xml=  0 psin=   0 0drp=  0 rsc50=   2 other=   1
+  textures.q3.bin                   : total=   4 | xml=  0 psin=   0 0drp=  0 rsc50=   2 other=   2
+  textures.tail.bin                 : total= 577 | xml=  0 psin=   0 0drp=  0 rsc50= 282 other= 295
+TOTAL_VALID_ZLIB_STREAMS: 16213 (xml=477, psin=4066, 0drp=872, rsc50=4357, other=6441)
+
+=== 2. SAMPLE & COMPLETE-ARCHIVE DECODED XML PAYLOADS ===
+  common.head.bin                @0x00b000 comp=2568 raw=65536 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_binks' paths=['$(common)/movies/ArcadeGames/BFYB_IDLE_SCREEN_BINK.bk2', '$(common)/movies/ArcadeGames/BFYB_INTRO_BINK.bk2', '$(common)/movies/ArcadeGames/BFYB_LEVEL_01_INTRO.bk2', '$(common)/movies/ArcadeGames/BFYB_LEVEL_SELECT_LOOP.bk2']
+  common.head.bin                @0x00bba0 comp= 311 raw=  549 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_buildingMoviePreset' paths=['$(target)/data/buildingMoviePresets']
+  common.head.bin                @0x00c000 comp= 342 raw=  648 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_credits' paths=['$(target)/data/credits/credits.rpf']
+  common.head.bin                @0x00c160 comp= 316 raw=  546 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_credits_movie' paths=['$(target)/data/creditsMovieHashStrings']
+  common.head.bin                @0x00c570 comp= 347 raw=  593 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_init_level_with_map_unloaded_misc' paths=['common:/data/levels/americas/water/ShoreWavePlacementData.xml']
+  common.head.bin                @0x00d000 comp= 409 raw= 3160 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_language' paths=['$(target)/data/lang/american_final.rpf', '$(target)/data/lang/brazilian_final.rpf', '$(target)/data/lang/chinesesimp_final.rpf', '$(target)/data/lang/chinesetrad_final.rpf']
+  common.head.bin                @0x010a30 comp= 305 raw=  546 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_renderTargetPreset' paths=['$(target)/data/renderTargetPresets']
+  common.head.bin                @0x010b70 comp= 312 raw=  500 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_stinger_binks' paths=['$(common)/movies/Stinger/RSG_STINGER.bk2']
+  common.head.bin                @0x012490 comp= 401 raw= 1603 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_vfx' paths=['$(target)/data/effects/ptfxassetinfo', '$(target)/data/effects/ptfx/fxlists.rpf', '$(target)/data/effects/ptfx/drawables.rpf', '$(target)/data/effects/ptfx/drawablesamplers.rpf']
+  common.head.bin                @0x014000 comp= 454 raw= 4827 root=<CDataFileMgr__ContentDef> id/dev='' paths=['$(root)/changesets/script/ccs_core_parseddata_default_shared.meta', '$(root)/changesets/script/ccs_core_script_basic.meta', '$(root)/changesets/ccs_core_anim.meta', '$(root)/changesets/ccs_core_anim_behaviors.meta']
+  common.head.bin                @0x015770 comp= 254 raw=  547 root=<MutexMap> id/dev='' paths=[]
+  common.head.bin                @0x018000 comp=1929 raw=55388 root=<CAnimalAttackBehaviours> id/dev='' paths=[]
+  common.head.bin                @0x019000 comp= 783 raw=10013 root=<CAnimalAnimationContexts> id/dev='' paths=[]
+  common.head.bin                @0x01a000 comp= 408 raw= 2717 root=<CBaitingInfo> id/dev='' paths=[]
+  common.head.bin                @0x01b000 comp=1270 raw=10478 root=<CBreakableVehicleDoorLockManagerData> id/dev='' paths=[]
+  common.head.bin                @0x01d000 comp=6441 raw=54137 root=<CClimbTuneMgr> id/dev='' paths=[]
+  common.head.bin                @0x01f000 comp= 555 raw= 4550 root=<Combat__GoalData__Store> id/dev='' paths=[]
+  common.head.bin                @0x021000 comp=3089 raw=65536 root=<CCombatInfoMgr> id/dev='' paths=[]
+  common.head.bin                @0x026000 comp=4225 raw=65536 root=<CConversationList> id/dev='' paths=[]
+  common.head.bin                @0x028000 comp=3403 raw=65536 root=<CConversationDictionary> id/dev='' paths=[]
+  common.head.bin                @0x02f000 comp=3319 raw=65536 root=<CDoorInteractionDataList> id/dev='' paths=[]
+  common.head.bin                @0x035000 comp= 923 raw=10533 root=<CDynamicScenarioManager> id/dev='' paths=[]
+  common.head.bin                @0x039000 comp=1294 raw=23517 root=<CHazardNodes> id/dev='' paths=[]
+  common.head.bin                @0x039510 comp= 267 raw= 1005 root=<CIdlePreferenceManager> id/dev='' paths=[]
+  common.head.bin                @0x039620 comp= 310 raw= 1086 root=<CLadderRailsMetadataManager> id/dev='' paths=[]
+  common.head.bin                @0x03a000 comp=1250 raw= 6996 root=<CLadderMetadataManager> id/dev='' paths=[]
+  common.head.bin                @0x03b000 comp=2594 raw=65536 root=<CLassoDataManager> id/dev='' paths=[]
+  common.head.bin                @0x03d000 comp=2821 raw=65536 root=<CPedInventoryLoadOutManager> id/dev='' paths=[]
+  common.head.bin                @0x042000 comp= 316 raw=  848 root=<LostTargetSearch__Tunables> id/dev='' paths=[]
+  common.head.bin                @0x044000 comp=1344 raw=32388 root=<CPedMotivationInfoManager> id/dev='' paths=[]
+  common.head.bin                @0x045000 comp=1003 raw= 8347 root=<CPedAccuracyManager> id/dev='' paths=[]
+  common.head.bin                @0x046000 comp= 686 raw= 2717 root=<sPedDamageModifiers> id/dev='' paths=[]
+  common.head.bin                @0x047000 comp= 812 raw= 3473 root=<sPedDistractionModifiers> id/dev='' paths=[]
+  common.head.bin                @0x048000 comp=4017 raw=65536 root=<CPedScheduleInfoManager> id/dev='' paths=[]
+  common.head.bin                @0x056000 comp= 964 raw= 7327 root=<CScenicViewManager> id/dev='' paths=[]
+  common.head.bin                @0x057000 comp=2825 raw=34987 root=<CSearchPointOfInterestRuleSet> id/dev='' paths=[]
+  common.head.bin                @0x058000 comp=1071 raw=65536 root=<CTrainConfigs> id/dev='' paths=[]
+  common.head.bin                @0x059000 comp=1014 raw=21009 root=<CParkingSplines> id/dev='' paths=[]
+  common.head.bin                @0x05d000 comp=2083 raw=21281 root=<WeaponAnimations__FullbodyControllerData> id/dev='' paths=[]
+  common.head.bin                @0x05e000 comp= 388 raw= 1733 root=<WeaponAnimations__ConfigData> id/dev='' paths=[]
+  core_licenses_data.full.bin    @0x003000 comp= 406 raw=  763 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_licenses_Licenses' paths=['$(target)/data/licenses/license_additional_content.rpf']
+  core_licenses_data.full.bin    @0x0031a0 comp= 263 raw=  455 root=<CDataFileMgr__ContentDef> id/dev='' paths=['$(root)/changesets/ccs_core_licenses_licenses.meta']
+  core_licenses_data.full.bin    @0x0032b0 comp= 405 raw=  786 root=<SSetupData> id/dev='core_licenses' paths=[]
+  core_restofworld001.full.bin   @0x0c0b30 comp= 426 raw=  777 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_restofworld001_ingame_animation' paths=['$(target)/anim/ingame/ambient/clip_iteminteraction.rpf']
+  core_restofworld001.full.bin   @0x0c1000 comp= 438 raw=  961 root=<CDataFileMgr__ContentChangeSetDef> id/dev='core_restofworld001_ttdb' paths=['$(target)/ttdb/globalduplicates', '$(target)/ttdb/ui/ttdb_ui']
+  core_restofworld001.full.bin   @0x0c11c0 comp= 290 raw=  638 root=<CDataFileMgr__ContentDef> id/dev='' paths=['$(root)/changesets/ccs_core_restofworld001_ingame_animation.meta', '$(root)/changesets/ccs_core_restofworld001_ttdb.meta']
+  core_restofworld001.full.bin   @0x0c12f0 comp= 428 raw=  859 root=<SSetupData> id/dev='core_restofworld001' paths=[]
+  story000_bvh4.full.bin         @0x000340 comp= 433 raw=  800 root=<CDataFileMgr__ContentChangeSetDef> id/dev='story000_environment_bvh' paths=['$(target)/levels/americas/map/environment/island_01/tr_tropics/tr_cal/tr_cal_merged_bvh.rpf']
+  story000_bvh4.full.bin         @0x001000 comp= 657 raw=14426 root=<CDataFileMgr__ContentChangeSetDef> id/dev='story000_terrain_bvh' paths=['$(target)/levels/americas/map/terrain/s09_w13_s12_w16/s09_w13_bvh.rpf', '$(target)/levels/americas/map/terrain/s09_w13_s12_w16/s09_w13_s12_w16_bvh.rpf', '$(target)/levels/americas/map/terrain/s09_w13_s12_w16/s09_w13_s12_w16_lod_bvh.rpf', '$(target)/levels/americas/map/terrain/s09_w13_s12_w16/s09_w14_bvh.rpf']
+  story000_bvh4.full.bin         @0x0012a0 comp= 285 raw=  622 root=<CDataFileMgr__ContentDef> id/dev='' paths=['$(root)/changesets/ccs_story000_environment_bvh.meta', '$(root)/changesets/ccs_story000_terrain_bvh.meta']
+  story000_bvh4.full.bin         @0x0013c0 comp= 420 raw=  829 root=<SSetupData> id/dev='story000_bvh' paths=[]
+
+=== 3. SGD5 SHADER BLOCK PARSING (shaders.head.bin @0x009000) ===
+SGD5 @0x009000: magic=SGD5 u04=0xa08b72b3 u08=0x60555dc2 sub_count_u32=33 (0x21) first_section_bytes=2112 (0x840, ends 0x9858)
+Sequential 8-byte parameter/binding tables (>=4 entries): 31 tables, 2419 total 8-byte records in [0x9030..0xdf68)
+  table[00] @0x09030..0x09858 count=261 pre_hdr_u32[1]=0xeb000105 (lo=261)
+  table[01] @0x098a0..0x09be0 count=104 pre_hdr_u32[1]=0x63000068 (lo=104)
+  table[02] @0x09bfc..0x09cdc count= 28 pre_hdr_u32[1]=0x1a00001c (lo=28)
+  table[03] @0x09cf8..0x0a320 count=197 pre_hdr_u32[1]=0xb90000c5 (lo=197)
+  table[04] @0x0a33c..0x0a72c count=126 pre_hdr_u32[1]=0x7700007e (lo=126)
+  table[05] @0x0a748..0x0ad10 count=185 pre_hdr_u32[1]=0xb20000b9 (lo=185)
+  table[06] @0x0ad2c..0x0ae7c count= 42 pre_hdr_u32[1]=0x2a00002a (lo=42)
+  table[07] @0x0ae98..0x0b0d0 count= 71 pre_hdr_u32[1]=0x3c000047 (lo=71)
+  table[08] @0x0b0ec..0x0b33c count= 74 pre_hdr_u32[1]=0x4700004a (lo=74)
+  table[09] @0x0b358..0x0b598 count= 72 pre_hdr_u32[1]=0x46000048 (lo=72)
+  table[10] @0x0b5b4..0x0b60c count= 11 pre_hdr_u32[1]=0x0900000b (lo=11)
+  table[11] @0x0b628..0x0b6b0 count= 17 pre_hdr_u32[1]=0x0f000011 (lo=17)
+  table[12] @0x0b6cc..0x0bb1c count=138 pre_hdr_u32[1]=0x8300008a (lo=138)
+  table[13] @0x0bb38..0x0c0f0 count=183 pre_hdr_u32[1]=0xa80000b7 (lo=183)
+  table[14] @0x0c10c..0x0c194 count= 17 pre_hdr_u32[1]=0x10000011 (lo=17)
+  table[15] @0x0c1dc..0x0c264 count= 17 pre_hdr_u32[1]=0x10000011 (lo=17)
+  table[16] @0x0c280..0x0c628 count=117 pre_hdr_u32[1]=0x6c000075 (lo=117)
+  table[17] @0x0c644..0x0c664 count=  4 pre_hdr_u32[1]=0x04000004 (lo=4)
+  table[18] @0x0c680..0x0c7a8 count= 37 pre_hdr_u32[1]=0x21000025 (lo=37)
+  table[19] @0x0c7c4..0x0cbb4 count=126 pre_hdr_u32[1]=0x7600007e (lo=126)
+  table[20] @0x0cbd0..0x0ced8 count= 97 pre_hdr_u32[1]=0x5b000061 (lo=97)
+  table[21] @0x0cef4..0x0cfcc count= 27 pre_hdr_u32[1]=0x1a00001b (lo=27)
+  table[22] @0x0cfe8..0x0d018 count=  6 pre_hdr_u32[1]=0x04000006 (lo=6)
+  table[23] @0x0d034..0x0d104 count= 26 pre_hdr_u32[1]=0x1800001a (lo=26)
+  table[24] @0x0d120..0x0d180 count= 12 pre_hdr_u32[1]=0x0a00000c (lo=12)
+  table[25] @0x0d19c..0x0d204 count= 13 pre_hdr_u32[1]=0x0c00000d (lo=13)
+  table[26] @0x0d220..0x0d2b8 count= 19 pre_hdr_u32[1]=0x0f000013 (lo=19)
+  table[27] @0x0d2d4..0x0d714 count=136 pre_hdr_u32[1]=0x7f000088 (lo=136)
+  table[28] @0x0d730..0x0dbf8 count=153 pre_hdr_u32[1]=0x90000099 (lo=153)
+  table[29] @0x0dc14..0x0de94 count= 80 pre_hdr_u32[1]=0x4b000050 (lo=80)
+  table[30] @0x0deb0..0x0df68 count= 23 pre_hdr_u32[1]=0x17000017 (lo=23)
+  shaders.head.bin  : symbol_strings=737 first=VS_AlphaTransmissionFullScreenTri_4f16bf6c_Wrapped last=VS_TransformSkin_PositionOnly_4b73ea93_Wrapped
+  shaders.q1.bin    : symbol_strings=133 first=PS_PedAlphaTransmission_Decals_52f61330_Wrapped last=PS_MirrorPedTextured_Eight_bae8f8d0_Wrapped
+  shaders.q3.bin    : symbol_strings=0 first=None last=None
+  shaders.tail.bin  : symbol_strings=0 first=None last=None
+
+=== 4. NESTED RPF9 CONTAINERS (OFFSET, HEADER BOUNDS & RECONSTRUCTED SIZE) ===
+TOTAL_NESTED_RPF9_OCCURRENCES: 55 (54 unique archive_ids; script.head@0xc4000 == script.tail@0x9bcd0)
+  anim.head.bin                      @0x005000 id=0x7834a6f2619f3f88 w04=   640 w0c=    64 w24=   1 size=   4896 | exact_from_trailer@0x62e0..0x6320
+  anim.head.bin                      @0x007000 id=0x15730a34e4431974 w04= 49648 w0c= 76432 w24= 722 size=unknown | unbounded_in_window (bytes_available_after_offset=4165632)
+  audio.head.bin                     @0x002000 id=0x3fd2c43b1569f655 w04=  8336 w0c=   624 w24=  18 size=unknown | unbounded_in_window (bytes_available_after_offset=4186112)
+  core_bvh4.head.bin                 @0x010000 id=0xd15bcfe5b19d4d38 w04=  1184 w0c=   336 w24=  10 size= 656640 | exact_from_pre_next_rpf9_gap@0xb03b0..0xb0500
+  core_bvh4.head.bin                 @0x0b1000 id=0x3116b37cb34af661 w04=  1136 w0c=   240 w24=   9 size= 492880 | exact_from_pre_next_rpf9_gap@0x129460..0x129550
+  core_bvh4.head.bin                 @0x12a000 id=0x99130ed34611e06f w04=  4512 w0c=  1648 w24=  62 size=1321088 | exact_from_pre_next_rpf9_gap@0x26c210..0x26c880
+  core_bvh4.head.bin                 @0x26d000 id=0x542b2153dde7865f w04=  1760 w0c=   464 w24=  19 size= 349504 | exact_from_pre_next_rpf9_gap@0x2c2370..0x2c2540
+  core_bvh4.head.bin                 @0x2c3000 id=0xab6af104f1b08647 w04=  2848 w0c=   832 w24=  36 size=unknown | unbounded_in_window (bytes_available_after_offset=1298432)
+  core_bvh4.q3.bin                   @0x0d430c id=0x84e8521e38234f21 w04=  4624 w0c=   992 w24=  64 size=unknown | unbounded_in_window (bytes_available_after_offset=1228020)
+  core_bvh4.tail.bin                 @0x1e3410 id=0x4905dc86e165a38e w04=155984 w0c=135600 w24=2286 size=1855920 | exact_from_pre_next_rpf9_gap@0x387410..0x3a85c0
+  core_bvh4.tail.bin                 @0x3a9410 id=0x6148fde96d68b565 w04=  2656 w0c=  1872 w24=  33 size=  27264 | exact_from_pre_next_rpf9_gap@0x3af740..0x3afe90
+  core_bvh4.tail.bin                 @0x3b0410 id=0xd372f57c1ec58b8c w04= 19984 w0c=  7536 w24= 286 size=unknown | unbounded_in_window (bytes_available_after_offset=326640)
+  core_licenses_data.full.bin        @0x001000 id=0x541009fd3268bc3e w04=   800 w0c=    80 w24=   2 size=   7760 | exact_from_trailer@0x2e00..0x2e50
+  core_restofworld.head.bin          @0x000aa0 id=0x162b7cc3d164fea3 w04=   704 w0c=   112 w24=   2 size=    912 | exact_from_trailer@0xdc0..0xe30
+  core_restofworld.head.bin          @0x001000 id=0x8d808d50af36b746 w04= 10032 w0c=  4944 w24= 145 size=unknown | unbounded_in_window (bytes_available_after_offset=4190208)
+  core_restofworld001.full.bin       @0x001000 id=0xa9c15aec74a20665 w04=  1968 w0c=  1616 w24=  22 size= 785200 | exact_from_trailer@0xc04e0..0xc0b30
+  data.head.bin                      @0x012000 id=0x066f4100fa0dcc2b w04=   816 w0c=   128 w24=   3 size=   9456 | exact_from_pre_next_rpf9_gap@0x14470..0x144f0
+  data.head.bin                      @0x015000 id=0xde905eb0826cc03a w04= 48512 w0c= 36416 w24= 683 size=unknown | unbounded_in_window (bytes_available_after_offset=4108288)
+  levels.head.bin                    @0x01c000 id=0x7f3dd0948173a215 w04=  1280 w0c=   624 w24=   8 size= 197776 | exact_from_pre_next_rpf9_gap@0x4c220..0x4c490
+  levels.head.bin                    @0x04d000 id=0x4b61e13c15dbdac2 w04= 43008 w0c= 11376 w24= 636 size=unknown | unbounded_in_window (bytes_available_after_offset=3878912)
+  navmeshes.head.bin                 @0x001000 id=0xd7b56f9c491d59bb w04=219840 w0c= 70960 w24=3224 size=unknown | unbounded_in_window (bytes_available_after_offset=4190208)
+  packs.head.bin                     @0x005000 id=0x3ced1125459275e9 w04= 11808 w0c=  1840 w24= 194 size=2951520 | exact_from_pre_next_rpf9_gap@0x2d5230..0x2d5960
+  packs.head.bin                     @0x2d6000 id=0xe567c178eea449a3 w04=  6544 w0c=  1856 w24=  98 size= 194368 | exact_from_pre_next_rpf9_gap@0x305000..0x305740
+  packs.head.bin                     @0x306000 id=0x3f6314f3b6172d35 w04=195264 w0c= 67488 w24=2715 size=unknown | unbounded_in_window (bytes_available_after_offset=1024000)
+  script.head.bin                    @0x001000 id=0x12808742c60a5047 w04=  1152 w0c=    64 w24=   2 size= 797584 | exact_from_trailer@0xc3b50..0xc3b90
+  script.head.bin                    @0x0c4000 id=0xb1fa1a6ebed3d833 w04= 73488 w0c= 25264 w24=1012 size=unknown | unbounded_in_window (bytes_available_after_offset=3391488)
+  script.tail.bin                    @0x09bcd0 id=0xb1fa1a6ebed3d833 w04= 73488 w0c= 25264 w24=1012 size=unknown | unbounded_in_window (bytes_available_after_offset=3556144)
+  shared_minigame000.head.bin        @0x001000 id=0x7a2c3b4ff73b2b9f w04=  1024 w0c=   192 w24=   6 size= 153120 | exact_from_pre_next_rpf9_gap@0x26560..0x26620
+  shared_minigame000.head.bin        @0x027000 id=0x1a3bf0392e42ee8b w04=  1328 w0c=   464 w24=  10 size= 444304 | exact_from_pre_next_rpf9_gap@0x935c0..0x93790
+  shared_minigame000.head.bin        @0x094000 id=0x9daa91a3aeb989ea w04=  2224 w0c=  1648 w24=  35 size=unknown | unbounded_in_window (bytes_available_after_offset=3588096)
+  shared_minigame000.tail.bin        @0x2c23f0 id=0x30c0f87309d84507 w04=   688 w0c=    80 w24=   1 size=  18240 | exact_from_pre_next_rpf9_gap@0x2c6ae0..0x2c6b30
+  shared_minigame000.tail.bin        @0x2c73f0 id=0x1994ca982c0d5a98 w04=   640 w0c=    64 w24=   1 size=   6368 | exact_from_trailer@0x2c8c90..0x2c8cd0
+  shared_minigame000.tail.bin        @0x2c93f0 id=0x33170487b6e2d07c w04=   608 w0c=    64 w24=   1 size= 518032 | exact_from_trailer@0x347b40..0x347b80
+  shared_minigame000.tail.bin        @0x347b80 id=0xca81b719442e711f w04=   640 w0c=    96 w24=   1 size=   1296 | exact_from_trailer@0x348030..0x348090
+  shared_minigame000.tail.bin        @0x3483f0 id=0x55acb52851136a8c w04=  2560 w0c=  1472 w24=  36 size= 191632 | exact_from_pre_next_rpf9_gap@0x376ac0..0x377080
+  shared_minigame000.tail.bin        @0x3773f0 id=0xde2040163388caa1 w04=   736 w0c=   128 w24=   3 size=  57888 | exact_from_trailer@0x385590..0x385610
+  shared_minigame000.tail.bin        @0x3863f0 id=0x349d3b09c51df790 w04=   736 w0c=   112 w24=   3 size=  13760 | exact_from_trailer@0x389940..0x3899b0
+  shared_minigame000.tail.bin        @0x38a3f0 id=0x28202a46063dc1c1 w04=  1264 w0c=   400 w24=  11 size=unknown | unbounded_in_window (bytes_available_after_offset=482320)
+  shared_minigame000_bvh4.head.bin   @0x001000 id=0x0d1cae10f8559f6a w04= 11152 w0c=  4688 w24= 167 size=unknown | unbounded_in_window (bytes_available_after_offset=4190208)
+  shared_minigame000_bvh4.q3.bin     @0x024d58 id=0xcccbe2cf31014782 w04= 10528 w0c=  3376 w24= 158 size=unknown | unbounded_in_window (bytes_available_after_offset=1946280)
+  shared_minigame000_bvh4.tail.bin   @0x24b720 id=0x9c997b7d37cca36f w04=  8720 w0c=  2944 w24= 128 size=1248128 | exact_from_pre_next_rpf9_gap@0x37b720..0x37c2a0
+  shared_minigame000_bvh4.tail.bin   @0x37c720 id=0x20aa8c1c716f9498 w04=  6752 w0c=  1936 w24=  97 size=unknown | unbounded_in_window (bytes_available_after_offset=538848)
+  story000.head.bin                  @0x00b000 id=0x3d1503400b3f74cc w04= 25104 w0c= 17776 w24= 346 size=unknown | unbounded_in_window (bytes_available_after_offset=4149248)
+  story000_restofworld.head.bin      @0x001000 id=0xfc93283891713032 w04=   720 w0c=   112 w24=   3 size=  27968 | exact_from_trailer@0x7cd0..0x7d40
+  story000_restofworld.head.bin      @0x008000 id=0xbe45ed60ea21e87d w04=  2016 w0c=  1792 w24=  21 size= 976640 | exact_from_pre_next_rpf9_gap@0xf6000..0xf6700
+  story000_restofworld.head.bin      @0x0f7000 id=0xeeeda6162a1d9680 w04=   848 w0c=   320 w24=   4 size=  70464 | exact_from_trailer@0x108200..0x108340
+  story000_restofworld.head.bin      @0x109000 id=0xecd46a1471760528 w04=  5808 w0c=  2448 w24=  84 size=unknown | unbounded_in_window (bytes_available_after_offset=3108864)
+  story000_script.head.bin           @0x001000 id=0x24f2f1a844d0b6fc w04=  2208 w0c=   320 w24=  13 size=  92176 | exact_from_pre_next_rpf9_gap@0x176d0..0x17810
+  story000_script.head.bin           @0x018000 id=0x9f2512d8886d847e w04= 58864 w0c= 15920 w24= 745 size=unknown | unbounded_in_window (bytes_available_after_offset=4096000)
+  story000_script.tail.bin           @0x3ce3d0 id=0xaff06b1f4c7fd7ef w04=   816 w0c=    80 w24=   1 size= 203600 | exact_from_trailer@0x3ffed0..0x3fff20
+  textures.head.bin                  @0x001000 id=0xad3eb42a93ce59f2 w04=   608 w0c=    48 w24=   1 size=2249840 | exact_from_trailer@0x226440..0x226470
+  textures.head.bin                  @0x227000 id=0x4fb3e8222f774fae w04=  1152 w0c=   144 w24=   9 size=unknown | unbounded_in_window (bytes_available_after_offset=1937408)
+  textures.q3.bin                    @0x169a10 id=0x5cd222d9c7ed1a76 w04=   624 w0c=    48 w24=   1 size=   6592 | exact_from_trailer@0x16b3a0..0x16b3d0
+  textures.q3.bin                    @0x16ba10 id=0x0530dbe2446a232b w04=   608 w0c=    48 w24=   1 size=unknown | unbounded_in_window (bytes_available_after_offset=607728)
+  textures.tail.bin                  @0x2572c0 id=0x170265b40bfa5258 w04=   608 w0c=    48 w24=   1 size= 784176 | exact_from_trailer@0x3169c0..0x3169f0
+
+=== 5. OTHER UNENCRYPTED SIGNATURES & UNREADABLE REGIONS ===
+  KB2n: sample_hits=['movies.head.bin@0x7000', 'movies.head.bin@0x3b1000', 'movies.tail.bin@0x133610', 'movies.tail.bin@0x28a610']
+  EDUP: sample_hits=['core_restofworld001.full.bin@0xc14a0', 'shared_minigame000.tail.bin@0x3fe8f0', 'story000.tail.bin@0x3f7af0']
+  LRSC: sample_hits=['anim.tail.bin@0x1d7024', 'data.head.bin@0x1ee1dc', 'data.head.bin@0x2a0228', 'data.tail.bin@0x3f2a64', 'levels.tail.bin@0x23b134', 'levels.tail.bin@0x3cfc2c', 'movies.head.bin@0x1bb9cd', 'navmeshes.tail.bin@0x3ffb0c', 'packs.tail.bin@0x4ed74', 'packs.tail.bin@0x14e784', 'packs.tail.bin@0x1ca124', 'packs.tail.bin@0x1fc894']
+  0DRP: sample_hits=['anim.tail.bin@0x1d702c', 'data.head.bin@0x1ee1e4', 'data.head.bin@0x2a0230', 'data.tail.bin@0x3f2a6c', 'levels.tail.bin@0x23b13c', 'levels.tail.bin@0x3cfc34', 'navmeshes.tail.bin@0x3ffb14', 'packs.tail.bin@0x4ed7c', 'packs.tail.bin@0x14e78c', 'packs.tail.bin@0x1ca12c', 'packs.tail.bin@0x1fc89c', 'packs.tail.bin@0x3e008c']
+  CHKS: sample_hits=['anim.tail.bin@0x1d707c', 'data.head.bin@0x1ee234', 'data.head.bin@0x2a0280', 'data.tail.bin@0x3f2abc', 'levels.tail.bin@0x23b18c', 'levels.tail.bin@0x3cfc84', 'navmeshes.tail.bin@0x3ffb64', 'packs.tail.bin@0x4edcc', 'packs.tail.bin@0x14e7dc', 'packs.tail.bin@0x1ca17c', 'packs.tail.bin@0x1fc8ec', 'packs.tail.bin@0x3e00dc']
+  LGID: sample_hits=['anim.tail.bin@0x1d701c', 'data.head.bin@0x1ee1d4', 'data.head.bin@0x2a01fc', 'data.tail.bin@0x3f2a5c', 'levels.tail.bin@0x23b12c', 'levels.tail.bin@0x3cfc24', 'navmeshes.tail.bin@0x3ffb04', 'packs.tail.bin@0x4ed6c', 'packs.tail.bin@0x14e77c', 'packs.tail.bin@0x1ca11c', 'packs.tail.bin@0x1fc88c', 'packs.tail.bin@0x3e007c']

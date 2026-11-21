@@ -1,0 +1,61 @@
+# Command: python3 script testing structural TOC & trailer hypotheses on complete and small RPF9 containers (w24 = 1..6)
+# Generated for T-RPF9-2 Objetivo C (raw/toc-chico.txt)
+
+=== H-C1: PLAINTEXT ASCII PATHS IN TOC, PADDING, OR TRAILER ===
+Prediction: If small complete RPF9s store plaintext paths in TOC [0x40..w04) or trailer [end-w0c..end), strings >=5 matching [A-Za-z0-9_./-]+ (e.g. 'content.xml', 'setup2.xml', 'changesets', '.meta', '.rpf') appear.
+  appdata0.head.bin                           : w24=2 toc_ascii>=5=[b'Ki_jL'] tr_ascii>=5=[]
+  core_licenses_data.full.bin (outer)         : w24=4 toc_ascii>=5=[] tr_ascii>=5=[]
+  core_licenses_data.full.bin (@0x1000 nested): w24=2 toc_ascii>=5=[] tr_ascii>=5=[]
+  story000_bvh4.full.bin                      : w24=4 toc_ascii>=5=[] tr_ascii>=5=[]
+  core_restofworld001.full.bin (outer)        : w24=6 toc_ascii>=5=[b'rNI3ck'] tr_ascii>=5=[]
+Verdict H-C1: REFUTADA (0 valid ASCII path strings in TOC or trailer; known filenames only appear inside inflated zlib XML payloads).
+
+=== H-C2: PLAINTEXT SMALL SIZES / OFFSETS (u16/u32 LE/BE) IN TOC OR TRAILER ===
+Prediction: Known compressed/raw sizes and offsets of complete small containers appear as plaintext u16/u32 LE/BE inside [0x40..w04) or [end-w0c..end).
+  story000_bvh4.full.bin                : hits=[(829, 'u16be', 'toc', 204)]
+  appdata0.head.bin                     : hits=[(4096, 'u16le', 'toc', 660)]
+  core_licenses_data.full.bin           : hits=[]
+  core_licenses_data.full.bin@0x1000    : hits=[]
+Verdict H-C2: REFUTADA (0 u32le/u32be/u16le matches across all 4 small complete containers; only 1 isolated u16be 829 in 768B random ciphertext of story000_bvh4, consistent with random false-positive rate).
+
+=== H-C3: COMPACT SUBTABLE [w08..w04) STRIDE & MINIMUM MAIN TOC [0x40..w08) ===
+Prediction: For w20_hi==1, w04 - w08 = ceil(9*w24/16)*16 when w2c_b0==1 (w24<=194) and ceil(10*w24/16)*16 when w2c_b0==2 (w24>=265).
+  w20_hi==1 & w2c_b0==1 -> ceil(9*w24/16)*16 : 54/54 exact
+  w20_hi==1 & w2c_b0==2 -> ceil(10*w24/16)*16: 15/15 exact
+  min(w08 - 64) across all 77 headers = 512 bytes (0x200)
+Verdict H-C3: CONFIRMADA (69/69 w20_hi==1 headers match exact 9B/10B stride; 8/77 headers with w20_hi==2 use larger subtable stride).
+
+=== H-C4: ENCRYPTED TRAILER [end-w0c..end) HEADER STRUCTURE & NAME TABLE ROLE ===
+Prediction: If trailer stores header(32B) + names, pairs sharing (w24, w20_hi) collide on blk0 [0..16), pairs sharing (w24, w20_hi, w0c) collide on blk0+blk1 [0..32) even across unrelated archives, and diverge at blk2 [32..) where names begin.
+  anim.head@0x5000 (w24=1,w0c=64)         blk0=aa0405b99acd17960141dafc7abd482f blk1=a12f56f59b4d6838c82fd94e9ec3a090 blk2=17710fdcd0c2d025b8ca34efb9e903c9
+  textures.head@0x1000 (w24=1,w0c=48)     blk0=aa0405b99acd17960141dafc7abd482f blk1=7aa94ed2f47323a5fb250aab8355d1d7 blk2=7c05655e62c2a16a43b3e21fe1922679
+  appdata0 (w24=2,w0c=64)                 blk0=b7da7c1d963787c846fe15fd0e243364 blk1=742d3fc9dc7a92c953d9e9d02946c27a blk2=cb042a7e2d5a1e219ba07a8642afb6d6
+  script@0x1000 (w24=2,w0c=64)            blk0=b7da7c1d963787c846fe15fd0e243364 blk1=742d3fc9dc7a92c953d9e9d02946c27a blk2=26b4954cc39dfad87fd7ec90d735eba9
+  core_licenses@0x1000 (w24=2,w0c=80)     blk0=b7da7c1d963787c846fe15fd0e243364 blk1=a148952490ea93c7d3f81dbec571ff22 blk2=1c1ad7d4e84ed161b2521db8c1998667
+  core_restofworld@0xaa0 (w24=2,w0c=112)  blk0=b7da7c1d963787c846fe15fd0e243364 blk1=dd043ba7adc005c18542de2acba3c24e blk2=5defd05be182a338bf6c3e87f486e7dd
+  script.tail (w24=2,w0c=128)             blk0=b7da7c1d963787c846fe15fd0e243364 blk1=b4c6863c4b14cf84704829f4d55000b5 blk2=92566c24071d5edc0d932ab394658d04
+  story000_row@0x1000 (w24=3,w0c=112)     blk0=f11ce775de6373e9dcc1007ab315d7eb blk1=31417e3c8b79936cb60bde1738d6c32c blk2=db096b37c128a97dddac66a993a65e06
+  shaders.tail (w24=3,w0c=160)            blk0=f11ce775de6373e9dcc1007ab315d7eb blk1=fcf80a3a9f6c81316975c352928a482f blk2=4ecde6df9acc3b80ea7327dc91a95a74
+  data@0x12000 (w24=3,w20_hi=2,w0c=128)   blk0=9972cfe29e80ec248de49d9defefb453 blk1=c5255b022447ed555424afecef590204 blk2=851c3fd31855933c90ebe6deb6a07b7a
+  core_licenses (w24=4,w0c=144)           blk0=5a178c51e7b96189237e72453084db8a blk1=18415cbd0e16c0d303e94434e40de9ad blk2=a0fe4db206ff6e35afdb994c72148ee4
+  story000_bvh4 (w24=4,w0c=144)           blk0=5a178c51e7b96189237e72453084db8a blk1=18415cbd0e16c0d303e94434e40de9ad blk2=abc73dd3a660ec7cd64a23f2cfdf7a73
+  story000_script.tail (w24=4,w0c=224)    blk0=5a178c51e7b96189237e72453084db8a blk1=dd42a57589c89bc05b9ee3c4a0959ada blk2=f0e15d2a4a22f1a74592d9a439d15d2a
+  story000_row@0xf7000 (w24=4,w0c=320)    blk0=5a178c51e7b96189237e72453084db8a blk1=07b70726f5d6866eb25303a5db23497c blk2=6792f692e7786dfde8b748de90e9d2d9
+  textures.tail (w24=22,w0c=544)          blk0=bae2486fd69205dfa8ffffea0db521e8 blk1=4f1bed773a0957092252b0c92f14cfc8 blk2=e7a6b639475a4840840e80dc2df9c815
+  core_row001@0x1000 (w24=22,w0c=1616)    blk0=bae2486fd69205dfa8ffffea0db521e8 blk1=ce488a9285ccac3e449637cf06514160 blk2=ce0ad92bae36262357d04d401f3b58d8
+  core_restofworld.tail (w24=39,w0c=1392) blk0=9b038e98400ce7e8009f8242bf31e4a8 blk1=da2cb6b05bac0317e0a91673f11b6efa blk2=9ec36eb8a69220999b0f2ad3b343cf54
+  story000_row.tail (w24=39,w0c=1584)     blk0=9b038e98400ce7e8009f8242bf31e4a8 blk1=45aa84e32f2e71b47686d2fc58129121 blk2=e03bd8201a91db4220233497e2eab9fe
+Verdict H-C4: CONFIRMADA para estructura de cabecera de trailer (blk0=(w24,w20_hi), blk1 agrega w0c/tamano, blk2+ diverge con nombres especificos del archivo, probado en (2,64) appdata0 vs script@0x1000 y (4,144) core_licenses vs story000_bvh4); INDETERMINADA para formato interno exacto de cadenas sin clave AES.
+
+=== H-C5: TRAILER LENGTH w0c VS KNOWN XML PATH LENGTHS ===
+Prediction: 32-byte trailer header + sum(len(full_path)+1) fits inside w0c (padded to 16B) for story000_bvh4, core_licenses_data, core_restofworld001.
+  story000_bvh4 (w0c=144): 'changesets/ccs_story000_environment_bvh.meta' (43) + 'changesets/ccs_story000_terrain_bvh.meta' (39) + 'content.xml' (12) + 'setup2.xml' (11) = 105 B -> 32 + 105 = 137 <= 144 (ceil16=144)
+  core_licenses_data (w0c=144): 'data/licenses/license_additional_content.rpf' (47) + 'changesets/ccs_core_licenses_licenses.meta' (41) + 'content.xml' (12) + 'setup2.xml' (11) = 111 B -> 32 + 111 = 143 <= 144 (ceil16=144)
+  core_restofworld001 (w0c=240): 'anim/ingame/ambient/clip_iteminteraction.rpf' (45) + 'ttdb/globalduplicates' (22) + 'changesets/ccs_core_restofworld001_ingame_animation.meta' (53) + 'changesets/ccs_core_restofworld001_ttdb.meta' (40) + 'content.xml' (12) + 'setup2.xml' (11) = 183 B -> 32 + 183 = 215 <= 240
+Verdict H-C5: CONFIRMADA (compatible en las 3 muestras completas con rutas XML reconstruidas; el relleno exacto de 144 y 240 permanece INDETERMINADO sin clave).
+
+=== H-C6: TOC [0x60..w04) XOR TEST ON SMALL SAME-w24 CONTAINERS ===
+Prediction: If TOC [0x60..w04) reuses stream keystream or shares identical plaintext past +0x60, C1 ^ C2 exhibits low entropy or zero runs.
+  appdata0 ^ script [0x60..0x260) (512 B): ent=7.5682 zeros=2/512 (0.39%)
+  core_licenses ^ story000_bvh4 [0x60..0x330) (720 B): ent=7.7068 zeros=7/720 (0.97%)
+Verdict H-C6: REFUTADA para reutilizacion de flujo / igualdad plana desde 0x60 (entropia ~7.57-7.71); layout interno de entradas en [0x60..w04) sigue INDETERMINADO sin clave AES.

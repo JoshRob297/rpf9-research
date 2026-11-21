@@ -1,46 +1,45 @@
 ---
-id: T-RPF9-1
-run: R-20261121-124631-31fa
+id: T-RPF9-2
+run: R-20261121-131054-8939
 role: heavy
-status: partial
+status: done
 verdict: null
 refused: false
 ---
 
 ## Que hice
 
-- **Fase 1 (`raw/cabeceras.txt`)**: Parseadas las 12 cabeceras `.head.bin` externas y 19 cabeceras RPF9 anidadas (31 cabeceras RPF9 validas, 30 unicas) en `samples/` (`/home/sistver/proyectos/rpf9-research/samples/`). Tabulados los 16 campos `uint32` LE (`0x00..0x3c`), reconstruido el tamaño real exacto de 3 archivos por solapamiento (`appdata0` = 8,880 B, `common` = 6,642,192 B, `script` = 4,358,960 B) y verificada coherencia de `w04` (fin de TOC) y `w0c` (longitud del trailer al final del archivo).
-- **Fase 2 (`raw/toc.txt`, `raw/firmas.txt`)**: Medida entropia Shannon por bloques de 4 KB en los primeros 4 MB de las 12 muestras; localizada region cifrada de TOC en `[0x40..w04)` y trailer cifrado en `[EOF - w0c .. EOF)`. Evaluados modos AES (0 duplicados intra-TOC en 62,487 bloques de 16 B -> refuta ECB; `C1 ^ C2` desde `0x60` con entropia ~7.99 -> refuta CTR/stream nonce fijo; prefijo identico de 32 B `5f08daab...` en `0x40..0x5f` en los 30 RPF9 unicos -> compatible con cifrado encadenado IV fijo). Escaneadas las 47 ventanas por firmas solicitadas (0 hits) y reales (`9FPR`, `KB2n`, `SGD5`, `LGID`/`LRSC`/`0DRP`/`CHKS`, >3,000 flujos zlib `78 da`). Probadas claves triviales/derivadas de cabecera (todas fallan) y documentado estado de claves RPF7.
-- **Fase 3 (`tools/rpf9.py`, `tests/test_rpf9.py`)**: Implementado prototipo CLI con `--json` y `--scan-nested` que explica cada campo de 32 bits, detecta cifrado de TOC sin inventar entradas y corre pruebas sobre muestras reales de distinto tamaño (`appdata0` 8,880 B, `levels` 4,194,304 B, `script` 4,194,304 B) y casos sinteticos.
-- **Documentacion (`docs/RPF9.md`, `docs/RPF9.es.md`)**: Especificacion bilingue con tabla de 10 hipotesis (confirmadas, refutadas, indeterminadas) y trazabilidad linea/seccion a `raw/`.
+- **Objetivo A (`raw/cabeceras2.txt`)**: Extendida la tabla de cabeceras a los **22** RPF9 y **78** ficheros `.bin` en `/home/sistver/proyectos/rpf9-research/samples/` (sin subcarpeta `pack/`), validando **77** cabeceras RPF9 (**76** `archive_id` unicos). Verificada la regla exacta de `[w08..w04)`: `ceil(9*w24/16)*16` (`54/54` cuando `w20_hi==1` y `w2c_b0==1`, `w24<=194`) y `ceil(10*w24/16)*16` (`15/15` cuando `w20_hi==1` y `w2c_b0==2`, `w24>=265`). Confirmado `w24` contra conteo de payloads en los 4 archivos completos y 2 anidados acotados (`4==4` en `story000_bvh4.full.bin`, `2==2` en `appdata0.head.bin`, `4==4` en `core_licenses_data.full.bin` + `2==2` en su RPF9 `@0x1000`, `6==6` en `core_restofworld001.full.bin` + `22==22` grupos en su RPF9 `@0x1000`).
+- **Objetivo B (`raw/payload.txt`, `tools/rpf9.py --payload`, `tests/test_rpf9.py`)**: Escaneados e inflados **16,213** flujos zlib `78 da` validos (477 XML, 4,066 `PSIN`, 872 `0DRP`, 4,357 `rsc50`, 6,441 otros/microcodigo shader); parseada la cabecera `SGD5` en `shaders.head.bin @0x9000` (`sub_count=33`, `first_section_bytes=2112`, 31 tablas secuenciales de 8 B con 2,419 registros y 737 simbolos `[VDHGMCP]S_*_Wrapped`); enumerados los **55** `RPF9` anidados (**54** unicos) con tamano exacto reconstruido en **29** de ellos; detectado `EDUP` (`core_restofworld001 @0xc14a0`). Extendido `tools/rpf9.py` con `--payload` para listar entradas legibles y reportar explicitamente TOC, traileres y regiones no legibles.
+- **Objetivo C (`raw/toc-chico.txt`)**: Probadas 6 hipotesis estructurales (`H-C1`..`H-C6`) en archivos completos chicos (`w24=1..6`). Refutadas rutas ASCII en claro (`H-C1`), tamanos/offsets `u16`/`u32` en claro (`H-C2`) y reutilizacion de flujo en `[0x60..w04)` (`H-C6`); confirmada la regla de paso 9/10 B en `[w08..w04)` (`H-C3`), las colisiones exactas de bloque 0 del trailer por `(w24, w20_hi)` y de 32 B (`blk0+blk1`) por `(w24, w20_hi, w0c)` (`appdata0` vs `script @0x1000`, `core_licenses_data` vs `story000_bvh4`) con divergencia en `blk2` (`H-C4`), y capacidad de `w0c` para `32 B + rutas XML` (`H-C5`).
+- **Documentacion (`docs/RPF9.md`, `docs/RPF9.es.md`)**: Actualizadas las especificaciones bilingues con los 22 archivos, 77 cabeceras, hallazgos de payload e hipotesis `H1`..`H13` citando `raw/cabeceras2.txt`, `raw/payload.txt` y `raw/toc-chico.txt`.
 
 ## Evidencia
 
-- `python3 -m unittest -v tests/test_rpf9.py` -> `Ran 6 tests in 0.064s` / `OK` (6/6 pass).
-- `python3 tools/rpf9.py /home/sistver/proyectos/rpf9-research/samples/levels.head.bin --json --scan-nested` -> salida JSON valida con `toc_encrypted: true`, `entry_listing_status: "blocked_encrypted_toc_no_key"`, `entries: []`, 2 RPF9 anidados en `0x1c000` y `0x4d000`.
-- `raw/cabeceras.txt`, `raw/toc.txt`, `raw/firmas.txt`: transcripciones reproducibles con comando y salida cruda.
-- `pytest`: **no verificado** (`No module named pytest` en `/usr/bin/python3`); verificado con `unittest` equivalente.
-- Claves propietarias RPF7 (`gtav_aes_key.dat` / `gta5keys.bin`): **no verificado** (ausentes del entorno y no incluidas en repositorios abiertos como CodeWalker/RageLib/LibertyV).
+- `python3 -m unittest -v tests/test_rpf9.py` -> `Ran 10 tests in 0.746s` / `OK` (10/10 pass).
+- `python3 tools/rpf9.py /home/sistver/proyectos/rpf9-research/samples/story000_bvh4.full.bin --payload` -> 4 streams XML inflados (`story000_environment_bvh`, `story000_terrain_bvh`, `CDataFileMgr__ContentDef`, `SSetupData`), 2 regiones no legibles explicitadas (`head_toc` `0x40..0x340`, `archive_trailer` `0x1570..0x1600`).
+- `python3 tools/rpf9.py /home/sistver/proyectos/rpf9-research/samples/shaders.head.bin --payload` -> `SGD5 @0x9000..0x400000 sub_count=33 sec0=2112B tables=31 recs=2419 syms=737` y regiones no legibles explicitadas.
+- Transcripciones en `raw/cabeceras2.txt`, `raw/payload.txt`, `raw/toc-chico.txt`.
+- Worktree `JoshRob297/task-t-rpf9-2` avanzado por fast-forward (`git merge --ff-only origin/main`) desde `eac3f6c` hasta `9b113cb` (`origin/main`) antes de iniciar ediciones, sin tocar la rama base `main` ni hacer commit/push.
 
 ## Requisitos cubiertos
 
-- [x] Fase 1: parseo de cabeceras disponibles (12 externas + 19 anidadas), campos 32-bit, coherencia con tamaño real -> `raw/cabeceras.txt`
-- [x] Fase 2: entropia 4 KB, ECB/CBC/CTR, firmas conocidas y reales, prueba de claves candidatas y cola -> `raw/toc.txt`, `raw/firmas.txt`
-- [x] Fase 3: `tools/rpf9.py` con `--json` y sin inventar entradas + `tests/test_rpf9.py`
-- [x] Documentacion: `docs/RPF9.md` y `docs/RPF9.es.md` con tabla de hipotesis y citas a `raw/`
+- [x] Objetivo A: tabla extendida a 22 archivos, validacion de campos y `w24` en completos -> `raw/cabeceras2.txt`
+- [x] Objetivo B: inflado zlib `78 da`, parseo `SGD5`, enumeracion de `RPF9` anidados -> `raw/payload.txt`, `tools/rpf9.py --payload`, `tests/test_rpf9.py`
+- [x] Objetivo C: hipotesis en completos/chicos (`w24` 1..6) con prediccion, prueba y veredicto -> `raw/toc-chico.txt`
+- [x] Documentacion actualizada en `docs/RPF9.md` y `docs/RPF9.es.md` sin push ni PR
 
 ## Pendientes y riesgos
 
-- Discrepancia de inventario: el brief/README citan 22 `.rpf`, pero `samples/MANIFEST.md` y `samples/` solo contienen 12 RPF (47 archivos `.bin`).
-- `pytest` no esta instalado en el sistema; aunque `tests/test_rpf9.py` es compatible con `pytest`, solo pudo ejecutarse con `python3 -m unittest`.
-- Sin la clave AES de RPF9 (ni binario de GTA V para claves RPF7), la estructura interna de registros dentro de `[0x40..w04)` y `[EOF - w0c .. EOF)` permanece `indeterminada`.
-- En el worktree, el harness reemplazo `samples/` por symlink y `samples.manifest/` (dejados sin tocar en git).
+- Sin la clave AES de RPF9 (ausente del entorno), la disposicion interna de registros dentro de `[0x60..w04)` y el formato exacto de cadenas en `[EOF-w0c+32..EOF)` permanecen `indeterminada`s.
+- El prompt menciona `samples/.../pack/`, pero las 78 muestras binarias estan ubicadas directamente en `/home/sistver/proyectos/rpf9-research/samples/` (no dentro de `pack/` ni del worktree, que solo contiene `samples/MANIFEST.md`).
+- Para `26/55` contenedores `RPF9` anidados, su tamano exacto queda sin cota superior porque la ventana `.head`/`.q3`/`.tail` de 2–4 MiB los trunca antes de su trailer `w0c`.
 
 ## Archivos modificados
 
-- `raw/cabeceras.txt`
-- `raw/toc.txt`
-- `raw/firmas.txt`
+- `raw/cabeceras2.txt`
+- `raw/payload.txt`
+- `raw/toc-chico.txt`
 - `tools/rpf9.py`
 - `tests/test_rpf9.py`
 - `docs/RPF9.md`
