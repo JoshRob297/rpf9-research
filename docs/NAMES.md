@@ -1,5 +1,7 @@
 # RPF9 Payload Name Recovery (`tools/name_recover.py`)
 
+**English** · [Español](NAMES.es.md)
+
 ## 1. Purpose and Design Alternatives
 
 Because the RPF9 Head TOC (`[0x40..w04)`) and EOF trailer (`[EOF - w0c .. EOF)`) are encrypted and no decryption key is available (`docs/RPF9.md` §5, H3/H7/H13), original archive entry names cannot be read from the container directory. `tools/name_recover.py` recovers resource paths and identifiers directly from unencrypted payload streams and records explicit provenance per stream.

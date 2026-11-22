@@ -1,5 +1,7 @@
 # RPF9 Container Analysis (GTA VI Xbox Series X|S)
 
+**English** · [Español](RPF9.es.md)
+
 ## 1. Sample Inventory and Scope Limits
 
 - `samples/` now contains all **22** RPF9 archives split across **78** binary files (`.head.bin`, `.q1.bin`, `.q3.bin`, `.tail.bin`, and 3 `.full.bin` complete packs; `appdata0.head.bin` is also complete) (`raw/cabeceras2.txt`, lines 5–6). Note: the worktree `samples/` directory holds `MANIFEST.md` only; the binaries reside directly under `samples/` (no `pack/` subdirectory).

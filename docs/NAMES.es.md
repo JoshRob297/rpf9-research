@@ -1,5 +1,7 @@
 # Recuperacion de Nombres en Payloads RPF9 (`tools/name_recover.py`)
 
+[English](NAMES.md) · **Español**
+
 ## 1. Proposito y Alternativas Evaluadas
 
 Dado que la TOC de cabecera (`[0x40..w04)`) y el trailer al final (`[EOF - w0c .. EOF)`) de RPF9 estan cifrados y no se dispone de la clave (`docs/RPF9.es.md` §5, H3/H7/H13), no es posible leer los nombres originales desde el directorio del contenedor. `tools/name_recover.py` recupera rutas e identificadores directamente desde los flujos sin cifrar del payload registrando su procedencia exacta.

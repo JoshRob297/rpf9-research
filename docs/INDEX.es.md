@@ -1,5 +1,7 @@
 # Cobertura del escaneo completo
 
+[English](INDEX.md) · **Español**
+
 El barrido cubrió los **22 contenedores `.rpf`** del paquete: 150.2 GiB de los 208.5 GiB totales.
 Lo que queda fuera son 57 archivos `.ttpf` (57.9 GiB) que se midieron y se descartaron: cabecera
 `RDS5`, entropía de 7.97 bits por byte y cero rutas recuperables. No es una omisión, es un

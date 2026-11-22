@@ -1,5 +1,7 @@
 # Análisis del Contenedor RPF9 (GTA VI Xbox Series X|S)
 
+[English](RPF9.md) · **Español**
+
 ## 1. Inventario de Muestras y Límites de Alcance
 
 - `samples/` contiene ahora los **22** archivos RPF9 divididos en **78** ficheros binarios (`.head.bin`, `.q1.bin`, `.q3.bin`, `.tail.bin` y 3 `.full.bin` completos; `appdata0.head.bin` también está completo) (`raw/cabeceras2.txt`, líneas 5–6). Nota: la carpeta `samples/` del worktree solo contiene `MANIFEST.md`; los binarios viven directamente en `samples/` (sin subcarpeta `pack/`).
