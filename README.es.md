@@ -37,6 +37,21 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
   `docs/NAMES.md` y `docs/INDEX.md`.
 
 Ver `METHODOLOGY.md`.
+## Proyectos relacionados y qué responde este dato
+
+Este repositorio mide un solo paquete retail. Estos proyectos consumen el mismo formato, y cada
+uno necesita una parte distinta de lo que aquí se publica.
+
+| proyecto | qué hace | qué le responde este repo |
+|---|---|---|
+| [ItsNotRexed/Leonida](https://github.com/ItsNotRexed/Leonida) | recompilación nativa a PC del build de Xbox | cobertura por archivo y por tipo (`docs/INDEX.md`), y 155k hashes con sal para comparar contra su propio recorrido |
+| [penwin2000/open-vfs](https://github.com/penwin2000/open-vfs) | filesystem virtual para los contenedores | 22 fixtures de cabecera en cinco formatos (`raw/cabeceras/`) y la fórmula de la región de tabla, medida en 22 de 22 |
+| [ivall/xcl](https://github.com/ivall/xcl) | capa de compatibilidad, shaders RDNA2 a DXIL | 25,043 streams `sgd5_shader_dxbc`, el 100% con nombre, frente a las cifras 24,064 y 26,503 publicadas en otros lados |
+| [R0Y00/Xbox2Windows](https://github.com/R0Y00/Xbox2Windows) | investigación de recompilación estática | dónde viven los streams con textura por archivo, en conteos y sin nombres |
+| [omonkeyz/xbox-emulator](https://github.com/omonkeyz/xbox-emulator) | notas de progreso para correr los builds | el mapa del contenedor, para que las notas apunten a offsets y no a nombres de archivo |
+
+La regla es la misma para todos: hechos medidos y geometría, nunca el manifiesto de contenido.
+
 ## Licencia
 
 GPL-3.0-or-later.

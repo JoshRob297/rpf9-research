@@ -48,6 +48,21 @@ shaders and 0.27% for `0DRP` containers. Details, method and the negative result
 The full path index is not published: it is the game's asset manifest, not the format. The repo
 ships the tools, the counts and salted hashes so anyone can diff their own run against ours.
 
+## Related projects and what this data answers
+
+This repository measures one retail package. These projects consume the same format, and each one
+needs a different part of what is published here.
+
+| project | what it does | what this repo answers |
+|---|---|---|
+| [ItsNotRexed/Leonida](https://github.com/ItsNotRexed/Leonida) | native PC recompilation of the Xbox build | per-archive and per-type name coverage (`docs/INDEX.md`), and 155k salted hashes to diff against its own walker |
+| [penwin2000/open-vfs](https://github.com/penwin2000/open-vfs) | virtual filesystem for the containers | 22 header fixtures in five formats (`raw/cabeceras/`) and the table-region formula, measured on 22 of 22 |
+| [ivall/xcl](https://github.com/ivall/xcl) | compatibility layer, RDNA2 shaders to DXIL | 25,043 `sgd5_shader_dxbc` streams, 100% of them named, against the 24,064 and 26,503 figures published elsewhere |
+| [R0Y00/Xbox2Windows](https://github.com/R0Y00/Xbox2Windows) | static recompilation research | where texture-bearing streams live per archive, as counts, without names |
+| [omonkeyz/xbox-emulator](https://github.com/omonkeyz/xbox-emulator) | progress notes for running the builds | the container map, so the notes can point at offsets instead of file names |
+
+The rule is the same for all of them: measured facts and geometry, never the asset manifest.
+
 ## License
 
 GPL-3.0-or-later.
