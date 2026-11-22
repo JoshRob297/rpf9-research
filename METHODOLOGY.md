@@ -1,37 +1,41 @@
-# Metodología
+# Methodology
 
-## Regla de la evidencia
+**English** · [Español](METHODOLOGY.es.md)
 
-Toda afirmación numérica o estructural necesita:
+## The evidence rule
 
-1. el comando o script que la produjo,
-2. su salida cruda en `raw/<tema>.txt`,
-3. la referencia en el documento (`docs/RPF9.md`) con el archivo donde está la prueba.
+Every numeric or structural claim needs:
 
-Si un experimento falla, se guarda igual: `raw/` conserva los intentos, no solo los aciertos.
+1. the command or script that produced it,
+2. its raw output in `raw/<topic>.txt`,
+3. the reference in the document (`docs/RPF9.md`) pointing at the file that holds the proof.
 
-## Prohibido
+If an experiment fails it is kept anyway: `raw/` preserves attempts, not only successes.
 
-- Deducir un formato "porque en GTA V era así" sin medirlo en RPF9.
-- Rellenar campos con ceros porque el tamaño "cuadra".
-- Presentar como hecho algo que dependa de una clave que no tenemos.
-- Tocar los binarios de `samples/`: son de solo lectura, y su sha256 está en el manifiesto.
+## Forbidden
 
-## Hipótesis y falsación
+- Inferring a layout "because that is how GTA V did it" without measuring it on RPF9.
+- Filling fields with zeros because the size "adds up".
+- Presenting as fact anything that depends on a key we do not have.
+- Writing to the binaries in `samples/`: they are read-only and their sha256 is in the manifest.
 
-Cada hipótesis vive como una fila con: qué predice, cómo se prueba y resultado
-(`confirmada`, `refutada`, `indeterminada`). Una hipótesis refutada vale tanto como una
-confirmada y se documenta igual.
+## Hypotheses and falsation
 
-## Comparación con RPF7
+Each hypothesis lives as a row with what it predicts, how it is tested and the result
+(`confirmed`, `refuted`, `undetermined`). A refuted hypothesis is worth as much as a confirmed one
+and is documented the same way.
 
-El formato de GTA V es referencia de contraste, no plantilla. Se puede usar la herramienta
-pública para *verificar nuestro método* contra un RPF7 conocido, pero ningún campo de RPF9
-se hereda sin medición en las muestras.
+## Comparison with RPF7
 
-## Entregables
+The GTA V format is a reference for contrast, not a template. The public tool can be used to
+*verify our method* against a known RPF7, but no RPF9 field is inherited without measurement on
+the samples.
 
-- `tools/rpf9.py` — cabecera + intento de TOC, con `--json`.
-- `docs/RPF9.md` / `docs/RPF9.es.md` — layout, campos, hipótesis, límites.
-- `raw/` — transcripciones.
-- `result.md` — estado del encargo al cerrar.
+## Deliverables
+
+- `tools/rpf9.py` — header plus a TOC attempt, with `--json`.
+- `tools/name_recover.py` — name recovery from the payload, with provenance.
+- `tools/merge_index.py` — merges the chunk JSONs into an index with absolute offsets.
+- `docs/RPF9.md` / `docs/RPF9.es.md` — layout, fields, hypotheses, limits.
+- `docs/INDEX.md` / `docs/INDEX.es.md` — full-scan coverage.
+- `raw/` — transcripts.
