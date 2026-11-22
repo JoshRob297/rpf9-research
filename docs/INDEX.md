@@ -2,10 +2,15 @@
 
 **English** · [Español](INDEX.es.md)
 
-The sweep covered the **22 `.rpf` containers** of the package: 150.2 GiB out of 208.5 GiB. What
-sits outside are 57 `.ttpf` files (57.9 GiB) that were measured and discarded — header `RDS5`,
-7.97 bits per byte of entropy, zero recoverable paths. That is not an omission, it is a result:
-without the key there is nothing to extract there.
+The package is 208.5 GiB. The **22 `.rpf` containers** account for 150.2 GiB of it; the other
+57.9 GiB are 57 `.ttpf` files that were measured and discarded — header `RDS5`, 7.97 bits per byte
+of entropy, zero recoverable paths. That is not an omission, it is a result: without the key there
+is nothing to extract there.
+
+Of those 150.2 GiB, the sweep read **123.0 GiB (81.9%)**: 71 chunks of 2.2 GB, processed one at a
+time. The 27.2 GiB it did not reach are listed under [What the sweep did not read](#what-the-sweep-did-not-read),
+with the ranges, because a coverage figure that mixes the size of the containers with the bytes
+actually walked is worth more to whoever checks than to whoever writes it.
 
 - 71 chunks of 2.2 GB, processed one at a time
 - 1,489,677 streams walked
@@ -49,10 +54,33 @@ Shaders come out complete because their header block stores the program name in 
 | `script.rpf` | 1,057 | 0 | 0 | 0 |
 | `story000_script` | 2,632 | 0 | 0 | 0 |
 
-## Two negative results, measured
+## Two negative results, measured — with their limits
 
-`movies.rpf` produced zero streams: its whole content is Bink 2, with no zlib streams and no mount
-XML. `script.rpf` and `story000_script` do have streams, but none with a name.
+`movies.rpf` produced zero streams in the **4.6 GiB the sweep read of its 8.8 GiB**: everything it
+touched is Bink 2, with no zlib streams and no mount XML. The other half was not read, so the honest
+statement is "no names in the half that was walked", not "no names in the archive".
+
+`script.rpf` and `story000_script` do have streams, but none with a name. Both were read to the end.
+
+## What the sweep did not read
+
+The 71 chunks were 2.2 GB slices, and 15 slices of the containers were never carved. That is 27.2 GiB
+of the 150.2 GiB:
+
+| archive | not read | of |
+|---|---:|---:|
+| `core_bvh4` | 7.73 GiB | 7.73 GiB |
+| `story000` | 6.44 GiB | 18.64 GiB |
+| `movies.rpf` | 3.93 GiB | 8.23 GiB |
+| `audio.rpf` | 4.30 GiB | 26.58 GiB |
+| `levels.rpf` | 4.30 GiB | 70.92 GiB |
+| `data.rpf` | 0.45 GiB | 0.45 GiB |
+| `shared_minigame000_bvh4` | 0.06 GiB | 0.06 GiB |
+| `appdata0`, `story000_bvh4`, `core_licenses_data` | < 1 MiB | — |
+
+The figures above are derived from the chunk start offsets recorded in each tramo and the container
+sizes, not from a byte counter: the carve files were deleted after the scan, so the coverage is
+reconstructed, not re-read.
 
 ## What these numbers do not say
 

@@ -2,10 +2,14 @@
 
 [English](INDEX.md) · **Español**
 
-El barrido cubrió los **22 contenedores `.rpf`** del paquete: 150.2 GiB de los 208.5 GiB totales.
-Lo que queda fuera son 57 archivos `.ttpf` (57.9 GiB) que se midieron y se descartaron: cabecera
-`RDS5`, entropía de 7.97 bits por byte y cero rutas recuperables. No es una omisión, es un
-resultado: sin llave no hay nada que extraer ahí.
+El paquete son 208.5 GiB. Los **22 contenedores `.rpf`** suman 150.2 GiB; los otros 57.9 GiB son 57
+archivos `.ttpf` que se midieron y se descartaron: cabecera `RDS5`, entropía de 7.97 bits por byte y
+cero rutas recuperables. No es una omisión, es un resultado: sin llave no hay nada que extraer ahí.
+
+De esos 150.2 GiB, el barrido leyó **123.0 GiB (81.9%)**: 71 tramos de 2.2 GB, procesados de uno en
+uno. Los 27.2 GiB que no alcanzó están abajo, con sus rangos, porque una cifra de cobertura que
+mezcla el tamaño de los contenedores con los bytes realmente leídos vale más para quien la audita
+que para quien la escribe.
 
 - 71 tramos de 2.2 GB, procesados de uno en uno
 - 1,489,677 streams recorridos
@@ -49,10 +53,34 @@ Los shaders salen completos porque su cabecera guarda el nombre del programa en 
 | `script.rpf` | 1,057 | 0 | 0 | 0 |
 | `story000_script` | 2,632 | 0 | 0 | 0 |
 
-## Dos resultados negativos, medidos
+## Dos resultados negativos, medidos — con sus límites
 
-`movies.rpf` no produjo un solo stream: todo su contenido es Bink 2, sin streams zlib ni XML de
-montaje. `script.rpf` y `story000_script` sí tienen streams, pero ninguno con nombre.
+`movies.rpf` no produjo un solo stream en los **4.6 GiB que el barrido leyó de sus 8.8 GiB**: todo lo
+que tocó es Bink 2, sin streams zlib ni XML de montaje. La otra mitad no se leyó, así que lo correcto
+es "sin nombres en la mitad recorrida", no "sin nombres en el archivo".
+
+`script.rpf` y `story000_script` sí tienen streams, pero ninguno con nombre. Los dos se leyeron
+completos.
+
+## Lo que el barrido no leyó
+
+Los 71 tramos eran rebanadas de 2.2 GB y 15 rebanadas de los contenedores nunca se cortaron. Son
+27.2 GiB de los 150.2 GiB:
+
+| archivo | sin leer | de |
+|---|---:|---:|
+| `core_bvh4` | 7.73 GiB | 7.73 GiB |
+| `story000` | 6.44 GiB | 18.64 GiB |
+| `movies.rpf` | 3.93 GiB | 8.23 GiB |
+| `audio.rpf` | 4.30 GiB | 26.58 GiB |
+| `levels.rpf` | 4.30 GiB | 70.92 GiB |
+| `data.rpf` | 0.45 GiB | 0.45 GiB |
+| `shared_minigame000_bvh4` | 0.06 GiB | 0.06 GiB |
+| `appdata0`, `story000_bvh4`, `core_licenses_data` | < 1 MiB | — |
+
+Las cifras salen de los offsets de inicio registrados en cada tramo y del tamaño de los contenedores,
+no de un contador de bytes: los archivos tallados se borraron después del escaneo, así que la
+cobertura está reconstruida, no releída.
 
 ## Lo que estos números no dicen
 

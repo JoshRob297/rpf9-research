@@ -40,10 +40,10 @@ See `METHODOLOGY.md`.
 
 ## What the scan produced
 
-A full pass over the 22 archives (150.2 GiB, 71 chunks) recovered **177,087 named streams
-(11.89%)**, **155,214 unique paths** and **200,184 unique identifiers**. Coverage is 100% for
-shaders and 0.27% for `0DRP` containers. Details, method and the negative results are in
-`docs/INDEX.md`.
+A pass over the 22 archives — 150.2 GiB in total, **123.0 GiB actually read**, 71 chunks — recovered
+**177,087 named streams (11.89%)**, **155,214 unique paths** and **200,184 unique identifiers**.
+Coverage is 100% for shaders and 0.27% for `0DRP` containers. The 27.2 GiB the sweep did not reach,
+and why, are listed in `docs/INDEX.md` along with the negative results.
 
 The full path index is not published: it is the game's asset manifest, not the format. The repo
 ships the tools, the counts and salted hashes so anyone can diff their own run against ours.
