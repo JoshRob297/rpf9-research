@@ -1,4 +1,4 @@
-# Command: python3 script parsing all .head.bin and nested RPF9 headers in /home/sistver/proyectos/rpf9-research/samples/
+# Command: python3 script parsing all .head.bin and nested RPF9 headers in samples/
 # Generated for Fase 1 (raw/cabeceras.txt)
 
 OUTER_HEAD_FILES_FOUND: 12

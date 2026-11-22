@@ -25,7 +25,7 @@ Three design alternatives were evaluated:
 
 ## 3. Measured Coverage (`raw/nombres.txt`)
 
-Run across all **78** sample files in `/home/sistver/proyectos/rpf9-research/samples` (`raw/nombres.txt` §1–§2):
+Run across all **78** sample files in `samples` (`raw/nombres.txt` §1–§2):
 
 - **Total streams**: `17,082` (`16,213` zlib `78 da` + `869` `SGD5` shader entries)
 - **Named streams**: `1,509` (**8.83%**)

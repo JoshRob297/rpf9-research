@@ -1,4 +1,4 @@
-# Command: python3 script scanning all 78 .bin files in /home/sistver/proyectos/rpf9-research/samples/ for zlib (78 da), SGD5 shader blocks, nested RPF9 containers, and unencrypted magic signatures
+# Command: python3 script scanning all 78 .bin files in samples/ for zlib (78 da), SGD5 shader blocks, nested RPF9 containers, and unencrypted magic signatures
 # Generated for T-RPF9-2 Objetivo B (raw/payload.txt)
 
 === 1. VALID ZLIB STREAMS (78 da) ACROSS ALL 78 SAMPLE FILES ===

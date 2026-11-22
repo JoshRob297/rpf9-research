@@ -2,3 +2,4 @@ samples/*.bin
 samples.manifest/
 __pycache__/
 *.pyc
+result.md

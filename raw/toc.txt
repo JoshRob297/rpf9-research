@@ -1,4 +1,4 @@
-# Command: python3 script analyzing 4KB entropy, encrypted regions, AES ECB/CBC/CTR indicators, RPF7/candidate keys, and tail name-table checks on /home/sistver/proyectos/rpf9-research/samples/
+# Command: python3 script analyzing 4KB entropy, encrypted regions, AES ECB/CBC/CTR indicators, RPF7/candidate keys, and tail name-table checks on samples/
 # Generated for Fase 2 (raw/toc.txt)
 
 === 1. 4KB BLOCK ENTROPY IN FIRST 4MB (.head.bin) & ENCRYPTED TOC BOUNDARIES ===

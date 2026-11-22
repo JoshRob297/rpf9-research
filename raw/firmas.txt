@@ -1,4 +1,4 @@
-# Command: python3 script scanning all 47 sample windows in /home/sistver/proyectos/rpf9-research/samples/ for requested and observed signatures + valid zlib streams
+# Command: python3 script scanning all 47 sample windows in samples/ for requested and observed signatures + valid zlib streams
 # Generated for Fase 2 (raw/firmas.txt)
 
 === 1. REQUESTED SIGNATURES (ISG1, OSG1, DXBC, RSC7, RDS5, DDS , RIFF, BINK) ===

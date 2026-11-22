@@ -71,3 +71,10 @@ python3 merge_index.py                                   # fusiona y suma las ba
 
 El índice fusionado (`streams.tsv`, `paths.tsv`, `ids.tsv`) **no se publica**: es un inventario de
 contenido. Lo que se publica es la cobertura, el método y una muestra validada.
+
+## Relation to the TOC geometry
+
+The 9–10 byte entry stride documented in `docs/RPF9.md` (and the 16-byte alignment of the
+table region) is a separate measurement: it describes the table layout, not the name
+coverage. This document only reports how many streams carry a name and where those names
+come from.

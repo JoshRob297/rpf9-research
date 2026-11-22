@@ -1,4 +1,4 @@
-# Command: python3 script inspecting all 22 outer/pack RPF9 archives and 78 .bin windows in /home/sistver/proyectos/rpf9-research/samples/
+# Command: python3 script inspecting all 22 outer/pack RPF9 archives and 78 .bin windows in samples/
 # Generated for T-RPF9-2 Objetivo A (raw/cabeceras2.txt)
 
 BIN_FILES_FOUND: 78

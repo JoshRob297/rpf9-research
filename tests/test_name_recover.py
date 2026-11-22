@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import name_recover  # noqa: E402
 
-SAMPLES_DIR = Path("/home/sistver/proyectos/rpf9-research/samples")
+SAMPLES_DIR = Path(__file__).resolve().parent.parent / "samples"
 COMMON_HEAD = SAMPLES_DIR / "common.head.bin"
 SHADERS_HEAD = SAMPLES_DIR / "shaders.head.bin"
 DATA_HEAD = SAMPLES_DIR / "data.head.bin"

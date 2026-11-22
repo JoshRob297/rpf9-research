@@ -2,7 +2,7 @@
 
 ## 1. Inventario de Muestras y Límites de Alcance
 
-- `/home/sistver/proyectos/rpf9-research/samples/` contiene ahora los **22** archivos RPF9 divididos en **78** ficheros binarios (`.head.bin`, `.q1.bin`, `.q3.bin`, `.tail.bin` y 3 `.full.bin` completos; `appdata0.head.bin` también está completo) (`raw/cabeceras2.txt`, líneas 5–6). Nota: la carpeta `samples/` del worktree solo contiene `MANIFEST.md`; los binarios viven directamente en `/home/sistver/proyectos/rpf9-research/samples/` (sin subcarpeta `pack/`).
+- `samples/` contiene ahora los **22** archivos RPF9 divididos en **78** ficheros binarios (`.head.bin`, `.q1.bin`, `.q3.bin`, `.tail.bin` y 3 `.full.bin` completos; `appdata0.head.bin` también está completo) (`raw/cabeceras2.txt`, líneas 5–6). Nota: la carpeta `samples/` del worktree solo contiene `MANIFEST.md`; los binarios viven directamente en `samples/` (sin subcarpeta `pack/`).
 - En esos 78 ficheros se detectaron **77** cabeceras RPF9 validadas (**76** `archive_id` únicos: 22 externos/pack + 55 ocurrencias anidadas; `script.head.bin @0xc4000` y `script.tail.bin @0x9bcd0` se solapan) (`raw/cabeceras2.txt`, líneas 59–140).
 - **Tamaños reales exactos** (`raw/cabeceras2.txt`, líneas 153–175):
   - **4 archivos completos**: `story000_bvh4.full.bin` (**5,632** B, `0x1600`), `appdata0.head.bin` (**8,880** B, `0x22b0`), `core_licenses_data.full.bin` (**13,536** B, `0x34e0`), `core_restofworld001.full.bin` (**791,984** B, `0xc15b0`).

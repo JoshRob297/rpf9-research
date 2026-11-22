@@ -1,8 +1,8 @@
-# Command: python3 tools/name_recover.py /home/sistver/proyectos/rpf9-research/samples --validate --out /tmp/opencode/index.json
+# Command: python3 tools/name_recover.py samples --validate --out build/index.json
 # Generated for T-RPF9-3 (raw/nombres.txt)
 
 === 1. CLI SUMMARY & MANDATORY PAYLOAD VALIDATION ===
-Target: /home/sistver/proyectos/rpf9-research/samples (78 files)
+Target: samples (78 files)
 Total streams: 17082 | named: 1509 (8.83%) | unnamed (sin nombre): 15573
 Unique full_paths: 13402 | Unique identifiers: 14282
 

@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import rpf9  # noqa: E402
 
-SAMPLES_DIR = Path("/home/sistver/proyectos/rpf9-research/samples")
+SAMPLES_DIR = Path(__file__).resolve().parent.parent / "samples"
 APPDATA0_HEAD = SAMPLES_DIR / "appdata0.head.bin"
 LEVELS_HEAD = SAMPLES_DIR / "levels.head.bin"
 SCRIPT_HEAD = SAMPLES_DIR / "script.head.bin"
