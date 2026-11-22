@@ -1,0 +1,53 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    name: unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run the test suite
+        run: python3 -m unittest discover -s tests -v
+      - name: Header fixtures only (no samples needed)
+        run: python3 -m unittest tests.test_headers_fixture -v
+
+  cpp-fixture:
+    name: c++ fixture compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile the published fixture
+        run: |
+          cat > /tmp/main.cpp <<'EOF'
+          #include "raw/cabeceras/rpf9_headers.hpp"
+          #include <cstdio>
+          int main() {
+              static_assert(rpf9_fixtures::kHeaders.size() == 22);
+              std::printf("%zu\n", rpf9_fixtures::kHeaders.size());
+              return 0;
+          }
+          EOF
+          g++ -std=c++17 -Wall -Wextra -Wpedantic -I. /tmp/main.cpp -o /tmp/fixture
+          /tmp/fixture
+
+  tools:
+    name: tools parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Every tool compiles
+        run: |
+          python3 -m py_compile tools/rpf9.py tools/name_recover.py tools/merge_index.py
+      - name: merge_index argument handling
+        run: python3 tools/merge_index.py --help
