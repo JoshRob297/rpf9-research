@@ -39,7 +39,8 @@ The table region, from `toc_subtable_offset` to `toc_end_offset`, equals
 ceil(stride * w24 / 16) * 16        stride = 8 + (byte at 0x2c)
 ```
 
-It holds for **22 of 22** archives in this set. `levels.rpf` as an example: `w24 = 2078`,
+It holds for **22 of 22** archives in this set. The byte at `0x2c` is 1 in 15 archives
+(stride 9) and 2 in the other 7 (stride 10). `levels.rpf` as an example: `w24 = 2078`,
 `byte 0x2c = 2`, so stride 10, `10 * 2078 = 20780`, and `ceil(20780 / 16) * 16 = 20784`, which is
 exactly `toc_end_offset - toc_subtable_offset`.
 

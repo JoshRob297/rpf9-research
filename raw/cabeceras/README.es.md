@@ -40,7 +40,8 @@ La región de la tabla, desde `toc_subtable_offset` hasta `toc_end_offset`, equi
 ceil(stride * w24 / 16) * 16        stride = 8 + (byte en 0x2c)
 ```
 
-Se cumple en **22 de 22** archivos de este conjunto. `levels.rpf` como ejemplo: `w24 = 2078`,
+Se cumple en **22 de 22** archivos de este conjunto. El byte en `0x2c` vale 1 en 15 archivos
+(paso 9) y 2 en los otros 7 (paso 10). `levels.rpf` como ejemplo: `w24 = 2078`,
 `byte 0x2c = 2`, o sea paso 10; `10 * 2078 = 20780`, y `ceil(20780 / 16) * 16 = 20784`, que es
 exactamente `toc_end_offset - toc_subtable_offset`.
 
