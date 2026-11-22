@@ -1,0 +1,22 @@
+# Muestra de 20 rutas recuperadas del payload (archivo, offset absoluto, ruta).
+# El indice completo no se publica: es un inventario de contenido.
+anim	pack:/get_out_walk_90.clip	3329363984
+anim	pack:/right_0.clip	2423884576
+anim	pack:/silent_scared_fronthigh_lr_002.clip	2103526864
+anim	pack:/biped_q5	1363394576
+story000	pack:/ready_loop_3_8_nail_03.clip	3738079248
+story000	pack:/receptionist_starts_filming_office_chair.clip	3916279712
+story000	pack:/prop_q5	3953274896
+story000	pack:/baby_blues_b_omar_dawoud.clip	3886256608
+common	Lowlands/Perschars/Peds/LO_SPL_05_Farm/LO_SPL_05_Farm_Tractor_3	308352
+common	Tequesta/Perschars/Peds/Player/bk_lucia_penthouse_treadmill	325216
+common	SuburbsSouth/Perschars/Peds/Shop_Clerks/ss_55_car_dealership_salesperson_marlinmotors_1	328560
+common	DraperIsland/Perschars/Places/DraperFactory/Draper_Speedo_3	311920
+levels	doorinfo/uidoors_TR_ABI_Airbase_Islands.pso.meta	4181995520
+levels	Compounds/S4SDrugHouse/Gang_Member_8	67557781504
+levels	5q/_6	708698128
+levels	platform:/levels/americas/gameshapes/americas_vault/ma_mar_gameshapes/ma_mar_01_misc_gameshapes.pso.meta	25455763456
+story000_restofworld	pack:/hands_off_to_high_player.clip	55541376
+story000_restofworld	pack:/raul.clip	2271728
+story000_restofworld	pack:/lucia_straddle_bm_exit_cam.clip	42958448
+story000_restofworld	pack:/biped_q8	26723136

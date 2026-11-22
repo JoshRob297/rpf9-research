@@ -30,7 +30,8 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
   intentó y falló.
 - Los binarios de muestra **no se versionan** (ver `.gitignore`); solo su manifiesto con
   hashes.
-- Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español).
+- Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español); igual con
+  `docs/NAMES.md` y `docs/INDEX.md`.
 
 Ver `METHODOLOGY.md`.
 ## Licencia
