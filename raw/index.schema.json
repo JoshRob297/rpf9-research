@@ -1,0 +1,57 @@
+{
+ "generado": "2026-11-22",
+ "sal_publica": "rpf9-research/2026-11",
+ "hash": "sha256(sal + \"\\t\" + nombre) en hexadecimal, ordenado",
+ "archivos": {
+  "streams.tsv": {
+   "columnas": [
+    "rpf",
+    "abs_offset",
+    "offset_hex",
+    "compressed",
+    "inflated",
+    "type",
+    "status",
+    "n_paths",
+    "n_ids"
+   ],
+   "descripcion": "un renglon por stream; abs_offset es absoluto dentro del .rpf"
+  },
+  "paths.tsv": {
+   "columnas": [
+    "ruta",
+    "rpf",
+    "abs_offset"
+   ],
+   "descripcion": "una mencion por renglon; la misma ruta puede repetirse en varios streams"
+  },
+  "ids.tsv": {
+   "columnas": [
+    "identificador",
+    "rpf",
+    "abs_offset"
+   ],
+   "descripcion": "nombres internos con la forma nombre.#tipo"
+  },
+  "publico/paths.sha256": {
+   "entradas": 155214,
+   "descripcion": "hashes de rutas unicas, ordenados"
+  },
+  "publico/ids.sha256": {
+   "entradas": 200184,
+   "descripcion": "hashes de identificadores unicos, ordenados"
+  }
+ },
+ "totales": {
+  "streams": 1489677,
+  "con_nombre": 177087,
+  "rutas_unicas": 155214,
+  "ids_unicos": 200184,
+  "menciones_de_ruta": 526581
+ },
+ "como_comparar": [
+  "corre tools/name_recover.py sobre los mismos tramos de tu paquete",
+  "extrae tus nombres unicos y aplica la misma sal",
+  "ordena los hashes y compara: las diferencias indican streams que tu recorrido no vio"
+ ]
+}

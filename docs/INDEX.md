@@ -62,6 +62,24 @@ Tampoco hay correspondencia uno a uno entre nombre y bloque: varios streams pued
 misma ruta, y `paths.tsv` conserva todas las menciones con su offset absoluto justamente para
 que eso se pueda auditar.
 
+## Verifying without publishing the names
+
+The full index is not published: 155,214 paths would reconstruct the game's asset manifest.
+What is published instead lets anyone check their own extraction against ours.
+
+```
+raw/paths.sha256       155,214 hashes, sorted
+raw/ids.sha256         200,184 hashes, sorted
+raw/index.schema.json  column layout and counts
+```
+
+The hash is `sha256("rpf9-research/2026-11" + "\t" + name)`. The salt is public on purpose:
+it lets two parties compare coverage without either revealing a name.
+
+To compare: run `tools/name_recover.py` over the same chunks of your own package, take your
+unique names, apply the same salt, sort, and diff against the file. Missing hashes are streams
+your walker did not reach; extra ones are names we did not recover. Counts, not contents.
+
 ## Reproducir
 
 ```

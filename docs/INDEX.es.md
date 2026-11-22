@@ -75,6 +75,25 @@ doorinfo/uidoors_TR_ABI_Airbase_Islands.pso.meta  metadatos de puertas
 
 En `raw/muestra-rutas.txt` hay 20 ejemplos con su archivo y offset de origen.
 
+## Verificar sin publicar los nombres
+
+El índice completo no se publica: 155,214 rutas reconstruyen el manifiesto de contenido del
+juego. Lo que sí se publica permite que cualquiera compare su extracción contra la nuestra.
+
+```
+raw/paths.sha256       155,214 hashes, ordenados
+raw/ids.sha256         200,184 hashes, ordenados
+raw/index.schema.json  columnas y conteos
+```
+
+El hash es `sha256("rpf9-research/2026-11" + "\t" + nombre)`. La sal es pública a propósito:
+deja que dos partes comparen cobertura sin que ninguna revele un nombre.
+
+Para comparar: corre `tools/name_recover.py` sobre los mismos tramos de tu propio paquete, toma
+tus nombres únicos, aplica la misma sal, ordena y compara contra el archivo. Los hashes que
+falten son streams que tu recorrido no alcanzó; los que sobren, nombres que no recuperamos.
+Conteos, no contenidos.
+
 ## Reproducir
 
 ```
