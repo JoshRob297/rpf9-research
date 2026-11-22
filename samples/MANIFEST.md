@@ -1,10 +1,12 @@
-# Muestras
+# Samples
 
-Cada RPF se recorto en cuatro ventanas. `head` es la cabecera mas la tabla de
-contenidos; `tail` la cola del archivo (candidata a tabla de nombres); `q1` y `q3`
-son ventanas interiores al 25% y 75%.
+**English** · [Español](MANIFEST.es.md)
 
-| archivo | bytes | sha256 |
+Each RPF was cut into four windows. `head` is the header plus the table of contents; `tail` is the
+end of the file (a candidate for the name table); `q1` and `q3` are interior windows at 25% and
+75%.
+
+| file | bytes | sha256 |
 |---|---|---|
 | `anim.head.bin` | 4,194,304 | `2331cdb0ffff17c455e6e57ab93a6c5e…` |
 | `anim.q1.bin` | 2,097,152 | `567cefa7ea033658b299ce0fff70cff2…` |
@@ -54,4 +56,4 @@ son ventanas interiores al 25% y 75%.
 | `textures.q3.bin` | 2,097,152 | `03f5577c5d86d620335befc3e103a9c9…` |
 | `textures.tail.bin` | 4,194,304 | `fd5a8d98fc3efb8c6f4b1770ba3e215d…` |
 
-Total: 47 archivos, 131 MiB.
+Total: 47 files, 131 MiB.
