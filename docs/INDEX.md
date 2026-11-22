@@ -1,18 +1,21 @@
-# Cobertura del escaneo completo
+# Full-scan coverage
 
-El barrido cubrió los **22 contenedores `.rpf`** del paquete (150.2 GiB de 208.5 GiB).
-Lo que queda fuera son 57 archivos `.ttpf` (57.9 GiB) que se midieron y se descartaron: cabecera
-`RDS5`, entropía de 7.97 bits por byte y cero rutas recuperables. No es una omisión, es un
-resultado: sin llave no hay nada que extraer ahí.
+**English** · [Español](INDEX.es.md)
 
-- 71 tramos de 2.2 GB, procesados de uno en uno
-- 1,489,677 streams recorridos
-- **177,087 streams con nombre (11.89%)**
-- **155,214 rutas únicas** y **200,184 identificadores únicos**
+The sweep covered the **22 `.rpf` containers** of the package: 150.2 GiB out of 208.5 GiB. What
+sits outside are 57 `.ttpf` files (57.9 GiB) that were measured and discarded — header `RDS5`,
+7.97 bits per byte of entropy, zero recoverable paths. That is not an omission, it is a result:
+without the key there is nothing to extract there.
 
-## Cobertura por tipo de stream
+- 71 chunks of 2.2 GB, processed one at a time
+- 1,489,677 streams walked
+- **177,087 streams carry a name (11.89%)**
+- **155,214 unique paths** and **200,184 unique identifiers**
+- 526,581 path mentions in total
 
-| tipo | streams | con nombre | cobertura |
+## Coverage by stream type
+
+| type | streams | named | coverage |
 |---|---:|---:|---:|
 | `sgd5_shader_dxbc` | 25,043 | 25,043 | **100.00%** |
 | `xml` | 332 | 191 | 57.53% |
@@ -22,12 +25,12 @@ resultado: sin llave no hay nada que extraer ahí.
 | `PSIN` | 15,380 | 465 | 3.02% |
 | `0DRP` | 227,045 | 624 | 0.27% |
 
-Los shaders salen completos porque su bloque de cabecera guarda el nombre del programa en
-claro. Los `0DRP` siguen cerrados: 227 mil contenedores y 624 nombres.
+Shaders come out complete because their header block stores the program name in plain text.
+`0DRP` stays closed: 227 thousand containers and 624 names.
 
-## Por contenedor
+## Per container
 
-| archivo | streams | con nombre | rutas (menciones) | identificadores |
+| archive | streams | named | path mentions | identifiers |
 |---|---:|---:|---:|---:|
 | `anim.rpf` | 130,509 | 64,785 | 367,190 | 3,547 |
 | `levels.rpf` | 1,020,092 | 62,228 | 6,448 | 447,167 |
@@ -46,26 +49,37 @@ claro. Los `0DRP` siguen cerrados: 227 mil contenedores y 624 nombres.
 | `script.rpf` | 1,057 | 0 | 0 | 0 |
 | `story000_script` | 2,632 | 0 | 0 | 0 |
 
-## Dos resultados negativos, medidos
+## Two negative results, measured
 
-`movies.rpf` no produjo un solo stream: todo su contenido es Bink 2, sin streams zlib ni XML de
-montaje. `script.rpf` y `story000_script` sí tienen streams, pero ninguno con nombre.
+`movies.rpf` produced zero streams: its whole content is Bink 2, with no zlib streams and no mount
+XML. `script.rpf` and `story000_script` do have streams, but none with a name.
 
-## Lo que estos números no dicen
+## What these numbers do not say
 
-Un stream con nombre **no** es una entrada de la tabla de contenidos. La TOC sigue cifrada y no
-se decodificó: los nombres salen de los XML de montaje que viajan en claro dentro del payload.
-Por eso la cobertura es del 11.89% y no del 100%: no hay método conocido para cerrar la brecha
-sin la llave.
+A named stream is **not** a table-of-contents entry. The TOC is still encrypted and was not
+decoded: the names come from the mount XMLs that travel in plain text inside the payload. That is
+why coverage is 11.89% and not 100% — there is no known method to close the gap without the key.
 
-Tampoco hay correspondencia uno a uno entre nombre y bloque: varios streams pueden declarar la
-misma ruta, y `paths.tsv` conserva todas las menciones con su offset absoluto justamente para
-que eso se pueda auditar.
+There is also no one-to-one mapping between name and block: several streams can declare the same
+path, and `paths.tsv` keeps every mention with its absolute offset so that this stays auditable.
+
+## What the names look like
+
+They are not classical filesystem paths. Three shapes coexist:
+
+```
+pack:/get_out_walk_90.clip                        animation clips
+Tequesta/Perschars/Peds/Player/bk_lucia_...       character models, per district
+platform:/levels/americas/gameshapes/...          level meshes
+doorinfo/uidoors_TR_ABI_Airbase_Islands.pso.meta  door metadata
+```
+
+`raw/muestra-rutas.txt` holds 20 examples with their archive and offset of origin.
 
 ## Verifying without publishing the names
 
-The full index is not published: 155,214 paths would reconstruct the game's asset manifest.
-What is published instead lets anyone check their own extraction against ours.
+The full index is not published: 155,214 paths would reconstruct the game's asset manifest. What
+is published instead lets anyone check their own extraction against ours.
 
 ```
 raw/paths.sha256       155,214 hashes, sorted
@@ -73,27 +87,26 @@ raw/ids.sha256         200,184 hashes, sorted
 raw/index.schema.json  column layout and counts
 ```
 
-The hash is `sha256("rpf9-research/2026-11" + "\t" + name)`. The salt is public on purpose:
-it lets two parties compare coverage without either revealing a name.
+The hash is `sha256("rpf9-research/2026-11" + "\t" + name)`. The salt is public on purpose: it
+lets two parties compare coverage without either revealing a name.
 
-To compare: run `tools/name_recover.py` over the same chunks of your own package, take your
-unique names, apply the same salt, sort, and diff against the file. Missing hashes are streams
-your walker did not reach; extra ones are names we did not recover. Counts, not contents.
+To compare: run `tools/name_recover.py` over the same chunks of your own package, take your unique
+names, apply the same salt, sort, and diff against the file. Missing hashes are streams your
+walker did not reach; extra ones are names we did not recover. Counts, not contents.
+
+## Relation to the TOC geometry
+
+The 9–10 byte entry stride documented in `docs/RPF9.md` (and the 16-byte alignment of the table
+region) is a separate measurement: it describes the table layout, not the name coverage. This
+document only reports how many streams carry a name and where those names come from.
 
 ## Reproduce
 
 ```
-tools/name_recover.py <tramo.bin> --out <salida>.json     # un tramo de 2.2 GB
-tools/merge_index.py <dir_tramos> <dir_salida> \
-    --skip packs_1.json,packs_2.json,packs_3.json         # fusiona sumando las bases
+tools/name_recover.py <chunk.bin> --out <output>.json      # one 2.2 GB chunk
+tools/merge_index.py <chunks_dir> <output_dir> \
+    --skip packs_1.json,packs_2.json,packs_3.json          # merges, adding each chunk base
 ```
 
 Running both over the same package reproduces the counts in this document exactly: 68 chunks,
 1,489,677 streams, 177,087 named, 155,214 unique paths.
-
-## Relation to the TOC geometry
-
-The 9–10 byte entry stride documented in `docs/RPF9.md` (and the 16-byte alignment of the
-table region) is a separate measurement: it describes the table layout, not the name
-coverage. This document only reports how many streams carry a name and where those names
-come from.
