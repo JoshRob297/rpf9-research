@@ -49,8 +49,9 @@ A parser that advances a fixed 16 bytes per entry reads `levels.rpf` as 1,299 re
 
 ## Caveat
 
-The 8 archives whose `0x20` high half is 2 use a wider stride for the subtable, and this fixture
-does not model that case. It is an open question, not a solved one.
+The 8 archives whose `0x20` high half is 2 use a wider subtable. None of them is in this fixture:
+the 22 files here are all high half 1. The wider case is measured in `docs/NESTED.md` — it is a
+12-byte entry — and the 122 headers behind that conclusion are in `nested.tsv`.
 
 ## Provenance
 

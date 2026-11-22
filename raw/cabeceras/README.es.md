@@ -50,8 +50,9 @@ contienen 2,078 entradas. Esa diferencia es para lo que sirve el fixture.
 
 ## Salvedad
 
-Los 8 archivos cuya mitad alta de `0x20` es 2 usan un paso mayor en la subtabla, y este fixture no
-modela ese caso. Es una pregunta abierta, no un problema resuelto.
+Los 8 archivos cuya mitad alta de `0x20` es 2 usan una subtabla más ancha. Ninguno está en este
+fixture: los 22 de aquí son todos mitad alta 1. El caso ancho está medido en `docs/NESTED.md` —es
+una entrada de 12 bytes— y las 122 cabeceras detrás de esa conclusión están en `nested.tsv`.
 
 ## Procedencia
 

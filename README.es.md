@@ -34,7 +34,7 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
 - Los binarios de muestra **no se versionan** (ver `.gitignore`); solo su manifiesto con
   hashes.
 - Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español); igual con
-  `docs/NAMES.md` y `docs/INDEX.md`.
+  `docs/NAMES.md`, `docs/INDEX.md` y `docs/NESTED.md`.
 
 Ver `METHODOLOGY.md`.
 ## Proyectos relacionados y qué responde este dato

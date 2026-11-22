@@ -34,7 +34,7 @@ RPF9, and how far one can get without the key. The expected output is a document
   that is the language the commands were run in; they are evidence and are not translated.
 - Sample binaries are **not versioned** (see `.gitignore`); only their manifest with hashes is.
 - Documentation ships in pairs: `README.md` (English) and `README.es.md` (Spanish); likewise
-  `docs/RPF9.md`, `docs/NAMES.md` and `docs/INDEX.md` with their `.es.md` counterparts.
+  `docs/RPF9.md`, `docs/NAMES.md`, `docs/INDEX.md` and `docs/NESTED.md` with their `.es.md` counterparts.
 
 See `METHODOLOGY.md`.
 
