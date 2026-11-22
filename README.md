@@ -1,48 +1,59 @@
 # rpf9-research
 
-Ingeniería inversa del contenedor **RPF9** usado por GTA VI (Xbox Series X|S), a partir de
-un paquete de 209 GiB del que se tienen 22 archivos `.rpf` y 57 `.ttpf`.
+**English** · [Español](README.es.md)
 
-## Qué sabemos antes de empezar
+Reverse engineering of the **RPF9** container used by GTA VI (Xbox Series X|S), from a 209 GiB
+package holding 22 `.rpf` archives and 57 `.ttpf` files.
 
-- La magia es `39 46 50 52` en los primeros cuatro bytes: `RPF9` leído como entero
-  little-endian. GTA V usa `RPF7` (`37 46 50 52`).
-- Los primeros bytes después de la magia no son texto ni una tabla legible: la región
-  posterior parece cifrada (entropía alta, sin nombres en claro en los primeros 2 MB).
-- En GTA V la tabla de contenidos de un RPF7 va cifrada con AES y las herramientas públicas
-  (OpenIV, CodeWalker) conocen esa clave. Para RPF9 no hay herramienta pública.
+## What is known before starting
 
-## Objetivo
+- The magic is `39 46 50 52` in the first four bytes: `RPF9` read as a little-endian integer.
+  GTA V uses `RPF7` (`37 46 50 52`).
+- The bytes right after the magic are neither text nor a readable table: the region behind them
+  looks encrypted (high entropy, no plain-text names in the first 2 MB).
+- In GTA V the RPF7 table of contents is AES-encrypted and public tools (OpenIV, CodeWalker)
+  know that key. For RPF9 there is no public tool.
 
-Determinar, con evidencia reproducible, **la estructura de la cabecera y de la tabla de
-contenidos** de RPF9, y hasta dónde se puede llegar sin la clave. El resultado esperado es
-un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
+## Goal
 
-1. lea la cabecera y explique cada campo con su medición,
-2. diga si la TOC está cifrada y con qué evidencia (no por suposición),
-3. liste entradas si logra descifrarla, o explique exactamente qué falta.
+Determine, with reproducible evidence, **the layout of the header and the table of contents** of
+RPF9, and how far one can get without the key. The expected output is a document
+(`docs/RPF9.md`) plus a prototype (`tools/rpf9.py`) that:
 
-## Reglas del repositorio
+1. reads the header and explains each field with its measurement,
+2. states whether the TOC is encrypted and on what evidence (not by assumption),
+3. lists entries if it manages to decrypt it, or explains exactly what is missing.
 
-- **Cada número que aparezca en la documentación debe tener su transcripción en `raw/`.**
-  No se afirma nada que no esté medido.
-- Lo que no se pueda determinar se escribe como **no determinado**, con la prueba que se
-  intentó y falló.
-- Los binarios de muestra **no se versionan** (ver `.gitignore`); solo su manifiesto con
-  hashes.
-- Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español); igual con
-  `docs/NAMES.md` y `docs/INDEX.md`.
+## Repository rules
 
-Ver `METHODOLOGY.md`.
-## Licencia
+- **Every number in the documentation needs its transcript in `raw/`.** Nothing is claimed that
+  has not been measured.
+- Anything that cannot be determined is written as **undetermined**, together with the test that
+  was attempted and failed.
+- Sample binaries are **not versioned** (see `.gitignore`); only their manifest with hashes is.
+- Documentation ships in pairs: `README.md` (English) and `README.es.md` (Spanish); likewise
+  `docs/RPF9.md`, `docs/NAMES.md` and `docs/INDEX.md` with their `.es.md` counterparts.
+
+See `METHODOLOGY.md`.
+
+## What the scan produced
+
+A full pass over the 22 archives (150.2 GiB, 71 chunks) recovered **177,087 named streams
+(11.89%)**, **155,214 unique paths** and **200,184 unique identifiers**. Coverage is 100% for
+shaders and 0.27% for `0DRP` containers. Details, method and the negative results are in
+`docs/INDEX.md`.
+
+The full path index is not published: it is the game's asset manifest, not the format. The repo
+ships the tools, the counts and salted hashes so anyone can diff their own run against ours.
+
+## License
 
 GPL-3.0-or-later.
 
-El motivo es práctico: el trabajo de referencia más cercano, `ItsNotRexed/Leonida`, es
-GPL-3.0 y publica hechos de formato medidos sobre este mismo paquete. Se pueden tomar los
-hechos con atribución, pero si en algún momento se reutiliza código, esta licencia es la
-única que lo permite sin conflicto. Los proyectos con GPL-2.0-only (`xcl`,
-`americas-recomp`) y los de licencia no comercial (`PercyStar`) quedan como referencia de
-lectura, nunca como fuente de código.
+The reason is practical: the closest reference work, `ItsNotRexed/Leonida`, is GPL-3.0 and
+publishes measured format facts about this same package. Facts can be taken with attribution,
+but if code is ever reused, this is the only license that allows it without conflict. Projects
+under GPL-2.0-only (`xcl`, `americas-recomp`) and non-commercial licenses (`PercyStar`) remain
+reading references, never a source of code.
 
-Ver también `docs/` para el estado medido del formato.
+See also `docs/` for the measured state of the format.
