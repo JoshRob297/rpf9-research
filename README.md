@@ -30,6 +30,8 @@ RPF9, and how far one can get without the key. The expected output is a document
   has not been measured.
 - Anything that cannot be determined is written as **undetermined**, together with the test that
   was attempted and failed.
+- `raw/` holds the command output exactly as produced. Those transcripts are in Spanish because
+  that is the language the commands were run in; they are evidence and are not translated.
 - Sample binaries are **not versioned** (see `.gitignore`); only their manifest with hashes is.
 - Documentation ships in pairs: `README.md` (English) and `README.es.md` (Spanish); likewise
   `docs/RPF9.md`, `docs/NAMES.md` and `docs/INDEX.md` with their `.es.md` counterparts.

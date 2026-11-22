@@ -30,6 +30,7 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
   No se afirma nada que no esté medido.
 - Lo que no se pueda determinar se escribe como **no determinado**, con la prueba que se
   intentó y falló.
+- `raw/` guarda la salida de los comandos tal cual se produjo. Es evidencia y no se traduce.
 - Los binarios de muestra **no se versionan** (ver `.gitignore`); solo su manifiesto con
   hashes.
 - Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español); igual con
