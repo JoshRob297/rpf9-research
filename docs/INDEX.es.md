@@ -97,12 +97,13 @@ Conteos, no contenidos.
 ## Reproducir
 
 ```
-tools/name_recover.py <tramo.bin> --out <salida>.json    # un tramo de 2.2 GB
-python3 merge_index.py                                   # fusiona sumando las bases
+tools/name_recover.py <tramo.bin> --out <salida>.json     # un tramo de 2.2 GB
+tools/merge_index.py <dir_tramos> <dir_salida> \
+    --skip packs_1.json,packs_2.json,packs_3.json         # fusiona sumando las bases
 ```
 
-El índice fusionado (`streams.tsv`, `paths.tsv`, `ids.tsv`) **no se publica**: es un inventario de
-contenido. Lo que se publica es la cobertura, el método y la muestra.
+Correr ambos sobre el mismo paquete reproduce los conteos de este documento: 68 tramos, 1,489,677
+streams, 177,087 con nombre y 155,214 rutas únicas.
 
 ## Relación con la geometría de la TOC
 

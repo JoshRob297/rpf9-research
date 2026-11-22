@@ -80,15 +80,16 @@ To compare: run `tools/name_recover.py` over the same chunks of your own package
 unique names, apply the same salt, sort, and diff against the file. Missing hashes are streams
 your walker did not reach; extra ones are names we did not recover. Counts, not contents.
 
-## Reproducir
+## Reproduce
 
 ```
-tools/name_recover.py <tramo.bin> --out <salida>.json    # un tramo de 2.2 GB
-python3 merge_index.py                                   # fusiona y suma las bases
+tools/name_recover.py <tramo.bin> --out <salida>.json     # un tramo de 2.2 GB
+tools/merge_index.py <dir_tramos> <dir_salida> \
+    --skip packs_1.json,packs_2.json,packs_3.json         # fusiona sumando las bases
 ```
 
-El índice fusionado (`streams.tsv`, `paths.tsv`, `ids.tsv`) **no se publica**: es un inventario de
-contenido. Lo que se publica es la cobertura, el método y una muestra validada.
+Running both over the same package reproduces the counts in this document exactly: 68 chunks,
+1,489,677 streams, 177,087 named, 155,214 unique paths.
 
 ## Relation to the TOC geometry
 
