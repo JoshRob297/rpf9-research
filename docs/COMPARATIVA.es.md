@@ -69,7 +69,7 @@ cabeceras de enum, 72,455 valores) [verified]. Los conteos de marcas son por con
 recorrido avanza solo mientras esté `[0xAA;8]` en `+0x10` o `[0xEE;8]` en `+0x08`
 (`raw/comparativa/psin_census.py`) —, así que lo que se mide de forma independiente es que la
 ecuación de dos fases caiga exactamente en el final del cuerpo, no que las marcas existan [verified].
-Esos números son nuevos en esta tarea y también están escritos en `docs/PSIN.md:52-59` [verified].
+Esos números son nuevos en esta tarea y también están escritos en `docs/PSIN.md:54-61` [verified].
 
 ### Dónde coincidimos
 
@@ -123,7 +123,7 @@ razones distintas; el nuestro mantiene limpios los conteos, el suyo sigue devolv
 Un stream de 4,066 recorre otra cadena: `PSIN → PMAP → PSCH → PSIG → STNS → CHKS`
 (`anim.tail.bin @0x3ed8b0`, tamaños 260/56/144/20/1,352/20) [verified]. Ningún repositorio leído aquí
 menciona `PMAP`, `PSCH`, `PSIG` ni `STNS` (un grep sobre las tres fuentes no devuelve nada) [verified],
-y nuestros propios documentos describen solo la cadena principal (`docs/PSIN.md:38-49`). Un stream de
+y nuestros propios documentos describen solo la cadena principal (`docs/PSIN.md:28-40`). Un stream de
 4,066 no es un segundo formato, pero tampoco está explicado [hypothesis: una variante que usa otro
 tipo de recurso]. Es lo primero que hay que muestrear cuando se escriba un parser `PSIN` contra estos
 números.

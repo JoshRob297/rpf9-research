@@ -113,13 +113,14 @@ not something this script can show.
 # Section 2 is the shape histogram: 3,958 seven-chunk chains, 78 bare PSIN
 # headers, and one PSIN -> PMAP -> ... -> CHKS variant that no document in this
 # repository describes yet.
-# Section 3 is the framing test: of 23,829 boundaries that have a successor, the
-# stream's own next magic sits at pos + length in all 23,829 of them and at
-# pos + 8 + length in none. The fourth line is context, not a competing count:
-# 7,943 boundaries also hold four printable bytes eight bytes late, which is why
-# a checker has to compare against the successor instead of just looking for a
-# plausible tag. No chunk declares a length below 8.
-# Sections 4 and 5 are the body layouts that docs/PSIN.md:54-59 quotes: the
+# Section 3 states the successor count (23,829) because that is how the walk
+# advances, so the 100% row is by construction; it is not independent evidence.
+# What discriminates is the number of streams that end exactly at the inflated
+# size (3,959) and the body equations of sections 4-5, which a boundary shifted
+# by 8 bytes would not satisfy. The 7,943 plausible four-byte tags eight bytes
+# late show why a loose tag check is not enough either. No chunk declares a
+# length below 8.
+# Sections 4 and 5 are the body layouts that docs/PSIN.md:55-60 quotes: the
 # two-phase reading lands exactly on the body end 3,983 times for LSCH and 3,980
 # times for LENM, while the interleaved reading of PercyStar src/psin.rs:235
 # reaches the end in only 2,929 of the 3,980 LENM bodies.

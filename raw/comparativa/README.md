@@ -54,10 +54,12 @@ without translation.
 
 ## What each transcript supports
 
-`psin_census.txt` supports, in `docs/COMPARATIVA.md`, section 1: the 4,066-stream count, the
-23,829/0 framing split at `pos + length` versus `pos + 8 + length`, the zero chunks declaring a
-length below 8, the exact `LSCH` (3,983/3,983) and `LENM` (3,980/3,980) body equations, the
-2,929/3,980 reach of the interleaved `LENM` reading, and the 107 64 KiB prefixes.
+`psin_census.txt` supports, in `docs/COMPARATIVA.md`, section 1: the 4,066-stream count, the 3,959
+streams that end exactly at the inflated size (3,958 complete seven-chunk chains plus the PMAP
+variant), the 107 64 KiB prefixes, the zero chunks declaring a length below 8, the exact `LSCH`
+(3,983/3,983) and `LENM` (3,980/3,980) body equations, and the 2,929/3,980 reach of the interleaved
+`LENM` reading. Section 3 also prints the 23,829 successors; because the walk advances by that
+length, the 100% row is by construction and the exact-end counts are the discriminating evidence.
 
 `nested_scan.txt` supports section 2: the ten windows, the headers each scan finds at which offset,
 the `0xaa0` header that only the byte scan reaches, and the fact that the six 4 MiB census windows

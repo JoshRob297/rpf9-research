@@ -19,8 +19,10 @@ cabecera de 8 bytes**. Avanzar `8 + longitud` deja 8 bytes antes de la magia sig
 
 Esa sola regla es la diferencia entre un parser que lee un chunk y uno que lee la cadena. Medido
 sobre 73 streams: la magia siguiente está en `offset + longitud` en 56 de 56 casos donde el stream
-no está cortado a media estructura. Un barrido más amplio de 78 ventanas lo repite: 23,829 de
-23,829 sucesores caen en `offset + longitud` y ninguno en `offset + 8 + longitud`
+no está cortado a media estructura. Un barrido más amplio de 78 ventanas lo repite: 3,958 de 4,066
+streams recorren la cadena completa de siete chunks y terminan exactamente en el tamaño inflado, y la
+única variante PMAP es el final exacto número 3,959; los otros 107 son prefijos de 64 KiB cuyo último
+chunk declara una longitud mayor que el cuerpo, no fallas de framing
 (`raw/comparativa/psin_census.txt`).
 
 ## Resultado

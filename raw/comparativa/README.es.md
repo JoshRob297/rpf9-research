@@ -54,10 +54,13 @@ inglés, igual que `raw/payload.txt` y `raw/cabeceras.txt`, para que las afirmac
 
 ## Qué sostiene cada transcripción
 
-`psin_census.txt` sostiene, en `docs/COMPARATIVA.md`, la sección 1: el conteo de 4,066 streams, el
-reparto de framing 23,829/0 entre `pos + length` y `pos + 8 + length`, los cero chunks que declaran un
-largo menor que 8, las ecuaciones exactas de cuerpo `LSCH` (3,983/3,983) y `LENM` (3,980/3,980), el
-alcance 2,929/3,980 de la lectura intercalada de `LENM`, y los 107 prefijos de 64 KiB.
+`psin_census.txt` sostiene, en `docs/COMPARATIVA.md`, la sección 1: el conteo de 4,066 streams, los
+3,959 que terminan exactamente en el tamaño inflado (3,958 cadenas completas de siete chunks más la
+variante PMAP), los 107 prefijos de 64 KiB, los cero chunks que declaran un largo menor que 8, las
+ecuaciones exactas de cuerpo `LSCH` (3,983/3,983) y `LENM` (3,980/3,980), y el alcance 2,929/3,980 de
+la lectura intercalada de `LENM`. La sección 3 imprime además los 23,829 sucesores; como el recorrido
+avanza por ese largo, la fila del 100% es por construcción y los finales exactos son la evidencia
+discriminante.
 
 `nested_scan.txt` sostiene la sección 2: las diez ventanas, qué cabeceras encuentra cada escaneo y en
 qué offset, la cabecera de `0xaa0` a la que solo llega el escaneo byte a byte, y el hecho de que las
