@@ -9,6 +9,12 @@ with explicit provenance in priority order:
   3. SGD5 shader symbol tables ([VDHGMCP]S_*_Wrapped)
   4. Clean internal resource paths inside rsc50 / raw streams (when present)
 
+Every recovered name is also labelled by origin and strength (see the
+"Provenance labels" block below and docs/NAMES.md section 3): ``source`` says
+where the bytes came from, ``confidence`` says how much the evidence proves.
+The labels travel in a parallel ``labeled`` structure so the published
+``full_paths`` / ``identifiers`` arrays keep their type, length and order.
+
 Streams without recoverable names are recorded explicitly with status="unnamed"
 and never receive fabricated offset-based names.
 """
@@ -119,19 +125,220 @@ BINARY_TAG_STOPWORDS = frozenset(
 
 MAX_ZLIB_WINDOW = 4 * 1024 * 1024
 
+# ---------------------------------------------------------------------------
+# Provenance labels
+#
+# Two closed vocabularies, documented in docs/NAMES.md section 3:
+#
+#   source      where the bytes came from
+#               xml_mount | xml_chunk | literal | pattern | inferred
+#   confidence  how much those bytes prove
+#               confirmed | probable | candidate
+#
+# The classification is a rule table, not an opaque score. Each extractor tags
+# a candidate with the *channel* that found it (which tag, which regex), and
+# label_candidate() maps (stream_type, channel, kind, is_mount_xml) to exactly
+# one (source, confidence) pair. Channels are internal: they are stripped from
+# the published ``candidates`` arrays, whose shape does not change.
+# ---------------------------------------------------------------------------
+
+SOURCE_XML_MOUNT = "xml_mount"
+SOURCE_XML_CHUNK = "xml_chunk"
+SOURCE_LITERAL = "literal"
+SOURCE_PATTERN = "pattern"
+SOURCE_INFERRED = "inferred"
+
+CONFIDENCE_CONFIRMED = "confirmed"
+CONFIDENCE_PROBABLE = "probable"
+CONFIDENCE_CANDIDATE = "candidate"
+
+SOURCES: tuple[str, ...] = (
+    SOURCE_XML_MOUNT,
+    SOURCE_XML_CHUNK,
+    SOURCE_LITERAL,
+    SOURCE_PATTERN,
+    SOURCE_INFERRED,
+)
+CONFIDENCES: tuple[str, ...] = (
+    CONFIDENCE_CONFIRMED,
+    CONFIDENCE_PROBABLE,
+    CONFIDENCE_CANDIDATE,
+)
+
+CHANNEL_XML_PATH_TAG = "xml_path_tag"
+CHANNEL_XML_ID_TAG = "xml_id_tag"
+CHANNEL_XML_OTHER_TAG = "xml_other_tag"
+CHANNEL_XML_ATTR = "xml_attr"
+CHANNEL_XML_TEXT = "xml_text"
+CHANNEL_CSTRING = "cstring"
+CHANNEL_SCHEME = "scheme"
+CHANNEL_SGD5 = "sgd5"
+
+# Channels where an XML tag or attribute declares the value as a path or an
+# identity. Everything else was matched by shape only.
+DECLARED_XML_CHANNELS = frozenset(
+    {CHANNEL_XML_PATH_TAG, CHANNEL_XML_ID_TAG, CHANNEL_XML_ATTR}
+)
+
+# When one stream yields the same (kind, name) twice, the strongest channel
+# keeps the label. Rank is evidence strength, not source priority.
+CHANNEL_RANK = {
+    CHANNEL_XML_PATH_TAG: 5,
+    CHANNEL_XML_ID_TAG: 5,
+    CHANNEL_XML_ATTR: 4,
+    CHANNEL_CSTRING: 4,
+    CHANNEL_SGD5: 4,
+    CHANNEL_XML_OTHER_TAG: 2,
+    CHANNEL_SCHEME: 2,
+    CHANNEL_XML_TEXT: 1,
+}
+
+# Tags that declare a path. Same set the value classifier already trusts in
+# _classify_xml_value().
+XML_PATH_TAGS = frozenset({"filename", "loadPath", "exportPath", "datFile", "packFile"})
+
+# Root elements that make an inflated XML a mount manifest. Measured over the
+# 78 sample windows: 52 CDataFileMgr__ContentChangeSetDef + 8
+# CDataFileMgr__ContentDef = 60 of the 477 XML streams (raw/etiquetas.txt).
+MOUNT_XML_ROOTS = frozenset({"CDataFileMgr__ContentChangeSetDef", "CDataFileMgr__ContentDef"})
+
+XML_COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
+XML_ROOT_RE = re.compile(r"^\s*(?:<\?xml[^>]*\?>\s*)?<([A-Za-z0-9_]+)")
+
+
+def is_mount_xml(text: str) -> bool:
+    """True when the document's root element is a mount manifest."""
+    head = XML_COMMENT_RE.sub("", text[:8192])
+    match = XML_ROOT_RE.match(head)
+    return bool(match and match.group(1) in MOUNT_XML_ROOTS)
+
+
+def _xml_tag_channel(tag: str) -> str:
+    """Evidence channel for a value found inside <tag>...</tag>.
+
+    The channel follows the tag, not the inferred kind: ``<id>common:/x.meta</id>``
+    is classified as a full path by shape, but the manifest is still declaring
+    an identity, so it belongs to the identity channel.
+    """
+    if tag in XML_PATH_TAGS:
+        return CHANNEL_XML_PATH_TAG
+    if tag in XML_ID_TAGS:
+        return CHANNEL_XML_ID_TAG
+    return CHANNEL_XML_OTHER_TAG
+
+
+def label_candidate(
+    *,
+    stream_type: str,
+    channel: str,
+    kind: str,
+    mount_xml: bool = False,
+) -> tuple[str, str]:
+    """Return (source, confidence) for one recovered name.
+
+    Rules are evaluated top to bottom and the first match wins. The table is
+    exhaustive over the channels this module emits; an unknown channel falls
+    through to the weakest label instead of dropping the name.
+    """
+    # 1. SGD5 shader symbol: stored inline as name\\0 + 17-byte header + DXBC.
+    #    Complete literal with a declaring structure.
+    if channel == CHANNEL_SGD5:
+        return SOURCE_LITERAL, CONFIDENCE_CONFIRMED
+
+    # 2. scheme:/ path matched by regex anywhere in inflated bytes. The path
+    #    template is known; the declaring structure is not.
+    if channel == CHANNEL_SCHEME:
+        return SOURCE_PATTERN, CONFIDENCE_PROBABLE
+
+    # 3. Null-terminated string (both ends delimited). A full path is a
+    #    literal name; a bare token only matches the identifier grammar.
+    if channel == CHANNEL_CSTRING:
+        if kind == "full_path":
+            return SOURCE_LITERAL, CONFIDENCE_CONFIRMED
+        return SOURCE_INFERRED, CONFIDENCE_CANDIDATE
+
+    # 4. XML channels. "Declared" means the value sits in a tag or attribute
+    #    known to carry paths or identities; otherwise it was matched by shape.
+    declared = channel in DECLARED_XML_CHANNELS
+    strength = CONFIDENCE_CONFIRMED if declared else CONFIDENCE_PROBABLE
+
+    if stream_type == "xml_chunk":
+        # Continuation fragment: the root element is cut off, so it cannot be
+        # proven to be a mount manifest even when the tags survive.
+        return SOURCE_XML_CHUNK, strength
+    if stream_type == "xml" and mount_xml:
+        return SOURCE_XML_MOUNT, strength
+    if stream_type == "xml":
+        # A full XML document that is not a mount manifest: declared values are
+        # still literals in a stream, but they mount nothing.
+        if declared:
+            return SOURCE_LITERAL, CONFIDENCE_CONFIRMED
+        return SOURCE_PATTERN, CONFIDENCE_PROBABLE
+
+    return SOURCE_INFERRED, CONFIDENCE_CANDIDATE
+
 
 def _add_candidate(
     candidates: list[dict[str, str]],
-    seen: set[tuple[str, str]],
+    index: dict[tuple[str, str], int],
     value: str,
     kind: str,
     source: str,
+    channel: str,
 ) -> None:
     key = (kind, value)
-    if key in seen:
+    position = index.get(key)
+    if position is not None:
+        current = candidates[position]["channel"]
+        if CHANNEL_RANK.get(channel, 0) > CHANNEL_RANK.get(current, 0):
+            candidates[position]["channel"] = channel
         return
-    seen.add(key)
-    candidates.append({"name": value, "kind": kind, "source": source})
+    index[key] = len(candidates)
+    candidates.append(
+        {"name": value, "kind": kind, "source": source, "channel": channel}
+    )
+
+
+def _split_names(candidates: list[dict[str, str]]) -> tuple[list[str], list[str]]:
+    """Sorted, deduplicated names, exactly as published in full_paths/identifiers."""
+    return (
+        sorted({c["name"] for c in candidates if c["kind"] == "full_path"}),
+        sorted({c["name"] for c in candidates if c["kind"] == "identifier"}),
+    )
+
+
+def _labeled_block(
+    candidates: list[dict[str, str]],
+    stream_type: str,
+    mount_xml: bool,
+    full_paths: list[str],
+    identifiers: list[str],
+) -> dict[str, list[dict[str, str]]]:
+    """Build ``labeled``, index by index parallel to the two published arrays."""
+    by_key = {(c["kind"], c["name"]): c for c in candidates}
+
+    def entry(kind: str, name: str) -> dict[str, str]:
+        channel = by_key[(kind, name)]["channel"]
+        source, confidence = label_candidate(
+            stream_type=stream_type,
+            channel=channel,
+            kind=kind,
+            mount_xml=mount_xml,
+        )
+        return {"name": name, "source": source, "confidence": confidence}
+
+    return {
+        "full_paths": [entry("full_path", name) for name in full_paths],
+        "identifiers": [entry("identifier", name) for name in identifiers],
+    }
+
+
+def _public_candidates(candidates: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Strip the internal channel; the published candidate shape is unchanged."""
+    return [
+        {"name": c["name"], "kind": c["kind"], "source": c["source"]}
+        for c in candidates
+    ]
 
 
 def _classify_xml_value(value: str, from_tag: str | None = None) -> str | None:
@@ -170,19 +377,28 @@ def extract_from_xml(out: bytes, source: str = "xml") -> list[dict[str, str]]:
     """Extract deduplicated full paths and identifiers from inflated XML or XML chunks."""
     txt = out.decode("utf-8-sig", errors="replace")
     candidates: list[dict[str, str]] = []
-    seen: set[tuple[str, str]] = set()
+    index: dict[tuple[str, str], int] = {}
 
     # Pass 1: structured XML tags known to carry paths or resource identifiers
     for tag, val in XML_TAG_VAL_RE.findall(txt):
         kind = _classify_xml_value(val, from_tag=tag)
         if kind is not None:
-            _add_candidate(candidates, seen, val.strip(), kind, source)
+            _add_candidate(
+                candidates,
+                index,
+                val.strip(),
+                kind,
+                source,
+                _xml_tag_channel(tag),
+            )
 
     # Pass 2: path/file XML attributes (e.g. xi:include href="...meta")
     for val in XML_ATTR_VAL_RE.findall(txt):
         kind = _classify_xml_value(val, from_tag="filename")
         if kind is not None:
-            _add_candidate(candidates, seen, val.strip(), kind, source)
+            _add_candidate(
+                candidates, index, val.strip(), kind, source, CHANNEL_XML_ATTR
+            )
 
     # Pass 3: any text node containing a path or target extension
     for m in XML_TEXT_RE.finditer(txt):
@@ -190,7 +406,9 @@ def extract_from_xml(out: bytes, source: str = "xml") -> list[dict[str, str]]:
         if "/" in val or EXT_SUFFIX_RE.search(val) or val.startswith("$(") or ":/" in val:
             kind = _classify_xml_value(val, from_tag=None)
             if kind is not None:
-                _add_candidate(candidates, seen, val, kind, source)
+                _add_candidate(
+                    candidates, index, val, kind, source, CHANNEL_XML_TEXT
+                )
 
     return candidates
 
@@ -231,18 +449,18 @@ def classify_binary_string(s: str) -> str | None:
 def extract_from_container(out: bytes, source: str) -> list[dict[str, str]]:
     """Extract clean paths/identifiers from PSIN, 0DRP, rsc50, or raw binary payloads."""
     candidates: list[dict[str, str]] = []
-    seen: set[tuple[str, str]] = set()
+    index: dict[tuple[str, str], int] = {}
 
     for m in CLEAN_SCHEME_RE.finditer(out):
         s = m.group(0).decode("ascii", errors="ignore")
         if len(s) >= 5:
-            _add_candidate(candidates, seen, s, "full_path", source)
+            _add_candidate(candidates, index, s, "full_path", source, CHANNEL_SCHEME)
 
     for m in CSTR_RE.finditer(out):
         s = m.group(1).decode("ascii", errors="ignore")
         kind = classify_binary_string(s)
         if kind is not None:
-            _add_candidate(candidates, seen, s, kind, source)
+            _add_candidate(candidates, index, s, kind, source, CHANNEL_CSTRING)
 
     return candidates
 
@@ -320,7 +538,15 @@ def _scan_sgd5_entries(data: bytes, file_name: str) -> list[dict[str, Any]]:
             except zlib.error:
                 pass
 
-        candidates = [{"name": sym, "kind": "identifier", "source": "sgd5"}]
+        candidates = [
+            {
+                "name": sym,
+                "kind": "identifier",
+                "source": "sgd5",
+                "channel": CHANNEL_SGD5,
+            }
+        ]
+        full_paths, identifiers = _split_names(candidates)
         entries.append(
             {
                 "file": file_name,
@@ -330,9 +556,12 @@ def _scan_sgd5_entries(data: bytes, file_name: str) -> list[dict[str, Any]]:
                 "inflated_bytes": inflated_bytes,
                 "stream_type": stream_type,
                 "status": "named",
-                "full_paths": [],
-                "identifiers": [sym],
-                "candidates": candidates,
+                "full_paths": full_paths,
+                "identifiers": identifiers,
+                "labeled": _labeled_block(
+                    candidates, stream_type, False, full_paths, identifiers
+                ),
+                "candidates": _public_candidates(candidates),
             }
         )
     return entries
@@ -354,8 +583,13 @@ def recover_file(path: Path) -> list[dict[str, Any]]:
         if res is not None:
             out, comp_bytes = res
             stype = _classify_zlib_stream(out)
+            mount_xml = False
             if stype in ("xml", "xml_chunk"):
                 candidates = extract_from_xml(out, source="xml")
+                if stype == "xml":
+                    mount_xml = is_mount_xml(
+                        out.decode("utf-8-sig", errors="replace")
+                    )
             elif stype == "PSIN":
                 candidates = extract_from_container(out, source="psin")
             elif stype == "0DRP":
@@ -365,8 +599,7 @@ def recover_file(path: Path) -> list[dict[str, Any]]:
             else:
                 candidates = extract_from_container(out, source="raw_stream")
 
-            full_paths = sorted({c["name"] for c in candidates if c["kind"] == "full_path"})
-            identifiers = sorted({c["name"] for c in candidates if c["kind"] == "identifier"})
+            full_paths, identifiers = _split_names(candidates)
             streams.append(
                 {
                     "file": path.name,
@@ -378,7 +611,10 @@ def recover_file(path: Path) -> list[dict[str, Any]]:
                     "status": "named" if candidates else "unnamed",
                     "full_paths": full_paths,
                     "identifiers": identifiers,
-                    "candidates": candidates,
+                    "labeled": _labeled_block(
+                        candidates, stype, mount_xml, full_paths, identifiers
+                    ),
+                    "candidates": _public_candidates(candidates),
                 }
             )
             pos = idx + comp_bytes
@@ -402,6 +638,10 @@ def build_summary(streams: list[dict[str, Any]], files_scanned: int) -> dict[str
     unique_paths: set[str] = set()
     unique_ids: set[str] = set()
     target_ext_hits: Counter[str] = Counter()
+    labeled_total = 0
+    by_confidence: Counter[str] = Counter()
+    by_source: Counter[str] = Counter()
+    confidence_by_type: dict[str, Counter[str]] = {}
 
     for s in streams:
         st = s["stream_type"]
@@ -418,6 +658,14 @@ def build_summary(streams: list[dict[str, Any]], files_scanned: int) -> dict[str
             m = TARGET_EXT_RE.search(c["name"])
             if m:
                 target_ext_hits[m.group(0).lower()] += 1
+        # Label counts are name mentions (one per stream entry), not unique
+        # strings: they describe the same mention stream as candidates[].
+        type_counter = confidence_by_type.setdefault(st, Counter())
+        for entry in s["labeled"]["full_paths"] + s["labeled"]["identifiers"]:
+            labeled_total += 1
+            by_confidence[entry["confidence"]] += 1
+            by_source[entry["source"]] += 1
+            type_counter[entry["confidence"]] += 1
 
     for bucket in by_type.values():
         t = bucket["total"]
@@ -434,6 +682,18 @@ def build_summary(streams: list[dict[str, Any]], files_scanned: int) -> dict[str
         "by_stream_type": by_type,
         "candidate_mentions_by_source": dict(source_hits),
         "target_extension_mentions": dict(sorted(target_ext_hits.items())),
+        "labeled": {
+            "total_names": labeled_total,
+            "by_confidence": {conf: by_confidence.get(conf, 0) for conf in CONFIDENCES},
+            "by_source": {src: by_source.get(src, 0) for src in SOURCES},
+            "by_stream_type": {
+                st: {
+                    "total": sum(counter.values()),
+                    **{conf: counter.get(conf, 0) for conf in CONFIDENCES},
+                }
+                for st, counter in sorted(confidence_by_type.items())
+            },
+        },
     }
 
 
@@ -579,6 +839,16 @@ def format_human(report: dict[str, Any]) -> str:
     lines.append("")
     lines.append(f"Candidate mentions by source: {s['candidate_mentions_by_source']}")
     lines.append(f"Target extension mentions: {s['target_extension_mentions']}")
+    lab = s["labeled"]
+    conf = lab["by_confidence"]
+    lines.append(
+        "Labeled name mentions: total={} confirmed={} probable={} candidate={}".format(
+            lab["total_names"],
+            conf["confirmed"],
+            conf["probable"],
+            conf["candidate"],
+        )
+    )
     if "validation" in report:
         val = report["validation"]
         lines.append("")
