@@ -81,7 +81,8 @@ Esos números son nuevos en esta tarea y también están escritos en `docs/PSIN.
    nuestro `raw/payload.txt`) [verified].
 3. **`LSCH` es cabeceras primero, con la puerta `0xAA`.** `PercyStar/src/vehicle_data.rs:287-320`
    enuncia la regla en un comentario y la implementa; nuestro censo halla la lectura cabeceras
-   primero exacta en 3,983 de 3,983 cuerpos `LSCH` [verified]. Ambas implementaciones coinciden, que es lo útil.
+   primero exacta en 3,983 de 3,983 cuerpos `LSCH` [verified]. Ambas implementaciones coinciden, que
+   es lo útil.
 4. **Un chunk corto o que se pasa termina la cadena.** `PercyStar/src/psin.rs:194` corta con
    `sz < 8 || pos + sz > len`; nuestro censo se detiene en el mismo exceso y descarta el stream
    completo, la política que describe `docs/PSIN.md:70-72` [verified]. La rama `sz < 8` nunca se
@@ -198,9 +199,10 @@ tamaño por contenedor [verified]. Ninguna de las dos herramientas descifra la T
 adivinan la extensión del contenedor desde el trailer; la nuestra usa una tabla de valores observados
 de block 0 indexada por `w24` más una comprobación de entropía (`tools/rpf9.py:282-299`), la suya usa
 el último byte distinto de cero antes del archivo siguiente
-(`rpf9-extract/src/container.rs:95-105`) [verified]. La nuestra es exacta cuando la tabla de block 0 tiene el `w24`; si no, cae al hueco de ceros antes
-de la cabecera siguiente y reporta `unbounded` cuando no hay cabecera siguiente en la ventana. La
-suya es general pero heurística. Es un intercambio real, no una victoria clara.
+(`rpf9-extract/src/container.rs:95-105`) [verified]. La nuestra es exacta cuando la tabla de block 0
+tiene el `w24`; si no, cae al hueco de ceros antes de la cabecera siguiente y reporta `unbounded`
+cuando no hay cabecera siguiente en la ventana. La suya es general pero heurística. Es un intercambio
+real, no una victoria clara.
 
 ## 3. Geometría de la tabla
 
@@ -223,12 +225,13 @@ de 20,784 B, que su aritmética lee como 1,299 registros para 2,078 entradas
 
 ### Nuestro modelo: la cabecera predice la tabla
 
-`w04 - w08 == ceil(paso * w24 / 16) * 16` con `paso = 9` o `10` según el byte bajo de `+0x2c`, y `12` en los casos limpios de mitad alta 2 (`docs/RPF9.md:30`, `docs/NESTED.md:26-33`) [verified]. Se cumple 54/54 para 9, 15/15 para 10 (69/69 en el conjunto de mitad alta 1) y 22/22 en los 22
-fixtures externos
-(`raw/cabeceras/README.md:42`); para mitad alta 2 encaja 12 en 13 casos limpios más 2 que necesitan
-`w24 + 1`, con una cabecera que sigue usando paso 10 (`docs/NESTED.md:29-33`) [verified]. Eso es lo
-que permite que una cabecera prediga el tamaño de su propia sub-tabla y que el censo anidado informe
-cuentas de entradas sin descifrar nada [verified].
+`w04 - w08 == ceil(paso * w24 / 16) * 16` con `paso = 9` o `10` según el byte bajo de `+0x2c`, y
+`12` en los casos limpios de mitad alta 2 (`docs/RPF9.md:30`, `docs/NESTED.md:26-33`) [verified]. Se
+cumple 54/54 para 9, 15/15 para 10 (69/69 en el conjunto de mitad alta 1) y 22/22 en los 22 fixtures
+externos (`raw/cabeceras/README.md:42`); para mitad alta 2 encaja 12 en 13 casos limpios más 2 que
+necesitan `w24 + 1`, con una cabecera que sigue usando paso 10 (`docs/NESTED.md:29-33`) [verified].
+Eso es lo que permite que una cabecera prediga el tamaño de su propia sub-tabla y que el censo
+anidado informe cuentas de entradas sin descifrar nada [verified].
 
 ### Qué es mejor, y para qué
 
@@ -240,9 +243,10 @@ que 1,299 en lugar de 2,078 les cuesta un número impreso, no una extracción [v
 comprobación de alineación que sí aplican es además un filtro útil de falsos positivos que nuestro
 validador de cabecera no tiene [verified].
 
-Para **describir el contenedor**, el modelo de paso es el que coincide con el formato: explica el ancho de `[w08..w04)`, por qué esa región se rellena a 16, y da el ancho para las 18
-cabeceras de mitad alta 2 [verified]. Sin él, la única salida honesta
-es "la región mide N bytes", que es a lo que equivale su `records()`.
+Para **describir el contenedor**, el modelo de paso es el que coincide con el formato: explica el
+ancho de `[w08..w04)`, por qué esa región se rellena a 16, y da el ancho para las 18 cabeceras de
+mitad alta 2 [verified]. Sin él, la única salida honesta es "la región mide N bytes", que es a lo
+que equivale su `records()`.
 
 Dos puntos flojos nuestros, dichos sin adornos. Nuestra herramienta calcula la fórmula pero no la
 exige: `tools/rpf9.py:86-92` anota si la predicción coincide y acepta la cabecera en cualquier caso
