@@ -1,0 +1,26 @@
+## cadenas
+-- https://play.googleapis.com/log
+107152467:https://play.googleapis.com/log
+-- --disable_telemetry
+106427374:--disable_telemetry
+107348835:--disable_telemetry
+-- datacollection_opt_in=false
+106970815:datacollection_opt_in=false
+-- antigravity_ide_installation_id
+107152529:antigravity_ide_installation_id
+-- clearcut_go_client_telemetry
+41984616:clearcut_go_client_telemetry
+41984743:clearcut_go_client_telemetry
+41984872:clearcut_go_client_telemetry
+41985005:clearcut_go_client_telemetry
+41985132:clearcut_go_client_telemetry
+41985261:clearcut_go_client_telemetry
+-- clearcut.Client
+204259785:clearcut.Client
+205662963:clearcut.Client
+206420636:clearcut.Client
+
+## contexto del endpoint de Play Log
+=== match 0 offset=107152467 (0x6630453) pattern='https://play.googleapis.com/log'
+t URL %q: %wappendAgentRemoteSessionMessageMaking Vertex AI request to: %santigravity.%s.env_%s.tier_paidunexpected probe HTTP status %dfailed to download image %s: %vhttps://*.cloudworkstations.devdebug bundle size limit reachedfailed to read request body: %vhttps://play.googleapis.com/logtrajectory %s not found on diskantigravity_ide_installation_idFetchAvailableModels failed: %vresponse.request_id is requireddialogue_history/agent_thoughtsdialogue_history/agent_responsefailed to send audio to backendaudio sessio
+

@@ -1,0 +1,416 @@
+# Evidencia agy.bin (T-RE-DETECT)
+# generado: 2026-11-23T09:40:15-06:00
+# comando: tools/collect_evidence.sh agy.bin (copia local)
+
+## identidad del binario
+path=agy.bin (copia local) size=273879752 mtime=2026-11-23 09:15:28.879262243 -0600
+7b004d26c3fdea25a7c9d456de4bfaccef4be1e4cc7fd6db628859c5c941fa2d  agy.bin (copia local)
+agy.bin (copia local): ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[md5/uuid]=92653660fa3b85c980bb341e3c58790e, stripped
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Position-Independent Executable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x72bf000
+  Start of program headers:          64 (bytes into file)
+
+## go buildinfo
+
+Hex dump of section '.go.buildinfo':
+  0x0dba7760 ff20476f 20627569 6c64696e 663a0802 . Go buildinf:..
+  0x0dba7770 00000000 00000000 00000000 00000000 ................
+  0x0dba7780 60676f31 2e32382d 32303236 31313032 `go1.28-20261102
+  0x0dba7790 2d524330 3120636c 2f313031 32353634 -RC01 cl/1012564
+  0x0dba77a0 33303520 2b323938 66353365 34383320 305 +298f53e483 
+  0x0dba77b0 583a6669 656c6474 7261636b 2c626f72 X:fieldtrack,bor
+  0x0dba77c0 696e6763 72797074 6f2c6e6f 676f6c69 ingcrypto,nogoli
+  0x0dba77d0 73746578 706f7274 6e657766 6f726d61 stexportnewforma
+  0x0dba77e0 74000000 00000000 00000000 00000000 t...............
+
+
+## UA: literales y candidatos numericos
+binary: agy.bin (copia local) (273879752 bytes)
+template         @ 0x6500cc2  '%s/%s/%s (%s)'
+aidev_client     @ 0x64e76e2  'aidev_client'
+os_type          @ 0x64b052f  'os_type=%s'
+arch             @ 0x6466a71  'arch=%s'
+cl               @ 0x64468d7  'cl=%d'
+auth_method      @ 0x6518d7d  'auth_method=%s'
+separator        @ [0x2a1658, 0x5f41e8, 0x5f6450, 0x9e7ca1, 0x9e7cb9, 0x9e7cd1, 0xa9b1e9, 0x1084e69]  '; '
+datacollection   @ 0x6603ebf  'datacollection_opt_in=false'
+host_path        @ 0x64e76ee  'host_path=%s'
+proxy_client     @ 0x652f059  'proxy_client=%s'
+purpose          @ 0x64b0539  'purpose=%s'
+
+numeric candidates (10 digits, NUL-terminated):
+  1027820220 @ 0x6ff2a80
+  1027820220 @ 0x6ff2a90
+  1795406304 @ 0x6ff2aa0
+  1220703125 @ 0x726c6dd
+  1027820220 @ 0x72b5580
+  1795406304 @ 0x72b6800
+  1027820220 @ 0x72b6c60
+  1220703125 @ 0xe148e1b
+  1027820220 @ 0xe16e0a1
+  1795406304 @ 0xe16f321
+  1027820220 @ 0xe16f781
+
+template: antigravity/cli/<version> (<parts joined by '; '>)
+  - aidev_client
+  - os_type=<runtime GOOS>
+  - arch=<runtime GOARCH>
+  - cl=<10-digit build changelist>
+  - auth_method=<auth method>
+  - optional: datacollection_opt_in=false
+  - optional: host_path=<path>
+  - optional: proxy_client=<name>
+  - optional: purpose=<purpose>
+
+## funcion que construye la UA
+   0x95de7c0  entryoff=0x231f7c0  google3/third_party/jetski/language_server/code_assist_client/codeassistclient.userAgent
+
+## literales exactos
+-- antigravity/cli/
+-- aidev_client
+105805538:aidev_client
+-- os_type=%s
+105579823:os_type=%s
+-- arch=%s
+105278065:arch=%s
+-- cl=%d
+105146583:cl=%d
+-- auth_method=%s
+106007933:auth_method=%s
+-- %s/%s/%s (%s)
+105909442:%s/%s/%s (%s)
+-- 1027820220
+117385856:1027820220
+117385872:1027820220
+117390813:1027820220
+120280448:1027820220
+120281053:1027820220
+120286304:1027820220
+-- 1.5.14
+37924754:1b5c14
+37952519:1b5c14
+38102643:1b5c14
+38102817:1b5c14
+116627742:1.5.14
+208670597:1b5c14
+
+## disasm: construccion de la UA (partes y cl)
+ 95de900:	48 8b 15 39 b8 36 04 	mov    rdx,QWORD PTR [rip+0x436b839]        # d94a140 <_ZTISt10bad_typeid@@Base+0x5f6c80>
+ 95de907:	48 89 94 24 d0 00 00 	mov    QWORD PTR [rsp+0xd0],rdx
+ 95de90e:	00 
+ 95de90f:	48 8d 15 52 a6 11 03 	lea    rdx,[rip+0x311a652]        # c6f8f68 <__fxstat@plt+0xfd9ed8>
+ 95de916:	48 89 94 24 a8 01 00 	mov    QWORD PTR [rsp+0x1a8],rdx
+ 95de91d:	00 
+ 95de91e:	48 8d 15 7b 2f 34 02 	lea    rdx,[rip+0x2342f7b]        # b9218a0 <__fxstat@plt+0x202810>
+ 95de925:	48 89 94 24 b0 01 00 	mov    QWORD PTR [rsp+0x1b0],rdx
+ 95de92c:	00 
+ 95de92d:	48 8d 05 fb 1b ed fc 	lea    rax,[rip+0xfffffffffced1bfb]        # 64b052f <_cgo_topofstack@@Base-0xea8ef1>
+ 95de934:	bb 0a 00 00 00       	mov    ebx,0xa
+ 95de939:	48 8d 8c 24 a8 01 00 	lea    rcx,[rsp+0x1a8]
+ 95de940:	00 
+ 95de941:	bf 01 00 00 00       	mov    edi,0x1
+ 95de946:	89 fe                	mov    esi,edi
+ 95de948:	e8 53 d9 e0 fd       	call   73ec2a0 <_cgo_topofstack@@Base+0x92e80>
+ 95de94d:	48 89 84 24 d8 01 00 	mov    QWORD PTR [rsp+0x1d8],rax
+ 95de954:	00 
+ 95de955:	48 89 9c 24 b8 00 00 	mov    QWORD PTR [rsp+0xb8],rbx
+ 95de95c:	00 
+ 95de95d:	48 8d 15 04 a6 11 03 	lea    rdx,[rip+0x311a604]        # c6f8f68 <__fxstat@plt+0xfd9ed8>
+ 95de964:	48 89 94 24 98 01 00 	mov    QWORD PTR [rsp+0x198],rdx
+ 95de96b:	00 
+ 95de96c:	48 8d 15 3d 2f 34 02 	lea    rdx,[rip+0x2342f3d]        # b9218b0 <__fxstat@plt+0x202820>
+ 95de973:	48 89 94 24 a0 01 00 	mov    QWORD PTR [rsp+0x1a0],rdx
+ 95de97a:	00 
+ 95de97b:	48 8d 05 ef 80 e8 fc 	lea    rax,[rip+0xfffffffffce880ef]        # 6466a71 <_cgo_topofstack@@Base-0xef29af>
+ 95de982:	bb 07 00 00 00       	mov    ebx,0x7
+ 95de987:	48 8d 8c 24 98 01 00 	lea    rcx,[rsp+0x198]
+ 95de98e:	00 
+ 95de98f:	bf 01 00 00 00       	mov    edi,0x1
+ 95de994:	89 fe                	mov    esi,edi
+ 95de996:	e8 05 d9 e0 fd       	call   73ec2a0 <_cgo_topofstack@@Base+0x92e80>
+ 95de99b:	48 89 84 24 d0 01 00 	mov    QWORD PTR [rsp+0x1d0],rax
+ 95de9a2:	00 
+ 95de9a3:	48 89 9c 24 b0 00 00 	mov    QWORD PTR [rsp+0xb0],rbx
+ 95de9aa:	00 
+ 95de9ab:	31 c0                	xor    eax,eax
+ 95de9ad:	bb 03 00 00 00       	mov    ebx,0x3
+ 95de9b2:	31 c9                	xor    ecx,ecx
+ 95de9b4:	89 df                	mov    edi,ebx
+ 95de9b6:	48 8d 35 ab a5 11 03 	lea    rsi,[rip+0x311a5ab]        # c6f8f68 <__fxstat@plt+0xfd9ed8>
+ 95de9bd:	0f 1f 00             	nop    DWORD PTR [rax]
+ 95de9c0:	e8 3b 53 d7 fd       	call   7353d00 <_cgo_topofstack@@Base-0x5720>
+ 95de9c5:	48 c7 40 08 0c 00 00 	mov    QWORD PTR [rax+0x8],0xc
+ 95de9cc:	00 
+ 95de9cd:	83 3d bc ac 6a 07 00 	cmp    DWORD PTR [rip+0x76aacbc],0x0        # 10c89690 <_ZTISt10bad_typeid@@Base+0x39361d0>
+ 95de9d4:	75 12                	jne    95de9e8 <crosscall2@@Base+0x2163408>
+ 95de9d6:	48 8b 94 24 d8 01 00 	mov    rdx,QWORD PTR [rsp+0x1d8]
+ 95de9dd:	00 
+ 95de9de:	4c 8b 84 24 d0 01 00 	mov    r8,QWORD PTR [rsp+0x1d0]
+ 95de9e5:	00 
+ 95de9e6:	eb 33                	jmp    95dea1b <crosscall2@@Base+0x216343b>
+ 95de9e8:	48 8b 10             	mov    rdx,QWORD PTR [rax]
+ 95de9eb:	4c 8b 40 10          	mov    r8,QWORD PTR [rax+0x10]
+ 95de9ef:	4c 8b 48 20          	mov    r9,QWORD PTR [rax+0x20]
+ 95de9f3:	e8 28 ab d7 fd       	call   7359520 <_cgo_topofstack@@Base+0x100>
+ 95de9f8:	49 89 13             	mov    QWORD PTR [r11],rdx
+ 95de9fb:	48 8b 94 24 d8 01 00 	mov    rdx,QWORD PTR [rsp+0x1d8]
+ 95dea02:	00 
+ 95dea03:	49 89 53 08          	mov    QWORD PTR [r11+0x8],rdx
+ 95dea07:	4d 89 43 10          	mov    QWORD PTR [r11+0x10],r8
+ 95dea0b:	4c 8b 84 24 d0 01 00 	mov    r8,QWORD PTR [rsp+0x1d0]
+ 95dea12:	00 
+ 95dea13:	4d 89 43 18          	mov    QWORD PTR [r11+0x18],r8
+ 95dea17:	4d 89 4b 20          	mov    QWORD PTR [r11+0x20],r9
+ 95dea1b:	48 89 4c 24 78       	mov    QWORD PTR [rsp+0x78],rcx
+ 95dea20:	48 89 84 24 f8 00 00 	mov    QWORD PTR [rsp+0xf8],rax
+ 95dea27:	00 
+ 95dea28:	4c 8d 0d b3 8c f0 fc 	lea    r9,[rip+0xfffffffffcf08cb3]        # 64e76e2 <_cgo_topofstack@@Base-0xe71d3e>
+ 95dea2f:	4c 89 08             	mov    QWORD PTR [rax],r9
+ 95dea32:	4c 8b 8c 24 b8 00 00 	mov    r9,QWORD PTR [rsp+0xb8]
+ 95dea39:	00 
+ 95dea3a:	4c 89 48 18          	mov    QWORD PTR [rax+0x18],r9
+ 95dea3e:	48 89 50 10          	mov    QWORD PTR [rax+0x10],rdx
+ 95dea42:	48 8b 94 24 b0 00 00 	mov    rdx,QWORD PTR [rsp+0xb0]
+ 95dea49:	00 
+ 95dea4a:	48 89 50 28          	mov    QWORD PTR [rax+0x28],rdx
+ 95dea4e:	4c 89 40 20          	mov    QWORD PTR [rax+0x20],r8
+ 95dea52:	48 8b 15 b7 92 6a 07 	mov    rdx,QWORD PTR [rip+0x76a92b7]        # 10c87d10 <_ZTISt10bad_typeid@@Base+0x3934850>
+ 95dea59:	48 85 d2             	test   rdx,rdx
+ 95dea5c:	75 24                	jne    95dea82 <crosscall2@@Base+0x21634a2>
+ 95dea5e:	48 8b 05 db c9 24 04 	mov    rax,QWORD PTR [rip+0x424c9db]        # d82b440 <_ZTISt10bad_typeid@@Base+0x4d7f80>
+ 95dea65:	48 8b 1d dc c9 24 04 	mov    rbx,QWORD PTR [rip+0x424c9dc]        # d82b448 <_ZTISt10bad_typeid@@Base+0x4d7f88>
+ 95dea6c:	90                   	nop
+ 95dea6d:	e8 6e e2 da fd       	call   738cce0 <_cgo_topofstack@@Base+0x338c0>
+ 95dea72:	48 8b 4c 24 78       	mov    rcx,QWORD PTR [rsp+0x78]
+ 95dea77:	48 89 c2             	mov    rdx,rax
+ 95dea7a:	48 8b 84 24 f8 00 00 	mov    rax,QWORD PTR [rsp+0xf8]
+ 95dea81:	00 
+ 95dea82:	48 85 d2             	test   rdx,rdx
+ 95dea85:	7f 0a                	jg     95dea91 <crosscall2@@Base+0x21634b1>
+ 95dea87:	ba 03 00 00 00       	mov    edx,0x3
+ 95dea8c:	e9 ca 00 00 00       	jmp    95deb5b <crosscall2@@Base+0x216357b>
+ 95dea91:	44 0f 11 bc 24 98 01 	movups XMMWORD PTR [rsp+0x198],xmm15
+ 95dea98:	00 00 
+ 95dea9a:	48 89 d0             	mov    rax,rdx
+ 95dea9d:	0f 1f 00             	nop    DWORD PTR [rax]
+ 95deaa0:	e8 fb fa d6 fd       	call   734e5a0 <_cgo_topofstack@@Base-0xae80>
+ 95deaa5:	48 8d 0d fc a6 11 03 	lea    rcx,[rip+0x311a6fc]        # c6f91a8 <__fxstat@plt+0xfda118>
+ 95deaac:	48 89 8c 24 98 01 00 	mov    QWORD PTR [rsp+0x198],rcx
+ 95deab3:	00 
+ 95deab4:	48 89 84 24 a0 01 00 	mov    QWORD PTR [rsp+0x1a0],rax
+ 95deabb:	00 
+ 95deabc:	48 8d 05 14 7e e6 fc 	lea    rax,[rip+0xfffffffffce67e14]        # 64468d7 <_cgo_topofstack@@Base-0xf12b49>
+ 95deac3:	bb 05 00 00 00       	mov    ebx,0x5
+ 95deac8:	48 8d 8c 24 98 01 00 	lea    rcx,[rsp+0x198]
+ 95deacf:	00 
+ 95dead0:	bf 01 00 00 00       	mov    edi,0x1
+ 95dead5:	89 fe                	mov    esi,edi
+ 95dead7:	e8 c4 d7 e0 fd       	call   73ec2a0 <_cgo_topofstack@@Base+0x92e80>
+ 95deadc:	48 8b 4c 24 78       	mov    rcx,QWORD PTR [rsp+0x78]
+ 95deae1:	48 83 f9 04          	cmp    rcx,0x4
+ 95deae5:	72 0a                	jb     95deaf1 <crosscall2@@Base+0x2163511>
+ 95deae7:	48 8b 94 24 f8 00 00 	mov    rdx,QWORD PTR [rsp+0xf8]
+ 95deaee:	00 
+ 95deaef:	eb 41                	jmp    95deb32 <crosscall2@@Base+0x2163552>
+ 95deaf1:	48 89 9c 24 b8 00 00 	mov    QWORD PTR [rsp+0xb8],rbx
+ 95deaf8:	00 
+ 95deaf9:	48 89 84 24 d8 01 00 	mov    QWORD PTR [rsp+0x1d8],rax
+ 95deb00:	00 
+ 95deb01:	48 8b 84 24 f8 00 00 	mov    rax,QWORD PTR [rsp+0xf8]
+ 95deb08:	00 
+ 95deb09:	bb 04 00 00 00       	mov    ebx,0x4
+ 95deb0e:	bf 01 00 00 00       	mov    edi,0x1
+ 95deb13:	48 8d 35 4e a4 11 03 	lea    rsi,[rip+0x311a44e]        # c6f8f68 <__fxstat@plt+0xfd9ed8>
+ 95deb1a:	e8 e1 51 d7 fd       	call   7353d00 <_cgo_topofstack@@Base-0x5720>
+ 95deb1f:	48 8b 9c 24 b8 00 00 	mov    rbx,QWORD PTR [rsp+0xb8]
+ 95deb26:	00 
+ 95deb27:	48 89 c2             	mov    rdx,rax
+ 95deb2a:	48 8b 84 24 d8 01 00 	mov    rax,QWORD PTR [rsp+0x1d8]
+ 95deb31:	00 
+ 95deb32:	48 89 5a 38          	mov    QWORD PTR [rdx+0x38],rbx
+ 95deb36:	83 3d 53 ab 6a 07 00 	cmp    DWORD PTR [rip+0x76aab53],0x0        # 10c89690 <_ZTISt10bad_typeid@@Base+0x39361d0>
+ 95deb3d:	74 10                	je     95deb4f <crosscall2@@Base+0x216356f>
+ 95deb3f:	4c 8b 42 30          	mov    r8,QWORD PTR [rdx+0x30]
+ 95deb43:	e8 78 a9 d7 fd       	call   73594c0 <_cgo_topofstack@@Base+0xa0>
+ 95deb48:	49 89 03             	mov    QWORD PTR [r11],rax
+ 95deb4b:	4d 89 43 08          	mov    QWORD PTR [r11+0x8],r8
+ 95deb4f:	48 89 42 30          	mov    QWORD PTR [rdx+0x30],rax
+ 95deb53:	48 89 d0             	mov    rax,rdx
+ 95deb56:	ba 04 00 00 00       	mov    edx,0x4
+ 95deb5b:	48 8b 9c 24 20 02 00 	mov    rbx,QWORD PTR [rsp+0x220]
+ 95deb62:	00 
+ 95deb63:	48 85 db             	test   rbx,rbx
+ 95deb66:	0f 84 01 01 00 00    	je     95dec6d <crosscall2@@Base+0x216368d>
+ 95deb6c:	48 89 8c 24 a8 00 00 	mov    QWORD PTR [rsp+0xa8],rcx
+ 95deb73:	00 
+ 95deb74:	48 89 84 24 c8 01 00 	mov    QWORD PTR [rsp+0x1c8],rax
+ 95deb7b:	00 
+ 95deb7c:	48 89 54 24 70       	mov    QWORD PTR [rsp+0x70],rdx
+ 95deb81:	44 0f 11 bc 24 98 01 	movups XMMWORD PTR [rsp+0x198],xmm15
+ 95deb88:	00 00 
+ 95deb8a:	48 8b 84 24 18 02 00 	mov    rax,QWORD PTR [rsp+0x218]
+ 95deb91:	00 
+ 95deb92:	e8 69 fa d6 fd       	call   734e600 <_cgo_topofstack@@Base-0xae20>
+ 95deb97:	48 8d 0d ca a3 11 03 	lea    rcx,[rip+0x311a3ca]        # c6f8f68 <__fxstat@plt+0xfd9ed8>
+ 95deb9e:	48 89 8c 24 98 01 00 	mov    QWORD PTR [rsp+0x198],rcx
+ 95deba5:	00 
+ 95deba6:	48 89 84 24 a0 01 00 	mov    QWORD PTR [rsp+0x1a0],rax
+
+## cl: global 0xd82b440 -> relocacion -> string
+00000d82b440  000000000008 R_X86_64_RELATIVE                    6ff2a90
+00000d82b550  000000000008 R_X86_64_RELATIVE                    6ff2a80
+-- bytes del global (vaddr 0xd82b440, file offset 0xd22b440)
+0d22b440: 0000 0000 0000 0000 0a00 0000 0000 0000  ................
+0d22b450: 0000 0000 0000 0000 0100 0000 0000 0000  ................
+-- string apuntado (0x6ff2a90)
+06ff2a90: 3130 3237 3832 3032 3230 0000 0000 0000  1027820220......
+06ff2aa0: 3137 3935 3430 3633 3034 0001 0101 0101  1795406304......
+
+## URLs de API/telemetria (needles exactos)
+-- https://daily-cloudcode-pa.googleapis.com
+107486053:https://daily-cloudcode-pa.googleapis.com
+-- https://daily-cloudcode-pa.sandbox.googleapis.com
+-- https://cloudcode-pa.googleapis.com
+107302085:https://cloudcode-pa.googleapis.com
+-- https://autopush-cloudcode-pa.sandbox.googleapis.com
+107747138:https://autopush-cloudcode-pa.sandbox.googleapis.com
+-- https://play.googleapis.com/logtrajectory
+107152467:https://play.googleapis.com/logtrajectory
+-- clearcut_proxy
+48651446:clearcut_proxy
+106099393:clearcut_proxy
+107542373:clearcut_proxy
+107594163:clearcut_proxy
+107642570:clearcut_proxy
+107642617:clearcut_proxy
+-- logtrajectory
+107152495:logtrajectory
+-- RecordAsyncTelemetry
+29407930:RecordAsyncTelemetry
+29408028:RecordAsyncTelemetry
+29408127:RecordAsyncTelemetry
+29408232:RecordAsyncTelemetry
+29408337:RecordAsyncTelemetry
+29408441:RecordAsyncTelemetry
+-- BAICODE_TELEMETRY_ENDPOINT_URL
+107110644:BAICODE_TELEMETRY_ENDPOINT_URL
+-- RecordCodeAssistMetrics
+26844193:RecordCodeAssistMetrics
+26846927:RecordCodeAssistMetrics
+26852004:RecordCodeAssistMetrics
+26852110:RecordCodeAssistMetrics
+26852217:RecordCodeAssistMetrics
+26852330:RecordCodeAssistMetrics
+-- https://antigravity-cli-auto-updater-974169037036.us-central1.run.app
+108019083:https://antigravity-cli-auto-updater-974169037036.us-central1.run.app
+
+## cabeceras deterministas del CLI
+   0x95df360  entryoff=0x2320360  google3/third_party/jetski/language_server/code_assist_client/codeassistclient.(*CodeAssistClient).setHeaders
+-- X-Goog-Request-Reason
+106575673:X-Goog-Request-Reason
+-- thinking-binding-controls-2026-08-01
+107335103:thinking-binding-controls-2026-08-01
+-- interleaved-thinking-2025-05-14
+-- application/json
+106186956:application/json
+106276542:application/json
+107160310:application/json
+107315980:application/json
+-- refs LEA dentro de setHeaders (0x95df360..0x95df800)
+ 95df449:	48 8d 05 fd 10 ed fc 	lea    rax,[rip+0xfffffffffced10fd]        # 64b054d <_cgo_topofstack@@Base-0xea8ed3>
+ 95df579:	48 8d 05 b9 41 fc fc 	lea    rax,[rip+0xfffffffffcfc41b9]        # 65a3739 <_cgo_topofstack@@Base-0xdb5ce7>
+ 95df656:	48 8d 05 25 80 f0 fc 	lea    rax,[rip+0xfffffffffcf08025]        # 64e7682 <_cgo_topofstack@@Base-0xe71d9e>
+ 95df694:	48 8d 0d 31 52 f6 fc 	lea    rcx,[rip+0xfffffffffcf65231]        # 65448cc <_cgo_topofstack@@Base-0xe14b54>
+-- ref a anthropic-beta en el conversor Anthropic
+ 95e1fd1:	48 8d 0d cf 6d f3 fc 	lea    rcx,[rip+0xfffffffffcf36dcf]        # 6518da7 <_cgo_topofstack@@Base-0xe40679>
+ 95e1fdd:	48 8d 05 a4 cd e5 02 	lea    rax,[rip+0x2e5cda4]        # c43ed88 <__fxstat@plt+0xd1fcf8>
+ 95e2008:	48 8d 15 b0 ad 07 fd 	lea    rdx,[rip+0xfffffffffd07adb0]        # 665cdbf <_cgo_topofstack@@Base-0xcfc661>
+
+## cabeceras propietarias / identificadores
+-- X-Goog-Api-Client
+-- client-metadata
+107766920:client-metadata
+-- Client-Metadata
+-- x-goog-api-client
+106283342:x-goog-api-client
+-- X-Client-Device-Id
+-- X-Goog-QuotaUser
+-- deviceId
+105450889:deviceId
+108724812:deviceId
+109104390:deviceId
+109126485:deviceId
+109423591:deviceId
+110326450:deviceId
+110327361:deviceId
+111296524:deviceId
+-- device_id
+105560142:device_id
+106251564:device_id
+108724786:device_id
+109104364:device_id
+109126456:device_id
+109423418:device_id
+109423465:device_id
+109423565:device_id
+-- sessionToken
+105897578:sessionToken
+110086302:sessionToken
+110088119:sessionToken
+110088573:sessionToken
+110088984:sessionToken
+205156926:sessionToken
+209745678:sessionToken
+209745809:sessionToken
+-- machineId
+105474849:machineId
+-- installation_id
+106099002:installation_id
+107152545:installation_id
+109040139:installation_id
+111660074:installation_id
+111661687:installation_id
+116052512:installation_id
+209235167:installation_id
+210069882:installation_id
+-- x-antigravity-csrf-token
+106806477:x-antigravity-csrf-token
+110659349:x-antigravity-csrf-token
+110660193:x-antigravity-csrf-token
+110661939:x-antigravity-csrf-token
+110663095:x-antigravity-csrf-token
+110664185:x-antigravity-csrf-token
+110665414:x-antigravity-csrf-token
+
+## flujo de peticion: endpoints y modelo
+-- daily-cloudcode-pa.googleapis.com
+107486061:daily-cloudcode-pa.googleapis.com
+-- cloudcode-pa.googleapis.com
+106970842:cloudcode-pa.googleapis.com
+107302093:cloudcode-pa.googleapis.com
+107486067:cloudcode-pa.googleapis.com
+112375079:cloudcode-pa.googleapis.com
+112377549:cloudcode-pa.googleapis.com
+112383822:cloudcode-pa.googleapis.com
+-- v1internal:streamGenerateContent
+110420246:v1internal:streamGenerateContent
+-- v1internal:loadCodeAssist
+112964611:v1internal:loadCodeAssist
+-- logtrajectory
+107152495:logtrajectory
+-- RecordAsyncTelemetry
+29407930:RecordAsyncTelemetry
+29408028:RecordAsyncTelemetry
+29408127:RecordAsyncTelemetry
+29408232:RecordAsyncTelemetry
+29408337:RecordAsyncTelemetry
+29408441:RecordAsyncTelemetry

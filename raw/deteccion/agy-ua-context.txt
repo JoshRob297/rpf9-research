@@ -1,0 +1,41 @@
+######## antigravity
+[... limit=2 alcanzado]
+=== match 0 offset=35802910 (0x2224f1e) pattern='antigravity'
+/codeassist/shared/converters/anthropic/anthropicconverter.(*toolUseContextContentBlockProcessor).HandleLastContentBlockStop.google3/cloud/developer_experience/codeassist/shared/converters/anthropic/anthropicconverter.(*antigravityToolUseContextContentBlockProcessor).HandleContentBlockStart.google3/cloud/developer_experience/codeassist/shared/converters/anthropic/anthropicconverter.(*antigravityToolUseContextContentBlockProcessor).Handl
+
+=== match 1 offset=35803077 (0x2224fc5) pattern='antigravity'
+ist/shared/converters/anthropic/anthropicconverter.(*antigravityToolUseContextContentBlockProcessor).HandleContentBlockStart.google3/cloud/developer_experience/codeassist/shared/converters/anthropic/anthropicconverter.(*antigravityToolUseContextContentBlockProcessor).HandleContentBlockDelta.google3/cloud/developer_experience/codeassist/shared/converters/anthropic/anthropicconverter.(*antigravityToolUseContextContentBlockProcessor).Handl
+
+######## os_type=%s
+=== match 0 offset=105579823 (0x64b052f) pattern='os_type=%s'
+createtempLogged in.gemini-dir--add-dir=soft_blockhard_blockaicode_403[REDACTED]reset_timegrant_typerequest_idpeopleInfoHTTP_PROXYhttp_proxyconn_resettext/plainimage/jpegimage/webpimage/heicimage/heifUSE_AICODEv1internalos_type=%spurpose=%s%s/%s (%s)User-Agentdrop_blockcontainerdSSH_CLIENTelapsed_msconn_statemaxResultscategoriesrunTriggerproject_idlistAgentsvisibilitystandaloneaiplatformrawPredictgemini-2.5rewriteUri2006-01-02ccpa_error
+
+######## arch=%s
+=== match 0 offset=105278065 (0x6466a71) pattern='arch=%s'
+xXvintegercomplexfloat32float64symlink (trap writeat/.cachereaddirchtimesmkdiratfstatatversionundefoksecondsWARNING--%s=%sprofilev1alpharefreshfeaturesurface<empty>%s - %sbucket:gatewaynot_tlstimeoutexpiredCONNECTmodels/arch=%sURL: %s[%s] %s%s: %s
+readDiragentIdUNKNOWNstagingnonprod/u/\d+/capsuleBearer checkedskippeddroppedstartuppreviewupdatedorderBycorpora.configfile://google3triggerpath %qscratchvmoduleplugin:UnknownExpiresnosniff<he
+
+######## aidev_client
+=== match 0 offset=105805538 (0x64e76e2) pattern='aidev_client'
+portcli_log_fileapp-data-dircli_dir_nameCCPA API URLcustom_agentre_signed_inccpa_missingdisplay_namequota_statustoken is nilContent-Typecloudcode-pafetch_configSaveUserTierstate:ACTIVEalpn_missingx509_invalidconn_refusedaidev_clienthost_path=%s Trace: 0x%s Sherlog: %sOrchestratoragentPluginscascadeNuxesstartCascadetoken_expirypre_tls_diallistProjectslistTriggersextensionIdscli_settingsaicode_errorvscode-file:internal_hubhttp://[::1]Unau
+
+######## cl=%d
+=== match 0 offset=105146583 (0x64468d7) pattern='cl=%d'
+tokenmodelagent.heapblockstdio<nil> +-#0(nil)ErrorsvqxXchdirwritemkdir$HOMEchmodlstatchownfile.closegetwdpipe2int32int64ERRORFATAL%s.%dlogin0.2.0frontemailtitlepa_id%s#%d%s.%sscopecachequeryothererrorlt_5mge_5mhttpsamd64cl=%d%s/%sdata:orderstatematch.html.json.wasm.citcnoncecrashunsetstageLoginvoiceturnsui://%s:%vskill%d_%dshareclone%s %d7-30dmutexPiper%s-%sfixed/auth/x20/<url>Kitty 	"'\defersweeptestRtestWexecWhchanexecRschedsudogtimer
+
+######## auth_method=%s
+=== match 0 offset=106007933 (0x6518d7d) pattern='auth_method=%s'
+c/self/exeXDG_CACHE_HOMEoauth-personaloffline_accessgemini-2.5-progemini-4-argonGemini 3 Flashaicode_missingvalue_mismatchccpa_user_tierfetch_licensesbucket_missingbusinessaicodegemini_api_keysave_user_tierREQUEST_METHODauth_method=%sloadCodeAssistrequest is nilanthropic-beta/proc/1/cgroupconversationIdsetCliSettingscreateTerminal/auth/callbackAgent Platformantigravity-%sa153-a454-6272matching_countvscode-file://response.errorfailure_re
+
+######## %s/%s (%s)
+=== match 0 offset=105579843 (0x64b0543) pattern='%s/%s (%s)'
+gemini-dir--add-dir=soft_blockhard_blockaicode_403[REDACTED]reset_timegrant_typerequest_idpeopleInfoHTTP_PROXYhttp_proxyconn_resettext/plainimage/jpegimage/webpimage/heicimage/heifUSE_AICODEv1internalos_type=%spurpose=%s%s/%s (%s)User-Agentdrop_blockcontainerdSSH_CLIENTelapsed_msconn_statemaxResultscategoriesrunTriggerproject_idlistAgentsvisibilitystandaloneaiplatformrawPredictgemini-2.5rewriteUri2006-01-02ccpa_errordiff_countdiffs_json
+
+=== match 1 offset=105909445 (0x6500cc5) pattern='%s/%s (%s)'
+s=%q: %s
+Use LOAS auth--gemini_dir=stream closedfetchLicensessendTelemetrygemini-4-neonccpa_cooldown%s...(len=%d)group_missingrefresh_tokenclient_secrettrajectory_idupdate_storedtls_handshakex509_hostnameoauth_refresh%s/%s/%s (%s)userInitiatedcreateProjectupdateProjectcreateTriggerupdateTriggerdeleteTriggercancelCascadedeleteProjectlistTerminalscloseTerminalcode_verifierunmarshal: %w{"error": %s}fetchUserInfo/v1/responsesccpa_endpointAu
+
+######## datacollection_opt_in=false
+=== match 0 offset=106970815 (0x6603ebf) pattern='datacollection_opt_in=false'
+ -%s--override_user_agent_name=locating the executable: %wgemini-3.1-pro-low-thinkingx-cloudaicompanion-trace-idenable-voice-remote-controlccpa_ineligible_reason_codefailed to FetchLicenses: %wJETSKI_SERVICE_ENDPOINT_URLdatacollection_opt_in=falsecloudcode-pa.googleapis.comSuccessfully authenticated.failed to marshal token: %wgoog-originating-service-idhttps://*.corp.google.com:*record-error-sampling-ratesprompt text cannot be emptytraj
+

@@ -1,0 +1,62 @@
+### 6c5d9ae (introduce cl=962369648, fallback 1.4.7)
+commit 6c5d9ae75c4f5ce22b08f23c192cd4d75b9e0499
+Author: JoshRob <99092299+JoshRob297@users.noreply.github.com>
+Date:   Sat Oct 24 20:34:21 2026 -0600
+
+    fix(quota): use official CLI user-agent on quota summary and available models endpoints (#61)
+    
+    Google Antigravity endpoint /v1internal:retrieveUserQuotaSummary only returns
+    the 'Gemini Models' quota group when requested with the official CLI User-Agent.
+    With the generic IDE header, Google strips the Gemini group and only returns
+    the 'Claude and GPT models' group.
+    
+    - Bump fallback CLI version to 1.4.7 (matching upstream release).
+    - Provide getAntigravityCliUserAgent() helper in constants.ts.
+    - Pass getAntigravityCliUserAgent() to fetchQuotaSummary and fetchAvailableModels.
+    - Rebuild dist artifacts.
+
+diff --git a/src/constants.ts b/src/constants.ts
+index 241181e..46384ea 100644
+--- a/src/constants.ts
++++ b/src/constants.ts
+@@ -85,12 +85,16 @@ export function setAntigravityVersion(version: string): void {
+  * signature that the backend requires for Gemini 3.7/3.8 Flash. Kept current by
+  * `initAntigravityCliVersion()`; see docs/ANTIGRAVITY_API_SPEC.md.
+  */
+-export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.4.2";
++export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.4.7";
+ let antigravityCliVersion = ANTIGRAVITY_CLI_VERSION_FALLBACK;
+ let cliVersionLocked = false;
+ 
+ export function getAntigravityCliVersion(): string { return antigravityCliVersion; }
+ 
++export function getAntigravityCliUserAgent(): string {
++  return `antigravity/cli/${getAntigravityCliVersion()} (aidev_client; os_type=linux; arch=amd64; cl=962369648; auth_method=consumer)`;
++}
++
+ /**
+  * Set the runtime Antigravity CLI version. Can only be called once (at startup).
+  */
+
+### e9085a7 (sube fallback a 1.5.8 sin tocar cl)
+commit e9085a7e3c7e0fe43b9102bff29c916a5b7f535b
+Author: JoshRob <99092299+JoshRob297@users.noreply.github.com>
+Date:   Fri Nov 13 22:58:46 2026 -0600
+
+    fix(version): CLI fallback to 1.5.8, the version the auto-updater reports (#98)
+    
+    Co-authored-by: Hermes <hermes@local>
+
+diff --git a/src/constants.ts b/src/constants.ts
+index a8e28df..dac516b 100644
+--- a/src/constants.ts
++++ b/src/constants.ts
+@@ -85,7 +85,7 @@ export function setAntigravityVersion(version: string): void {
+  * signature that the backend requires for Gemini 3.7/3.8 Flash. Kept current by
+  * `initAntigravityCliVersion()`; see docs/ANTIGRAVITY_API_SPEC.md.
+  */
+-export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.5.3";
++export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.5.8";
+ let antigravityCliVersion = ANTIGRAVITY_CLI_VERSION_FALLBACK;
+ let cliVersionLocked = false;
+ 
