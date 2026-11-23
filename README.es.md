@@ -24,6 +24,23 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
 2. diga si la TOC está cifrada y con qué evidencia (no por suposición),
 3. liste entradas si logra descifrarla, o explique exactamente qué falta.
 
+## Lo que este repositorio no contiene
+
+Ni archivos del juego, ni código del juego, ni assets extraídos, ni listas de nombres. Cada cifra de
+aquí es una medición del formato; la evidencia en `raw/` es o bien una rebanada de cabecera de unos
+cientos de bytes por contenedor (la geometría la necesita) o la salida de nuestras herramientas.
+
+En concreto, este repositorio nunca ha contenido:
+
+```
+payloads .rpf ni .ttpf      nada más allá de cabeceras de 64 bytes
+ejecutables o librerías     ningún binario de ningún build
+nombres de assets           ninguna lista; solo hashes con sal y 200 rutas de muestra
+código descompilado         ninguno, de ningún archivo
+```
+
+Si una contribución futura añadiera algo de eso, no va aquí.
+
 ## Reglas del repositorio
 
 - **Cada número que aparezca en la documentación debe tener su transcripción en `raw/`.**
