@@ -1,0 +1,90 @@
+# Command: python3 tools/name_recover.py samples --out <index.json>
+# Evidence for docs/NAMES.md section 3 and docs/NAMES.es.md section 3 (T-RPF9-CONFIANZA).
+# Run: R-20261122-232933-e20c. 78 sample windows from the 209 GiB package.
+# <index.json> is a 21 MB scratch file, not versioned; sections 2-5 below are derived from it.
+
+=== 1. CLI OUTPUT (name_recover.py) ===
+Target: samples (78 files)
+Total streams: 17082 | named: 1509 (8.83%) | unnamed (sin nombre): 15573
+Unique full_paths: 13402 | Unique identifiers: 14282
+
+Coverage by stream_type:
+  0DRP                   total=  872 named=    8 unnamed=  864 (  0.92%)
+  PSIN                   total= 4066 named=    6 unnamed= 4060 (  0.15%)
+  raw                    total= 5512 named=   69 unnamed= 5443 (  1.25%)
+  rsc50                  total= 4357 named=  197 unnamed= 4160 (  4.52%)
+  sgd5_shader_dxbc       total=  867 named=  867 unnamed=    0 (100.00%)
+  sgd5_shader_truncated  total=    2 named=    2 unnamed=    0 (100.00%)
+  xml                    total=  477 named=  181 unnamed=  296 ( 37.95%)
+  xml_chunk              total=  929 named=  179 unnamed=  750 ( 19.27%)
+
+Candidate mentions by source: {'raw_stream': 10239, 'rsc50': 1665, 'xml': 26257, 'psin': 414, 'sgd5': 869, '0drp': 43}
+Target extension mentions: {'.dat': 15, '.meta': 142, '.rpf': 7592, '.xml': 221}
+Labeled name mentions: total=39487 confirmed=31238 probable=224 candidate=8025
+
+=== 2. LABEL BREAKDOWN (summary.labeled of <index.json>) ===
+total_names: 39487
+by_confidence: {"confirmed": 31238, "probable": 224, "candidate": 8025}
+by_source: {"xml_mount": 5515, "xml_chunk": 18324, "literal": 7418, "pattern": 205, "inferred": 8025}
+by_stream_type:
+  0DRP                   total=    43 confirmed=     4 probable=     0 candidate=    39
+  PSIN                   total=   414 confirmed=     0 probable=     0 candidate=   414
+  raw                    total= 10239 confirmed=  4087 probable=    44 candidate=  6108
+  rsc50                  total=  1665 confirmed=   122 probable=    79 candidate=  1464
+  sgd5_shader_dxbc       total=   867 confirmed=   867 probable=     0 candidate=     0
+  sgd5_shader_truncated  total=     2 confirmed=     2 probable=     0 candidate=     0
+  xml                    total=  7933 confirmed=  7837 probable=    96 candidate=     0
+  xml_chunk              total= 18324 confirmed= 18319 probable=     5 candidate=     0
+
+cross-check: sum(candidate_mentions_by_source) = 39487 == labeled.total_names
+
+=== 3. EXAMPLES PER LABEL (first two mentions per source/confidence) ===
+  [inferred/candidate] anim.tail.bin 0x3f3ed0 (raw) identifier 'ion_Female'
+  [inferred/candidate] anim.tail.bin 0x3f4860 (raw) identifier 'NM_UpperBody'
+  [literal/confirmed] anim.q1.bin 0x53b5c (raw) full_path 'pack:/enter_front_lf.clip'
+  [literal/confirmed] anim.q1.bin 0x53b5c (raw) full_path 'pack:/enter_front_rf.clip'
+  [pattern/probable] anim.q1.bin 0x53b5c (raw) full_path 'pack:/biped_q5'
+  [pattern/probable] anim.q1.bin 0x5cd6c (rsc50) full_path 'pack:/biped_q5'
+  [xml_chunk/confirmed] common.head.bin 0xba10 (xml_chunk) full_path '$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_11.bk2'
+  [xml_chunk/confirmed] common.head.bin 0xba10 (xml_chunk) full_path '$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_12.bk2'
+  [xml_chunk/probable] common.head.bin 0x48fc0 (xml_chunk) full_path 'DowntownNorth/Perschars/Peds/Shop_Clerks/dn_21_accessories_shop_clerk_1'
+  [xml_chunk/probable] common.head.bin 0x51340 (xml_chunk) full_path 'assets:/export/levels/americas/pedschedulepacks/'
+  [xml_mount/confirmed] common.head.bin 0xb000 (xml) full_path '$(common)/movies/ArcadeGames/BFYB_IDLE_SCREEN_BINK.bk2'
+  [xml_mount/confirmed] common.head.bin 0xb000 (xml) full_path '$(common)/movies/ArcadeGames/BFYB_INTRO_BINK.bk2'
+  [xml_mount/probable] common.head.bin 0x129000 (xml) full_path 'common:/data/anim/anim.meta'
+  [xml_mount/probable] common.head.bin 0x129000 (xml) full_path 'common:/data/anim/cinematic.meta'
+
+=== 4. MOUNT-ROOT CENSUS (same 78 files, same inflation loop) ===
+files: 78, xml streams: 477, xml_chunk streams: 929
+mount roots:
+  CDataFileMgr__ContentChangeSetDef          52
+  CDataFileMgr__ContentDef                    8
+  (streams with a mount root)                60 of 477
+other roots: 108 distinct; top 5:
+  timecycle_modifier_data                   147
+  timecycle_keyframe_data                    52
+  CVehiclePoints                             32
+  SSetupData                                 11
+  CTuningFile                                 9
+
+=== 5. REGRESSION CHECK vs raw/nombres.txt section 1 ===
+  total_streams           17082 -> 17082    OK
+  named_streams            1509 -> 1509     OK
+  unnamed_streams         15573 -> 15573    OK
+  coverage_pct             8.83 -> 8.83     OK
+  unique_full_paths       13402 -> 13402    OK
+  unique_identifiers      14282 -> 14282    OK
+  by_stream_type (total/named/unnamed):
+    0DRP                     872/    8/  864 ->   872/    8/  864 OK
+    PSIN                    4066/    6/ 4060 ->  4066/    6/ 4060 OK
+    raw                     5512/   69/ 5443 ->  5512/   69/ 5443 OK
+    rsc50                   4357/  197/ 4160 ->  4357/  197/ 4160 OK
+    sgd5_shader_dxbc         867/  867/    0 ->   867/  867/    0 OK
+    sgd5_shader_truncated      2/    2/    0 ->     2/    2/    0 OK
+    xml                      477/  181/  296 ->   477/  181/  296 OK
+    xml_chunk                929/  179/  750 ->   929/  179/  750 OK
+  candidate_mentions_by_source: OK (same six buckets and counts as raw/nombres.txt)
+  target_extension_mentions: OK (same four extensions and counts as raw/nombres.txt)
+
+# Existing keys keep their values: only new keys were added (stream.labeled,
+# summary.labeled, and the "Labeled name mentions" line in the human output).

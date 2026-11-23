@@ -25,7 +25,81 @@ Three design alternatives were evaluated:
 4. **`rsc50` and `raw` fallback (`rsc50`, `raw_stream`)**:
    - Extracts clean internal references (e.g. `pack:/...clip`, `audio:/config/waveslots2.xml`, `AMB_STREAM_*`, `AGC_Scan_*`) when present; otherwise records `status="unnamed"`.
 
-## 3. Measured Coverage (`raw/nombres.txt`)
+## 3. Provenance and Confidence Labels
+
+A recovered string is evidence, not a table-of-contents entry: it can be a path declared by a mount manifest, a `pack:/...` substring found inside inflated bytes, or a bare word that only matches the identifier grammar. An index that treats the three the same cannot be audited. Every name now carries two labels:
+
+| field | values | question it answers |
+|---|---|---|
+| `source` | `xml_mount`, `xml_chunk`, `literal`, `pattern`, `inferred` | where the bytes came from |
+| `confidence` | `confirmed`, `probable`, `candidate` | how much those bytes prove |
+
+### 3.1 Where the labels live
+
+`full_paths` and `identifiers` keep their type, length and order. The labels travel in a parallel object, same length and index:
+
+```json
+"full_paths": ["$(target)/data/credits/credits.rpf"],
+"labeled": {
+  "full_paths": [
+    {"name": "$(target)/data/credits/credits.rpf",
+     "source": "xml_mount", "confidence": "confirmed"}
+  ],
+  "identifiers": []
+}
+```
+
+Three placements were considered:
+
+1. **`source`/`confidence` inside each `candidates[]` entry**: rejected. `candidates[].source` already exists with another meaning (the legacy stream bucket `xml`, `psin`, `0drp`, `sgd5`, `rsc50`, `raw_stream`), which `merge_index.py` reads and `candidate_mentions_by_source` publishes. Reusing the name would silently change an existing field.
+2. **One `labeled` list parallel to `candidates`**: rejected. `candidates` is the union of both kinds, so a consumer joining `full_paths` to its labels would have to re-derive the sort order, and a mixed-up index would go unnoticed.
+3. **Chosen**: `labeled.full_paths` and `labeled.identifiers`, same length and index as the arrays they shadow, each entry `{"name", "source", "confidence"}`. Repeating the name makes an entry readable on its own and makes any length mismatch detectable.
+
+The extractor keeps the *channel* that found each value (which tag, which regex) and `label_candidate()` maps it to exactly one pair. Channels are internal and are stripped from `candidates`, whose shape is unchanged.
+
+### 3.2 `source`: where the bytes came from
+
+| `source` | rule in `label_candidate()` | measured example |
+|---|---|---|
+| `xml_mount` | XML document whose root element is `CDataFileMgr__ContentChangeSetDef` or `CDataFileMgr__ContentDef` (60 of the 477 XML streams), value taken from a tag or attribute | `$(common)/movies/ArcadeGames/BFYB_IDLE_SCREEN_BINK.bk2`, `common.head.bin @0xb000` |
+| `xml_chunk` | XML continuation fragment (`xml_chunk`: closing tag, no XML declaration), so the root is unknown | `$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_11.bk2`, `common.head.bin @0xba10` |
+| `literal` | complete literal in another stream: a null-terminated C-string that is a full path, an SGD5 symbol, or a value declared by a path/identity tag in a non-mount XML | `pack:/enter_front_lf.clip`, `anim.q1.bin @0x53b5c`; `VS_AlphaTransmissionFullScreenTri_4f16bf6c_Wrapped`, `shaders.head.bin @0x10e3e` |
+| `pattern` | path template with no declaring structure: a `scheme:/` regex hit inside inflated bytes, or a path-shaped value in a tag not known to declare paths (non-mount XML) | `pack:/biped_q5`, `anim.q1.bin @0x5cd6c` |
+| `inferred` | only the token grammar matched: an identifier-shaped null-terminated string with no path syntax and no declaring context | `TEMP_0653AU_AAAA`, `data.head.bin @0x13000` |
+
+The mount roots are the two `CDataFileMgr__*` manifests; the other 417 XML streams in the sample set are tuning data (`timecycle_modifier_data` 147, `timecycle_keyframe_data` 52, `CVehiclePoints` 32, ...), and their names are `literal` or `pattern` according to the channel, never `xml_mount` (`raw/etiquetas.txt` section 4).
+
+### 3.3 `confidence`: how much the evidence proves
+
+| `confidence` | rule | measured example |
+|---|---|---|
+| `confirmed` | delimited literal, or value in a tag/attribute that declares paths or identities | `core_binks` from `<id>core_binks</id>`, `common.head.bin @0xb000` |
+| `probable` | matches a path template (scheme, `$(var)/`, multi-segment or known extension) but no declaring structure proves it is a name | `pack:/biped_q5`, `anim.q1.bin @0x5cd6c`; `common:/data/anim/anim.meta` in an `<Item>`, `common.head.bin @0x129000` |
+| `candidate` | only the identifier grammar matched: no path syntax, no context | `TEMP_0653AU_AAAA`, `data.head.bin @0x13000`; fragments such as `ion_Female`, `anim.tail.bin @0x3f3ed0` |
+
+The channel follows the tag, not the inferred kind: `<id>common:/data/anim/anim.meta</id>` is classified as a full path by shape, but the manifest declares it, so it is `confirmed`; the same string listed as `<Item>common:/data/anim/anim.meta</Item>` in another manifest is `probable`. A fragment carved mid-tag loses the declaration and drops to `probable` as well: `DowntownNorth/Perschars/Peds/Shop_Clerks/dn_21_accessories_shop_clerk_1` (`common.head.bin @0x48fc0`) starts where the `<Name>` opening tag was cut, so only the path shape remains.
+
+`confirmed` means "this literal is in the payload and its scope is delimited, so the tool did not invent it". It does **not** mean "the asset exists at this path": several streams may declare the same path, and a mount XML declares *referenced* paths, not the TOC path of the stream itself (section 6).
+
+### 3.4 Rule order
+
+`label_candidate()` applies these rules in order and stops at the first match; the table is exhaustive over the channels the tool emits, and an unknown channel falls back to `inferred`/`candidate` instead of dropping the name:
+
+1. SGD5 symbol -> `literal`/`confirmed`.
+2. `scheme:/` regex hit in binary bytes -> `pattern`/`probable`.
+3. Null-terminated C-string -> `literal`/`confirmed` for a path, `inferred`/`candidate` for an identifier.
+4. `xml_chunk` -> `xml_chunk`, `confirmed` when the value's tag or attribute survives, `probable` otherwise.
+5. XML document with a mount root -> `xml_mount`, same declared/probable split.
+6. XML document without a mount root -> `literal`/`confirmed` when declared, `pattern`/`probable` otherwise.
+7. Anything else -> `inferred`/`candidate`.
+
+When one stream finds the same name twice, the strongest channel keeps the label. In `anim.q1.bin @0x53b5c`, `pack:/enter_front_lf.clip` is a complete null-terminated string (`literal`/`confirmed`) while `pack:/biped_q5` in the same stream is only matched by the scheme regex (`pattern`/`probable`).
+
+### 3.5 The number behind the published percentage
+
+The published figure is **1,509 named streams out of 17,082 (8.83%)**. It is `summary.named_streams / summary.total_streams`, a stream-level ratio that counts any stream with at least one candidate, whatever its label; the full-scan index in `docs/INDEX.md` follows the same rule (177,087 of 1,489,677 streams, 11.89%). The new breakdown in `summary.labeled` counts *name mentions*: 39,487, of which 31,238 `confirmed`, 224 `probable` and 8,025 `candidate` (`raw/etiquetas.txt` sections 1-2). It cannot recompute either percentage, and it is not meant to: the published ratio stays as it was, and the split is what lets a reader say how much of it is declared evidence. Counts are mentions (one per stream entry), not unique strings.
+
+## 4. Measured Coverage (`raw/nombres.txt`)
 
 Run across all **78** sample files in `samples` (`raw/nombres.txt` §1–§2):
 
@@ -48,7 +122,7 @@ Run across all **78** sample files in `samples` (`raw/nombres.txt` §1–§2):
 
 By archive group (`raw/nombres.txt` §2): small complete XML packs (`core_licenses_data`, `core_restofworld001`, `story000_bvh4`) reach **100.00%**; `shaders` reaches **83.24%** (`869/1,044`); `core_restofworld` **46.97%**; `story000_restofworld` **46.73%**; `common` **18.16%**; while `script` (`0/2,977`) and `story000_script` (`0/673`) are **0.00%**.
 
-## 4. Real Examples and Mandatory Payload Validation (`raw/nombres.txt` §1, §3)
+## 5. Real Examples and Mandatory Payload Validation (`raw/nombres.txt` §1, §3)
 
 - **XML (`xml`)**: `common.head.bin @0xb000` (`comp=2568`, `inf=65536`) -> `full_paths=['$(common)/movies/ArcadeGames/BFYB_IDLE_SCREEN_BINK.bk2', ...]`, `identifiers=['core_binks']`.
 - **XML continuation (`xml_chunk`)**: `common.head.bin @0xba10` (`comp=397`, `inf=8732`) -> `full_paths=['$(common)/movies/TV/SPRT/BSKT/R_GM_WIN_11.bk2', ...]`.
@@ -65,14 +139,14 @@ By archive group (`raw/nombres.txt` §2): small complete XML packs (`core_licens
 - `[rsc50] anim.q1.bin @0x5cd6c -> 'pack:/biped_q5'` (`verified=True`, `payload_off=304952`)
 - `[raw_stream] anim.q1.bin @0x53b5c -> 'pack:/biped_q5'` (`verified=True`, `payload_off=39992`)
 
-## 5. Limitations
+## 6. Limitations
 
 - **Encrypted TOC/Trailer ceiling**: Without the RPF9 AES key, the `91.17%` (`15,573/17,082`) of streams lacking inline strings (`PSIN` `LSNS` opaque bodies, `0DRP` page tables, `rsc50` geometry/textures, numeric tuning XMLs) cannot be mapped back to their original archive entry paths.
 - **Referenced vs self-owning names**: XML manifests (`CDataFileMgr__ContentChangeSetDef`) list *referenced* child paths (`$(target)/data/credits/credits.rpf`) rather than the TOC path of the XML stream itself (`content.xml`), and `xml_chunk` continuation fragments only expose names inside the carved 64 KiB slice.
 - **Sample window truncation**: 2 `SGD5` shader entries (`shaders.head.bin @0x3ff36c`, `shaders.q1.bin @0x1facd3`) and any zlib streams split across window boundaries are incomplete in the 2–4 MiB `.bin` windows.
 - **Unencrypted non-zlib assets**: Raw `KB2n` Bink 2 streams and uncompressed `AWC` audio banks do not go through zlib inflation and are outside `name_recover.py`'s stream-inflation index.
 
-## 6. Comparison vs Leonida's Offset-Based Naming
+## 7. Comparison vs Leonida's Offset-Based Naming
 
 Per `ItsNotRexed/Leonida` (`docs/rpf.md`, `tools/rpf9_carve.py`, `tools/shader_carve.py`, GPL-3.0 reference):
 

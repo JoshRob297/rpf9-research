@@ -168,5 +168,224 @@ class TestNameRecoverSynthetic(unittest.TestCase):
         self.assertEqual(by_type["sgd5_shader_dxbc"]["inflated_bytes"], len(dxbc_body))
 
 
+class TestNameRecoverLabels(unittest.TestCase):
+    """Provenance/confidence labels on synthetic streams (all names invented)."""
+
+    def test_label_rule_table(self) -> None:
+        cases = [
+            ("xml", "xml_path_tag", "full_path", True, ("xml_mount", "confirmed")),
+            ("xml", "xml_id_tag", "identifier", True, ("xml_mount", "confirmed")),
+            ("xml", "xml_id_tag", "full_path", True, ("xml_mount", "confirmed")),
+            ("xml", "xml_text", "full_path", True, ("xml_mount", "probable")),
+            ("xml", "xml_other_tag", "full_path", True, ("xml_mount", "probable")),
+            ("xml_chunk", "xml_path_tag", "full_path", False, ("xml_chunk", "confirmed")),
+            ("xml_chunk", "xml_text", "full_path", False, ("xml_chunk", "probable")),
+            ("xml", "xml_path_tag", "full_path", False, ("literal", "confirmed")),
+            ("xml", "xml_text", "full_path", False, ("pattern", "probable")),
+            ("raw", "cstring", "full_path", False, ("literal", "confirmed")),
+            ("raw", "cstring", "identifier", False, ("inferred", "candidate")),
+            ("raw", "scheme", "full_path", False, ("pattern", "probable")),
+            ("sgd5_shader_dxbc", "sgd5", "identifier", False, ("literal", "confirmed")),
+        ]
+        for stream_type, channel, kind, mount, expected in cases:
+            with self.subTest(stream_type=stream_type, channel=channel, kind=kind):
+                self.assertEqual(
+                    name_recover.label_candidate(
+                        stream_type=stream_type,
+                        channel=channel,
+                        kind=kind,
+                        mount_xml=mount,
+                    ),
+                    expected,
+                )
+
+    def test_mount_root_detection(self) -> None:
+        mount = (
+            '<?xml version="1.0" encoding="utf-8"?>'
+            "<CDataFileMgr__ContentChangeSetDef><id>fixture_pack</id>"
+            "</CDataFileMgr__ContentChangeSetDef>"
+        )
+        tuning = '<?xml version="1.0"?><timecycle_modifier_data><Item/></timecycle_modifier_data>'
+        self.assertTrue(name_recover.is_mount_xml(mount))
+        self.assertFalse(name_recover.is_mount_xml(tuning))
+
+    def test_synthetic_streams_get_expected_labels(self) -> None:
+        # Every name below is invented for the fixture ("fixture" prefix).
+        mount_xml = (
+            b'<?xml version="1.0" encoding="utf-8"?>'
+            b"<CDataFileMgr__ContentChangeSetDef>"
+            b"<id>fixture_pack</id>"
+            b"<filename>$(fixture)/data/fixture_pack.rpf</filename>"
+            b"<deviceName>$(fixture)/dev/fixture_device.meta</deviceName>"
+            b"</CDataFileMgr__ContentChangeSetDef>"
+        )
+        # XML continuation fragment: closing tag, no XML declaration -> xml_chunk
+        chunk_xml = (
+            b"</FixturePack>"
+            b"<filename>$(fixture)/data/fixture_chunk.bk2</filename>"
+        )
+        # PSIN carrying an identifier-shaped token with no path context.
+        psin_payload = (
+            b"PSIN\x00\x00\x00\x10\x16\x00\x00\x00\x00\x00\x00\x00"
+            b"LSCH\x00\x00\x00\x08"
+            b"\x00fixture_TokenName\x00Gracias.\x00"
+        )
+        # Same stream, two channels: a scheme path only in prose (pattern) and
+        # a null-terminated scheme path (literal; C-string wins the dedup).
+        raw_payload = (
+            b"see phy:/fixture_pattern/mesh in prose\x00"
+            b"phy:/fixture_literal/mesh\x00"
+        )
+        # Nothing to recover: must stay unnamed with empty labels.
+        empty_payload = b"\x00" * 16 + b"0DRPz\x00\x00\x00Gracias.\x00Hola.\x00"
+
+        blob = (
+            b"\x00" * 64
+            + zlib.compress(mount_xml, 9)
+            + zlib.compress(chunk_xml, 9)
+            + zlib.compress(psin_payload, 9)
+            + zlib.compress(raw_payload, 9)
+            + zlib.compress(empty_payload, 9)
+        )
+
+        with tempfile.TemporaryDirectory() as td:
+            sample_path = Path(td) / "synthetic_labels.bin"
+            out_json = Path(td) / "index.json"
+            sample_path.write_bytes(blob)
+
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "tools" / "name_recover.py"),
+                    str(sample_path),
+                    "--validate",
+                    "--out",
+                    str(out_json),
+                ],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            self.assertIn("all_verified=True", proc.stdout)
+            rep = json.loads(out_json.read_text(encoding="utf-8"))
+
+        by_type = {s["stream_type"]: s for s in rep["streams"]}
+
+        xml_stream = by_type["xml"]
+        self.assertEqual(
+            xml_stream["full_paths"],
+            [
+                "$(fixture)/data/fixture_pack.rpf",
+                "$(fixture)/dev/fixture_device.meta",
+            ],
+        )
+        self.assertEqual(xml_stream["identifiers"], ["fixture_pack"])
+        self.assertEqual(
+            xml_stream["labeled"]["full_paths"],
+            [
+                {
+                    "name": "$(fixture)/data/fixture_pack.rpf",
+                    "source": "xml_mount",
+                    "confidence": "confirmed",
+                },
+                {
+                    "name": "$(fixture)/dev/fixture_device.meta",
+                    "source": "xml_mount",
+                    "confidence": "confirmed",
+                },
+            ],
+        )
+        self.assertEqual(
+            xml_stream["labeled"]["identifiers"],
+            [
+                {
+                    "name": "fixture_pack",
+                    "source": "xml_mount",
+                    "confidence": "confirmed",
+                }
+            ],
+        )
+
+        chunk_stream = by_type["xml_chunk"]
+        self.assertEqual(
+            chunk_stream["labeled"]["full_paths"],
+            [
+                {
+                    "name": "$(fixture)/data/fixture_chunk.bk2",
+                    "source": "xml_chunk",
+                    "confidence": "confirmed",
+                }
+            ],
+        )
+
+        psin_stream = by_type["PSIN"]
+        self.assertEqual(psin_stream["identifiers"], ["fixture_TokenName"])
+        self.assertEqual(
+            psin_stream["labeled"]["identifiers"],
+            [
+                {
+                    "name": "fixture_TokenName",
+                    "source": "inferred",
+                    "confidence": "candidate",
+                }
+            ],
+        )
+
+        raw_stream = by_type["raw"]
+        self.assertEqual(
+            raw_stream["full_paths"],
+            ["phy:/fixture_literal/mesh", "phy:/fixture_pattern/mesh"],
+        )
+        self.assertEqual(
+            [(e["name"], e["source"], e["confidence"]) for e in raw_stream["labeled"]["full_paths"]],
+            [
+                ("phy:/fixture_literal/mesh", "literal", "confirmed"),
+                ("phy:/fixture_pattern/mesh", "pattern", "probable"),
+            ],
+        )
+
+        empty_stream = by_type["0DRP"]
+        self.assertEqual(empty_stream["status"], "unnamed")
+        self.assertEqual(empty_stream["labeled"], {"full_paths": [], "identifiers": []})
+
+        # Compatibility: labeled is parallel to the published arrays, and the
+        # published arrays/candidates keep their exact types and keys.
+        for stream in rep["streams"]:
+            for kind in ("full_paths", "identifiers"):
+                self.assertIsInstance(stream[kind], list)
+                self.assertTrue(all(isinstance(name, str) for name in stream[kind]))
+                self.assertEqual(
+                    [entry["name"] for entry in stream["labeled"][kind]],
+                    stream[kind],
+                )
+            for candidate in stream["candidates"]:
+                self.assertEqual(set(candidate), {"name", "kind", "source"})
+
+        summary = rep["summary"]
+        self.assertEqual(summary["total_streams"], 5)
+        self.assertEqual(summary["named_streams"], 4)
+        labeled = summary["labeled"]
+        self.assertEqual(labeled["total_names"], 7)
+        self.assertEqual(
+            labeled["by_confidence"],
+            {"confirmed": 5, "probable": 1, "candidate": 1},
+        )
+        self.assertEqual(
+            labeled["by_source"],
+            {
+                "xml_mount": 3,
+                "xml_chunk": 1,
+                "literal": 1,
+                "pattern": 1,
+                "inferred": 1,
+            },
+        )
+        self.assertEqual(labeled["by_stream_type"]["xml"]["total"], 3)
+        self.assertEqual(labeled["by_stream_type"]["xml"]["confirmed"], 3)
+        self.assertEqual(labeled["by_stream_type"]["raw"]["probable"], 1)
+        self.assertEqual(labeled["by_stream_type"]["PSIN"]["candidate"], 1)
+        self.assertEqual(labeled["by_stream_type"]["0DRP"]["total"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()
