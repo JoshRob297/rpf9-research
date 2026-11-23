@@ -24,6 +24,23 @@ RPF9, and how far one can get without the key. The expected output is a document
 2. states whether the TOC is encrypted and on what evidence (not by assumption),
 3. lists entries if it manages to decrypt it, or explains exactly what is missing.
 
+## What this repository does not contain
+
+No game files, no game code, no extracted assets, no lists of asset names. Every number here is a
+measurement of a format; the evidence under `raw/` is either a header slice of a few hundred bytes
+per container (the geometry claim needs it) or the output of our own tools.
+
+Concretely, this repository has never contained:
+
+```
+.rpf or .ttpf payloads        no container bytes beyond 64-byte headers
+executables or libraries      no binaries from any build
+asset names                   no path list; only salted hashes and a 200-path sample
+decompiled code               none, from any file
+```
+
+If a future contribution would add any of those, it does not belong here.
+
 ## Repository rules
 
 - **Every number in the documentation needs its transcript in `raw/`.** Nothing is claimed that
