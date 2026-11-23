@@ -1,0 +1,37 @@
+# Corroboracion independiente: formula de tamano de la rejilla de entradas [w08..w04)
+# y bloques 0..1 del trailer cifrado, sobre una copia propia distinta (v1.0.2.1).
+#
+# Motivo: docs/RPF9.md seccion 3 (tabla @0x08 'w08'), hipotesis H8 (formula de
+# tamano) e H13 (estructura del trailer: blk0=f(w24,w20_hi); blk0+blk1 compartidos
+# cuando coincide (w24,w20_hi,w0c); nombres desde el bloque 2).
+# Evidencia: cabeceras de contenedores (<64 B por archivo) y primeros 32 B del
+# trailer; sin datos de juego.
+
+contenedor              tam_archivo       w04(A)       w08(B)   w24(N)   w0c(C)     ver_w@0x20 H8-verdict
+story000_bvh4                  5632          832          784        4      144  0x00010005   CONFIRMA (grid9=48 grid10=48)
+core_licenses_data            13536          816          768        4      144  0x00010005   CONFIRMA (grid9=48 grid10=48)
+core_restofworld001          791984          944          880        6      240  0x00010005   CONFIRMA (grid9=64 grid10=64)
+script_outer                4358960          608          576        2      128  0x00010003   CONFIRMA (grid9=32 grid10=32)
+appdata0                       8880          864          832        2       64  0x00010006   CONFIRMA (grid9=32 grid10=32)
+script.nested@0x1000              -         1152         1120        2       64  0x00010007   CONFIRMA (grid9=32)
+
+# H13 par-a-par: contenedores con mismos (w24,w20_hi,w0c) comparten los 32 bytes iniciales del trailer:
+#   story000_bvh4      ver=0x00010005  w24=4  w0c=144
+#   core_licenses_data ver=0x00010005  w24=4  w0c=144
+mapa_bytes_comunes ('.'=igual,'X'=difiere; filas=16B; izquierda story000_bvh4 derecha core_licenses_data):
+  0: ................ 5a178c51e7b96189237e72453084db8a 5a178c51e7b96189237e72453084db8a
+ 16: ................ 18415cbd0e16c0d303e94434e40de9ad 18415cbd0e16c0d303e94434e40de9ad
+ 32: XXXXXXXXXXXXXXXX abc73dd3a660ec7cd64a23f2cfdf7a73 a0fe4db206ff6e35afdb994c72148ee4
+ 48: XXXXXXXXXXXXXXXX d42034a17fee796696d3bc575f146285 975bcddcf70d0da9cdff7296c96f94c4
+ 64: XXXXXXXXXXXXXXXX df3b38dc165b5f1dca13f250ec80eebe 495eb47489570e04282692c7461a2c44
+ 80: XXXXXXXXXXXXXXXX 49ff43a8e2f74c39a048916905104336 e83bad3bffe2a48704101acf4275e8ad
+ 96: XX.XXXXXXXXXXXXX 4108d508f10db68991677306d1d8db3e 94f8d506e95e3d28b079b2adc3cb8c08
+112: XXXXXXXXXXXXXXXX c26c13d8c8b7dab103e5b155d1c2debd 682c2d9e8d6ef17207a3ac763e124094
+128: XXXXXXXXXXXXXXXX a1e96947a1e292dced50f7c92bba3c3b c06b7f90e8d4af2979c242c046e9e61b
+
+# Resultado medido: prefijo comun exacto de 32 bytes; primera divergencia en byte 32.
+# Concuerda con H13 (blk0+blk1 = 32 bytes comunes; divergencia desde bloque 2 = zona de nombres).
+# blk0 medido (hex 16B): 5a178c51e7b96189237e72453084db8a ; identico para ambos contenedores del par.
+
+# Comparacion con valores publicados en docs/RPF9.md tabla H13 / raw:
+#   (w24=4 -> blk0 5a178c51e7b96189237e72453084db8a) reproducido identico arriba.
