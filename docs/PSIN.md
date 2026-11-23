@@ -19,9 +19,10 @@ Every chunk is `magic (4 bytes) + length (u32 big-endian) + body`, and **the len
 
 That single rule is the difference between a parser that reads one chunk and one that reads the
 chain. Measured on 73 streams: the next magic sits at `offset + length` in 56 of 56 cases where the
-stream is not truncated mid-chunk. A wider sweep of 78 windows repeats it: 23,829 of 23,829
-successors land at `offset + length` and none at `offset + 8 + length`
-(`raw/comparativa/psin_census.txt`).
+stream is not truncated mid-chunk. A wider sweep of 78 windows repeats it: 3,958 of 4,066 streams
+walk the complete seven-chunk chain and end exactly at the inflated size, and the one PMAP variant
+is the 3,959th exact end; the other 107 are 64 KiB prefixes whose last chunk declares a length past
+the body, not framing failures (`raw/comparativa/psin_census.txt`).
 
 ## Result
 

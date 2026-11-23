@@ -68,7 +68,7 @@ approximate: `32*N + 16*sum(field count)` equals the body length in 3,983 of 3,9
 by construction — the walk advances only while `[0xAA;8]` at `+0x10` or `[0xEE;8]` at `+0x08` is
 present (`raw/comparativa/psin_census.py`), so what is measured independently is that the two-phase
 equation lands exactly on the body end, not that the markers exist [verified]. Those numbers are new
-in this task and are also written up in `docs/PSIN.md:52-59` [verified].
+in this task and are also written up in `docs/PSIN.md:53-60` [verified].
 
 ### Where we agree
 
@@ -120,7 +120,7 @@ still returns partial data.
 One stream out of 4,066 walks a different chain: `PSIN → PMAP → PSCH → PSIG → STNS → CHKS`
 (`anim.tail.bin @0x3ed8b0`, sizes 260/56/144/20/1,352/20) [verified]. No repository read here
 mentions `PMAP`, `PSCH`, `PSIG` or `STNS` (grep over all three sources returns nothing) [verified],
-and our own docs describe only the main chain (`docs/PSIN.md:38-49`). One stream in 4,066 is not a
+and our own docs describe only the main chain (`docs/PSIN.md:27-39`). One stream in 4,066 is not a
 second format, but it is not explained either [hypothesis: a variant used by a different resource
 kind]. It is the first thing to sample when a PSIN parser is written against these numbers.
 
