@@ -19,7 +19,9 @@ cabecera de 8 bytes**. Avanzar `8 + longitud` deja 8 bytes antes de la magia sig
 
 Esa sola regla es la diferencia entre un parser que lee un chunk y uno que lee la cadena. Medido
 sobre 73 streams: la magia siguiente está en `offset + longitud` en 56 de 56 casos donde el stream
-no está cortado a media estructura.
+no está cortado a media estructura. Un barrido más amplio de 78 ventanas lo repite: 23,829 de
+23,829 sucesores caen en `offset + longitud` y ninguno en `offset + 8 + longitud`
+(`raw/comparativa/psin_census.txt`).
 
 ## Resultado
 
@@ -47,6 +49,15 @@ anim@450179072    PSIN(22,608) -> LSCH(648) -> LENM(8) -> LSNS(68) -> LGID(8) ->
 `LENM` y `LGID` son siempre 8 bytes: cabecera sin cuerpo. `CHKS` son 20. Las partes variables son
 `LSCH` y `LRSC`, que es donde vive la metadata del recurso.
 
+## Dentro de los cuerpos
+
+Los cuerpos son tablas de dos fases, no bloques opacos. `LSCH` contiene `N` cabeceras de struct de
+32 bytes consecutivas, cada una con la marca `[0xAA;8]` en `+0x10`, y luego un registro de campo de
+16 bytes por cada cuenta guardada en `+0x1C` (mitad alta). `32*N + 16*sum(cuenta)` es igual al
+largo del cuerpo en los 3,983 chunks `LSCH` que caben en su stream. `LENM` es el mismo patrón con
+cabeceras de 24 bytes (marca `[0xEE;8]` en `+0x08`) y registros de valor de 16 bytes: 3,980 de
+3,980 cuerpos son `24*N + 16*sum(cuenta)`. Los conteos están en `raw/comparativa/psin_census.txt`.
+
 ## Lo que esto no dice
 
 No dice nada del significado de los bytes dentro de cada chunk; solo que la cadena, su orden y su
@@ -57,4 +68,10 @@ encuadre son lo que la documentación afirma. Los cuerpos no se decodifican aqu�
 - 68 streams recorridos de 15,380. Se muestrearon diez archivos, uno de ellos (`anim`) más a fondo
   que el resto.
 - Un stream cuya longitud declarada se pasa de su tamaño inflado se descartó como truncado; esos
-  existen de verdad y hay que manejarlos, no son error de medición.
+  existen de verdad y hay que manejarlos, no son error de medición. En el barrido de 78 ventanas
+  hay 107, todos inflando exactamente 65,536 bytes; sus cuerpos quedan fuera de los conteos de
+  layout de arriba.
+
+`docs/COMPARATIVA.es.md` pone este framing al lado del único lector público de PSIN que lo recorre
+(`PercyStar/src/psin.rs:188-201`, con sus propios lectores de tabla en `vehicle_data.rs`) y de las dos
+herramientas que solo etiquetan el stream.

@@ -1,0 +1,128 @@
+# Command: python3 raw/comparativa/psin_census.py <samples dir>
+# Generated for T-RPF9-COMPARA (evidence for docs/COMPARATIVA.md, section 1 - PSIN)
+# Script: raw/comparativa/psin_census.py, next to this file.
+# Samples: the read-only .bin windows of the lab package, 19 .head + 59 .q1/.q3/.tail
+# slices of 78 files, 225,877,312 bytes. They are not in this repository.
+#
+# What it does: finds every zlib stream in the windows whose inflated body starts
+# with PSIN, walks the chunk chain advancing by the declared 32-bit big-endian
+# length, and checks the LSCH and LENM bodies against docs/PSIN.md.
+#
+# Cross-check: the total below (4,066 PSIN streams) is the same number the payload
+# census in raw/payload.txt reports for PSIN over the same windows.
+
+INPUT: 78 windows, 225,877,312 bytes
+
+=== 1. PSIN STREAMS PER WINDOW ===
+window                                   bytes  PSIN streams
+anim.head.bin                        4,194,304             1
+anim.tail.bin                        4,194,304             8
+data.head.bin                        4,194,304           454
+data.tail.bin                        4,194,304             4
+levels.head.bin                      4,194,304             8
+levels.tail.bin                      4,194,304            27
+navmeshes.tail.bin                   4,194,304             1
+packs.tail.bin                       4,194,304            47
+script.head.bin                      4,194,304           928
+script.q1.bin                        2,097,152           577
+script.q3.bin                        1,089,740           369
+script.tail.bin                      4,194,304          1012
+shared_minigame000.head.bin          4,194,304             6
+shared_minigame000.tail.bin          4,194,304             2
+story000_script.q3.bin               2,097,152            99
+story000_script.tail.bin             4,194,304           523
+
+TOTAL PSIN stream starts: 4066
+
+=== 2. CHAIN SHAPES ===
+  3958  PSIN -> LSCH -> LENM -> LSNS -> LGID -> LRSC -> CHKS
+    78  PSIN
+    22  PSIN -> LSCH -> LENM -> LSNS
+     4  PSIN -> LSCH
+     3  PSIN -> LSCH -> LENM
+     1  PSIN -> PMAP -> PSCH -> PSIG -> STNS -> CHKS
+
+walk stop reasons: {'exact_end': 3959, 'declared_past_end': 107}
+
+=== 3. ADVANCE RULE: length includes the 8-byte chunk header ===
+successors at pos + length                  : 23829
+  the stream's next magic is there          : 23829 (100.00%)
+  the stream's next magic 8 bytes later     : 0
+  any plausible tag 8 bytes later           : 7943 (chance matches, not boundaries)
+streams ending exactly at the inflated size : 3959/4066
+  complete seven-chunk chains               : 3958
+  PSIN -> PMAP -> ... -> CHKS variant       : 1
+streams stopping at a chunk past the body   : 107/4066
+chunks declaring length < 8                 : 0
+The independent check is in sections 4-5: each boundary slices a body, and
+the two-phase equation must land exactly on the end of that body. The third
+line is the framing test: the stream's own next magic never sits 8 bytes late.
+The fourth line counts four printable bytes that would pass a loose tag check
+if one did not compare against the successor the walk actually reaches.
+
+=== 4. LSCH BODY: 32-byte headers, then 16-byte field records ===
+LSCH chunks that fit in their stream : 3983
+32-byte struct headers               : 48475
+  with [AA x 8] at +16..+24          : 48475 (by construction of the walk)
+16-byte field records                : 344446
+body == 32*headers + 16*fields       : 3983/3983
+headers per chunk                    : min 1, max 69, chunks with 1 header: 1
+
+=== 5. LENM BODY: 24-byte enum headers, then 16-byte value records ===
+LENM chunks that fit in their stream : 3980
+24-byte enum headers                 : 11806
+  with [EE x 8] at +8..+16           : 11806 (by construction of the walk)
+16-byte value records                : 72455
+body == 24*headers + 16*values       : 3980/3980
+interleaved reading consumes body    : 2929/3980  (PercyStar psin.rs:235)
+chunks with >= 2 enum headers        : 1051 (interleaved stops after the first)
+
+=== 6. EXAMPLES: full chains ===
+anim.head.bin @0x6000  compressed=732  inflated=2808  stop=exact_end
+  PSIN(2048) -> LSCH(440) -> LENM(8) -> LSNS(196) -> LGID(8) -> LRSC(88) -> CHKS(20)
+
+data.head.bin @0x12330  compressed=536  inflated=1288  stop=exact_end
+  PSIN(528) -> LSCH(440) -> LENM(8) -> LSNS(196) -> LGID(8) -> LRSC(88) -> CHKS(20)
+
+data.head.bin @0x13000  compressed=1138  inflated=2568  stop=exact_end
+  PSIN(544) -> LSCH(1208) -> LENM(600) -> LSNS(100) -> LGID(8) -> LRSC(88) -> CHKS(20)
+
+data.head.bin @0x14000  compressed=1121  inflated=2552  stop=exact_end
+  PSIN(544) -> LSCH(1208) -> LENM(600) -> LSNS(84) -> LGID(8) -> LRSC(88) -> CHKS(20)
+
+data.head.bin @0x21000  compressed=3690  inflated=10624  stop=exact_end
+  PSIN(2144) -> LSCH(6312) -> LENM(1568) -> LSNS(484) -> LGID(8) -> LRSC(88) -> CHKS(20)
+
+=== 7. CONTAINER PREFIXES (declared length past the inflated body) ===
+streams whose walk stops past the body : 107 of 4066
+  inflated body size                  : [65536]
+  first chunk that overruns           : {'PSIN': 78, 'LSNS': 22, 'LSCH': 4, 'LENM': 3}
+  anim.tail.bin @0x1d7570: PSIN declares 972552 at +0x0, body is 65536
+  anim.tail.bin @0x20d570: PSIN declares 307048 at +0x0, body is 65536
+  anim.tail.bin @0x213570: LSNS declares 189732 at +0x5e90, body is 65536
+
+Chunks whose declared length overruns the body are not used for the LSCH/LENM
+counts in sections 4 and 5; the page itself is counted as one PSIN stream, like
+every other one, which is why the total in section 1 matches the payload census.
+Whether those 64 KiB bodies are one page of a larger container is a hypothesis,
+not something this script can show.
+
+# --- where to look ---
+# Section 1 gives the 4,066 total and the per-window spread; the same number
+# appears in the payload census line raw/payload.txt:62 (psin=4066).
+# Section 2 is the shape histogram: 3,958 seven-chunk chains, 78 bare PSIN
+# headers, and one PSIN -> PMAP -> ... -> CHKS variant that no document in this
+# repository describes yet.
+# Section 3 is the framing test: of 23,829 boundaries that have a successor, the
+# stream's own next magic sits at pos + length in all 23,829 of them and at
+# pos + 8 + length in none. The fourth line is context, not a competing count:
+# 7,943 boundaries also hold four printable bytes eight bytes late, which is why
+# a checker has to compare against the successor instead of just looking for a
+# plausible tag. No chunk declares a length below 8.
+# Sections 4 and 5 are the body layouts that docs/PSIN.md:54-59 quotes: the
+# two-phase reading lands exactly on the body end 3,983 times for LSCH and 3,980
+# times for LENM, while the interleaved reading of PercyStar src/psin.rs:235
+# reaches the end in only 2,929 of the 3,980 LENM bodies.
+# Section 7 lists the 107 streams whose last chunk declares a length past the
+# inflated body, all of them exactly 65,536 bytes long. They are container
+# prefixes cut by the window, so their bodies stay out of the layout counts.

@@ -195,5 +195,79 @@ class TestRpf9Synthetic(unittest.TestCase):
             os.unlink(tmp_path)
 
 
+class TestRpf9EdgeCases(unittest.TestCase):
+    """Edge cases behind docs/COMPARATIVA.md; every fixture is invented bytes."""
+
+    @staticmethod
+    def _header(*, toc_end: int = 128, split: int = 112, trailer: int = 32, entry_count: int = 1) -> bytes:
+        return struct.pack(
+            "<16I",
+            rpf9.RPF9_MAGIC,
+            toc_end,
+            split,
+            trailer,
+            1,
+            2,
+            0x47A00,
+            0x150,
+            0x10006,
+            entry_count,
+            0xDA72573E,
+            0x00090F01,
+            16,
+            0,
+            0,
+            0,
+        )
+
+    def _inspect(self, blob: bytes, **kwargs):
+        with tempfile.NamedTemporaryFile(delete=False) as tf:
+            tf.write(blob)
+            tmp_path = Path(tf.name)
+        try:
+            return rpf9.inspect_file(tmp_path, **kwargs)
+        finally:
+            os.unlink(tmp_path)
+
+    def test_truncated_header_is_rejected(self) -> None:
+        # 63 bytes: magic plus zeros, one byte short of the 64-byte header.
+        blob = struct.pack("<I", rpf9.RPF9_MAGIC) + b"\x00" * 59
+        self.assertEqual(len(blob), 63)
+        with self.assertRaises(ValueError):
+            rpf9.parse_header(blob)
+
+    def test_zero_entry_count_header_does_not_invent_entries(self) -> None:
+        blob = self._header(entry_count=0) + (b"\x00" * 64)
+        report = self._inspect(blob, include_payload=True)
+        self.assertEqual(report["header"]["entry_count_candidate"], 0)
+        self.assertEqual(report["toc"]["entries"], [])
+        self.assertEqual(report["toc"]["entry_listing_status"], "unencrypted_toc_layout_unverified")
+        self.assertEqual(report["payload"]["zlib_stream_count"], 0)
+        self.assertEqual(report["payload"]["nested_rpf9_containers"], [])
+
+    def test_nested_header_at_unaligned_offset_is_found(self) -> None:
+        inner_offset = 0x1234
+        blob = self._header() + (b"\x00" * (inner_offset - 64)) + self._header(entry_count=1) + (b"\x00" * 64)
+        report = self._inspect(blob, scan_nested=True, include_payload=True)
+        nested = report["payload"]["nested_rpf9_containers"]
+        self.assertEqual([n["offset_hex"] for n in nested], ["0x1234"])
+        self.assertEqual(nested[0]["offset"], inner_offset)
+        self.assertNotEqual(nested[0]["offset"] % 4096, 0)
+        self.assertEqual(nested[0]["entry_count_candidate"], 1)
+
+    def test_psin_chunk_length_below_header_is_classified_not_parsed(self) -> None:
+        # tools/rpf9.py classifies PSIN by prefix (tools/rpf9.py:481); the chunk walk
+        # described in docs/PSIN.md is not implemented there, so a chunk length below
+        # the 8-byte header must not crash the classification or invent entries.
+        body = b"PSIN" + struct.pack(">I", 4) + (b"\xaa" * 24)
+        blob = self._header() + (b"\x00" * 64) + zlib.compress(body, 9)
+        report = self._inspect(blob, include_payload=True)
+        self.assertEqual(report["payload"]["zlib_stream_count"], 1)
+        self.assertEqual(report["payload"]["zlib_streams"][0]["kind"], "PSIN")
+        self.assertEqual(report["payload"]["zlib_streams"][0]["decompressed_bytes"], len(body))
+        self.assertEqual(report["toc"]["entries"], [])
+        self.assertEqual(report["payload"]["nested_rpf9_containers"], [])
+
+
 if __name__ == "__main__":
     unittest.main()
