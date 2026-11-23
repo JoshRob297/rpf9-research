@@ -221,12 +221,11 @@ The consequence is visible on a real archive: `levels.rpf` has `w24 = 2,078` and
 
 `w04 - w08 == ceil(stride * w24 / 16) * 16` with `stride = 9` or `10` selected by the low byte of
 `+0x2c`, and `12` in the clean high-half-2 cases (`docs/RPF9.md:30`, `docs/NESTED.md:26-33`)
-[verified]. It holds 54/54 for 9, 15/15 for 10 (69/69 for the high-half-1 set) and 22/22 on the 22 outer
-fixtures
-(`raw/cabeceras/README.md:42`); for high-half-2 it fits 12 in 13 clean cases plus 2 that need
-`w24 + 1`, with one header that still uses stride 10 (`docs/NESTED.md:29-33`) [verified]. That is
-what lets a header predict its own subtable size and lets the nested census report entry counts
-without decrypting anything [verified].
+[verified]. It holds 54/54 for 9, 15/15 for 10 (69/69 for the high-half-1 set) and 22/22 on the 22
+outer fixtures (`raw/cabeceras/README.md:42`); for high-half-2 it fits 12 in 13 clean cases plus 2
+that need `w24 + 1`, with one header that still uses stride 10 (`docs/NESTED.md:29-33`) [verified].
+That is what lets a header predict its own subtable size and lets the nested census report entry
+counts without decrypting anything [verified].
 
 ### Which is better, and for what
 
