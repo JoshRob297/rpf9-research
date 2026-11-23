@@ -21,8 +21,10 @@ import zlib
 from dataclasses import dataclass
 from pathlib import Path
 
-DEFAULT_INDEX_DIR = Path("/home/sistver/idx-fixtures/resolver/index")
-DEFAULT_RPF_DIR = Path("/home/sistver/idx-fixtures/resolver/rpf")
+# No hay rutas por defecto: el indice y los contenedores los pone quien llama. Un
+# default apuntando al arbol de quien lo escribio solo funciona en esa maquina.
+DEFAULT_INDEX_DIR = None
+DEFAULT_RPF_DIR = None
 
 ZLIB_PREFIX = b"\x78"
 
@@ -485,14 +487,14 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--index-dir",
         type=Path,
-        default=DEFAULT_INDEX_DIR,
+        default=None,
         metavar="DIR",
         help=f"directory with streams-*.tsv and paths-*.tsv (default: {DEFAULT_INDEX_DIR})",
     )
     parser.add_argument(
         "--rpf-dir",
         type=Path,
-        default=DEFAULT_RPF_DIR,
+        default=None,
         metavar="DIR",
         help=f"directory with the .rpf containers (default: {DEFAULT_RPF_DIR})",
     )
@@ -626,6 +628,12 @@ def _print_verify(report: VerifyReport) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    faltan = [n for n, v in (("--index-dir", args.index_dir), ("--rpf-dir", args.rpf_dir)) if v is None]
+    if faltan:
+        parser.error(
+            "faltan " + " y ".join(faltan) + ": el indice y los contenedores no tienen ruta por defecto"
+        )
 
     if args.verify is not None:
         if args.path is not None:
