@@ -37,6 +37,53 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
   `docs/NAMES.md`, `docs/INDEX.md` y `docs/NESTED.md`.
 
 Ver `METHODOLOGY.md`.
+
+## Fusionar índices de orígenes distintos
+
+`tools/merge_index.py` sigue aceptando la forma histórica, sin cambios:
+
+```sh
+tools/merge_index.py <dir_tramos> <dir_salida> --skip packs_1.json,packs_2.json,packs_3.json
+```
+
+La forma multifuente exige que cada origen declare su tipo; el fusionador no lo adivina:
+
+```sh
+tools/merge_index.py <dir_salida> \
+    --source name_recover=<dir_o_json> \
+    --source paths=<nombres.txt|nombres.json> \
+    --source inventory-tsv=<inventario.tsv> \
+    --source inventory-csv=<inventario.csv> \
+    --source hashes=<paths.sha256>
+```
+
+| tipo | entrada | aporta |
+|---|---|---|
+| `name_recover` | JSON de `tools/name_recover.py` | streams, rutas, identificadores y offsets |
+| `paths` | una ruta por línea, o `{"paths": [...]}` | rutas sin offset ni tamaño |
+| `inventory-tsv` / `inventory-csv` | `archivo, offset, ruta` (`offset` decimal o `0x...`) | rutas con archivo y offset absoluto |
+| `hashes` | lista de `sha256` con sal como `raw/paths.sha256` | solo compara cobertura; nunca fusiona |
+
+Los conflictos se resuelven en este orden, que también se escribe en `report.json`:
+
+1. Una ruta recuperada literalmente del payload (XML de montaje) gana sobre cualquier versión
+   derivada de un patrón cuando discrepan en el offset.
+2. La misma ruta, contenedor, offset y tamaño se fusionan en una entrada sin marca.
+3. La misma ruta y contenedor con offset distinto, o el mismo offset con tamaño distinto,
+   quedan como `conflict` con todas las versiones y el motivo. No se elige una.
+4. Dos rutas distintas con el mismo hash quedan como `collision`.
+5. Una entrada sin ruta pero con identificador queda como `orphan`.
+
+Una discrepancia resuelta por la regla 1 igual se escribe en `conflict` con
+`resolution: literal`; solo las entradas `unresolved` conservan más de una versión en
+`index.tsv`.
+
+`streams.tsv`, `paths.tsv` e `ids.tsv` conservan su significado anterior: el log de menciones
+de las fuentes `name_recover`, para que los conteos de `docs/INDEX.md` sigan reproduciéndose.
+`index.tsv` es el índice normalizado de rutas (una fila por versión, `estado=conflict` cuando
+no se resolvió) y `report.json` guarda las listas `conflict`, `collision`, `orphan` y
+`unrecognized` más los conteos por fuente. `--skip` sigue descartando archivos por nombre.
+
 ## Proyectos relacionados y qué responde este dato
 
 Este repositorio mide un solo paquete retail. Estos proyectos consumen el mismo formato, y cada

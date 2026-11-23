@@ -48,6 +48,51 @@ and why, are listed in `docs/INDEX.md` along with the negative results.
 The full path index is not published: it is the game's asset manifest, not the format. The repo
 ships the tools, the counts and salted hashes so anyone can diff their own run against ours.
 
+## Merging indexes from different sources
+
+`tools/merge_index.py` still accepts the historical form, unchanged:
+
+```sh
+tools/merge_index.py <chunks_dir> <output_dir> --skip packs_1.json,packs_2.json,packs_3.json
+```
+
+The multi-source form requires every origin to declare its type; the merger does not guess it:
+
+```sh
+tools/merge_index.py <output_dir> \
+    --source name_recover=<dir_or_json> \
+    --source paths=<names.txt|names.json> \
+    --source inventory-tsv=<inventory.tsv> \
+    --source inventory-csv=<inventory.csv> \
+    --source hashes=<paths.sha256>
+```
+
+| type | input | contributes |
+|---|---|---|
+| `name_recover` | JSON from `tools/name_recover.py` | streams, paths, identifiers and offsets |
+| `paths` | one path per line, or `{"paths": [...]}` | paths without offset or size |
+| `inventory-tsv` / `inventory-csv` | `archive, offset, path` (`offset` decimal or `0x...`) | paths with archive and absolute offset |
+| `hashes` | salted `sha256` list like `raw/paths.sha256` | coverage comparison only; never merges |
+
+Conflicts are resolved in this order, which is also written to `report.json`:
+
+1. A path recovered literally from the payload (mount XML) beats any pattern-derived version
+   when they disagree on the offset.
+2. The same path, container, offset and size merge into one entry without a mark.
+3. The same path and container with a different offset, or the same offset with a different
+   size, become a `conflict` entry with every version and the reason. Nothing is chosen.
+4. Two different paths with the same hash become a `collision`.
+5. An entry without a path but with an identifier becomes an `orphan`.
+
+A discrepancy resolved by rule 1 is still written to `conflict` with `resolution: literal`;
+only `unresolved` entries keep more than one version in `index.tsv`.
+
+`streams.tsv`, `paths.tsv` and `ids.tsv` keep their previous meaning: the mention log of the
+`name_recover` sources, so the counts in `docs/INDEX.md` still reproduce. `index.tsv` is the
+normalized path index (one row per version, `estado=conflict` when unresolved) and
+`report.json` holds the `conflict`, `collision`, `orphan` and `unrecognized` lists plus the
+per-source counts. `--skip` still drops files by name.
+
 ## Related projects and what this data answers
 
 This repository measures one retail package. These projects consume the same format, and each one
