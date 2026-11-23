@@ -1,0 +1,27 @@
+# Corroboracion independiente: regla de encadenado PSIN sobre una copia propia distinta (v1.0.2.1).
+# Referencia docs/PSIN.md: cada chunk = magic(4) + len_u32_BE donde len INCLUYE su propia
+# cabecera de 8 bytes; avanzar `len` aterriza exactamente en el siguiente magic; cadena completa
+# PSIN->LSCH->LENM->LSNS->LGID->LRSC->CHKS terminando exactamente al final del tamano inflado.
+# Corpus publicado de referencia: 3958/4066 completas y exact-end (97.34%) sobre diez archivos.
+
+# Alcance aqui: UN hijo anidado dentro de script.rpf, ubicado escaneando cabeceras RPF9 embebidas
+# (u32LE @off == 0x52504639, bytes b'9FPR') SIN apoyarse en la TOC cifrada. Ventana: desde
+# align_4096(w04_hijo) hasta la siguiente cabecera RPF9 valida. Streams fisicos hallados por firma
+# zlib 78xx exigiendo inflado completo hasta EOF limpio >= 24B consumidos; seleccion left-greedy sin
+# solapamiento.
+
+RESULTADOS:
+  cabeceras_rpf9_embebidas_validadas : 3 (outer + 2 hijos validos por cabecera en script.rpf)
+  hijo_objetivo                      : off=802816 A(w04)=73488 B(w08)=61328 C(w0c)=25264 N(w24)=1012 verW=0x20006
+  candidatas_firma_zlib              : 1124
+  streams_zlib_aceptados             : 1015 (rechazos: {"zlib_error:78da": 1})
+  censo_first4CC_inflado             : {"PSIN": 1012, "Ö{cÞ": 1, "Àíp\u0014": 1, "ÿH=¤": 1}
+  streams clasificados PSIN          : 1012  (== N declarado del hijo; los otros aceptados no empiezan en PSIN)
+  cadenas_canonicas_exact_end        : 1009/1012 = 99.7%  (PSIN->LSCH->LENM->LSNS->LGID->LRSC->CHKS terminando exactamente al final del tamano inflado)
+  variantes PMAP                     : 0 (ausencia consistente con raridad poblacional ~1/4066 sobre diez archivos; aqui un solo archivo)
+  terminadas_por_chunk_truncado       : 3 (residuo tipo prefijo-64KiB truncado, no errores de framing)
+  sin_fin_exacto                     : 3
+
+# Interpretacion honesta: regla de framing REPRODUCIDA sobre corpus totalmente independiente
+# (99.7%% aqui vs 97.34%% publicada; ambos residuos consisten con truncacion de muestras). Sin dependencia
+# de la TOC cifrada; sin afirmaciones nuevas sobre contenidos ni sobre cifrado.
