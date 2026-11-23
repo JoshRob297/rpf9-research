@@ -1,0 +1,39 @@
+## hosts cloudcode
+https://autopush-cloudcode-pa.sandbox.googleapis.comclearcut
+https://cloudcode-pa.googleapis.comGEMINI
+https://daily-cloudcode-pa.googleapis.comAdd
+https://preprod-daily-cloudcode-pa.sandbox.googleapis.comconverting
+
+## formatos de id
+-- %s/%s/%d/%s
+105698039:%s/%s/%d/%s
+-- agent-%s
+105582447:agent-%s
+106094078:agent-%s
+-- requestId
+33896452:requestId
+33897157:requestId
+33897856:requestId
+33898555:requestId
+33950515:requestId
+33951220:requestId
+33951919:requestId
+33972837:requestId
+-- sessionId
+43277124:sessionId
+43278090:sessionId
+43278680:sessionId
+43279270:sessionId
+43279866:sessionId
+43280464:sessionId
+43643546:sessionId
+43644516:sessionId
+
+## claves de labels en el binario
+106102137:root_cascade_id
+106102122:last_step_index
+112012733:last_step_index
+112012854:last_step_index
+106581805:used_non_gemini_model
+106504776:MODEL_PLACEHOLDER_M0
+116084730:MODEL_PLACEHOLDER_M0

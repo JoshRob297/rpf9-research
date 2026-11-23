@@ -1,0 +1,38 @@
+# plugin_audit: árbol fuente del plugin 2.9.11
+constants.ts:35: export const ANTIGRAVITY_ENDPOINT_DAILY = "https://daily-cloudcode-pa.sandbox.googleapis.com";  # host sandbox
+constants.ts:37: export const ANTIGRAVITY_ENDPOINT_DAILY_DIRECT = "https://daily-cloudcode-pa.googleapis.com";  # host daily directo
+constants.ts:47: export const ANTIGRAVITY_ENDPOINT_FALLBACKS = [  # orden de fallback
+constants.ts:65: export const ANTIGRAVITY_ENDPOINT = ANTIGRAVITY_ENDPOINT_DAILY;  # endpoint por defecto
+constants.ts:70: export const ANTIGRAVITY_DEFAULT_PROJECT_ID = "rising-fact-p41fc";  # project id hardcodeado
+constants.ts:93: export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.5.8";  # version CLI de fallback
+constants.ts:100: return `antigravity/cli/${getAntigravityCliVersion()} (aidev_client; os_type=linux; arch=amd64; cl=962369648; auth_method=consumer)`;  # cl congelado en el UA
+constants.ts:99: export function getAntigravityCliUserAgent(): string {  # constructor del UA CLI
+constants.ts:115: export function getAntigravityHeaders(): HeaderSet & { "Client-Metadata": string } {  # header Client-Metadata
+plugin/request.ts:87: const PLUGIN_SESSION_ID = `-${crypto.randomUUID()}`;  # session id del plugin
+plugin/request.ts:946: headers.delete("x-api-key");  # borra x-api-key
+plugin/request.ts:950: headers.delete("x-goog-api-key");  # borra x-goog-api-key
+plugin/request.ts:954: headers.delete("x-goog-user-project");  # borra x-goog-user-project
+plugin/request.ts:975: const transformedUrl = `${baseEndpoint}/v1internal:${rawAction}${streaming ? "?alt=sse" : ""}`;  # construccion de URL
+plugin/request.ts:1772: wrappedBody.requestType = "agent";  # requestType del body
+plugin/request.ts:1773: wrappedBody.userAgent = "antigravity";  # userAgent del body
+plugin/request.ts:1774: wrappedBody.requestId = "agent-" + crypto.randomUUID();  # requestId del plugin
+plugin/request.ts:1095: sessionId = signatureSessionKey;  # sessionId = clave compuesta
+plugin/request.ts:1790: headers.set("Accept", "text/event-stream");  # Accept SSE
+plugin/request.ts:1816: headers.set("User-Agent", userAgent);  # UA final
+plugin/request.ts:868: export function buildSafetySettings(safetyLevel: "medium" | "high" | "none" = "medium"): Array<{ category: string; threshold: string }> {  # safetySettings inyectados
+plugin/request.ts:831: function generateSyntheticProjectId(): string {  # project sintetico
+plugin/project.ts:131: "User-Agent": "antigravity",  # UA del loadCodeAssist
+plugin/project.ts:132: "X-Goog-Api-Client": "google-cloud-sdk vscode_cloudshelleditor/0.1",  # X-Goog-Api-Client del loadCodeAssist
+plugin/project.ts:133: "Client-Metadata": getAntigravityHeaders()["Client-Metadata"],  # Client-Metadata del loadCodeAssist
+plugin/fingerprint.ts:85: return crypto.randomUUID();  # deviceId aleatorio
+plugin/fingerprint.ts:89: return crypto.randomBytes(16).toString("hex");  # sessionToken aleatorio
+plugin/version.ts:31: export const CLI_VERSION_URL = "https://antigravity-cli-auto-updater-974169037036.us-central1.run.app";  # updater de version del CLI
+plugin.ts:2014: const currentEndpoint = ANTIGRAVITY_ENDPOINT_FALLBACKS[i];  # bucle de fallback
+v2/adapter.ts:839: ANTIGRAVITY_ENDPOINT_FALLBACKS[0],  # host del adaptador v2
+
+## ausencia de telemetria en el plugin
+(sin coincidencias de clearcut/play.googleapis/playlog/sendTelemetry en src, tests excluidos)
+
+## buildFingerprintHeaders: definido y no usado
+plugin/fingerprint.ts:159: export function buildFingerprintHeaders(fingerprint: Fingerprint | null): Partial<FingerprintHeaders> {
+(una sola definicion, cero llamadas fuera de fingerprint.ts)

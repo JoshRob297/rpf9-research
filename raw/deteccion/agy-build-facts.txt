@@ -1,0 +1,64 @@
+binary            : agy.bin (copia local)
+size              : 273879752
+md5               : 485ac1f779f3e0b8d5acc84868c49cdb
+sha256            : 7b004d26c3fdea25a7c9d456de4bfaccef4be1e4cc7fd6db628859c5c941fa2d
+go buildinfo      : '`go1.28-20261102-RC01 cl/1012564305 +298f53e483 X:fieldtrack,boringcrypto,nogolistexportnewforma'
+changelog         : '# Antigravity CLI Changelog'  version=1.5.14
+CL                : 1027820220  (global 0xd82b440 -> RELA 0x6ff2a90, len 10)
+UA builder        : 0x95de840
+setHeaders        : 0x95df3e0
+
+UA literals:
+  0x64cbbc3  'antigravity'
+  0x64b052f  'os_type=%s'
+  0x6466a71  'arch=%s'
+  0x64e76e2  'aidev_client'
+  0x64468d7  'cl=%d'
+  0x6518d7d  'auth_method=%s'
+  0x6432ad2  '; '
+  0x64b0543  '%s/%s (%s)'
+  0x6603ebf  'datacollection_opt_in=false'
+
+setHeaders literals:
+  0x95df449 -> 0x64b054d  'User-Agentdrop_blockcontainerdSSH_CLIENTelapsed_'
+  0x95df579 -> 0x65a3739  'X-Goog-Request-Reasonaicode.googleapis.comvertex'
+  0x95df656 -> 0x64e7682  'Content-Typecloudcode-pafetch_configSaveUserTier'
+  0x95df694 -> 0x65448cc  'application/jsonkeyring-marker-*CRM_ENDPOINT_URL'
+  0x95df72d -> 0x654491c  '/v1alpha/remote:.corp.google.comfetchSandboxPort'
+
+anthropic-beta value: 'thinking-binding-controls-2026-08-01' (func 0x95e1e80)
+
+body keys (offsets):
+  'requestType'                      ['0x65cfb00', '0x65f9fd3', '0x694cfb7', '0x6d35d22', '0x6d367ce']
+  'userAgent'                        ['0x25eeb39', '0x25eeb92', '0x2ba317b', '0x64a16f9', '0x64d6d72']
+  'requestId'                        ['0x2053804', '0x2053ac5', '0x2053d80', '0x205403b', '0x2060b33']
+  'root_cascade_id'                  ['0x652fd79']
+  'last_step_index'                  ['0x652fd6a', '0x6ad2dbd', '0x6ad2e36', '0xc712836', '0xc712867']
+  'used_non_gemini_model'            ['0x65a4f2d']
+  'MODEL_PLACEHOLDER_M0'             ['0x6592248', '0x6eb4ffa']
+  '%s/%s/%d/%s'                      ['0x64cd2f7']
+  'agent-%s'                         ['0x64b0f6f', '0x652ddfe']
+
+telemetry:
+  'https://play.googleapis.com/log'            ['0x6630453']
+  '--disable_telemetry'                        ['0x657f3ee', '0x6660363']
+  'datacollection_opt_in=false'                ['0x6603ebf']
+  'antigravity_ide_installation_id'            ['0x6630491']
+  'clearcut_go_client_telemetry'               ['0x280a268', '0x280a2e7', '0x280a368', '0x280a3ed', '0x280a46c']
+  'clearcut.Client'                            ['0xc2cc1c9', '0xc422af3', '0xc4dba9c']
+
+headers:
+  'X-Goog-Request-Reason'        ['0x65a3739']
+  'Content-Type'                 ['0x64e7682', '0x6527ec6', '0x65b4773', '0x6643354', '0x666765f']
+  'application/json'             ['0x65448cc', '0x655a6be', '0x66322f6', '0x665830c', '0x66633ea']
+  'User-Agent'                   ['0x64b054d', '0x64e88fc', '0x654560c', '0x664f062', '0x6681d30']
+  'X-Goog-Api-Client'            []
+  'x-goog-api-client'            ['0x655c14e']
+  'Client-Metadata'              []
+
+endpoints:
+  'daily-cloudcode-pa.googleapis.com'                      ['0x6681b6d']
+  'cloudcode-pa.googleapis.com'                            ['0x6603eda', '0x6654ccd', '0x6681b73', '0x6b2b527', '0x6b2becd']
+  'daily-cloudcode-pa.sandbox.googleapis.com'              ['0x66d79ea']
+  'preprod-daily-cloudcode-pa.sandbox.googleapis.com'      ['0x66d79e2']
+  'autopush-cloudcode-pa.sandbox.googleapis.com'           ['0x66c174a']

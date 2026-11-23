@@ -1,0 +1,129 @@
+# Evidencia plugin (T-RE-DETECT)
+# generado: 2026-11-23T09:40:24-06:00
+# comando: tools/collect_evidence.sh agy.bin (copia local) proyectos/opencode-antigravity-auth paquete instalado 2.9.11/dist
+
+## superficie de produccion (dist instalado)
+=== paquete instalado 2.9.11/dist/src/constants.js ===
+CLI version fallback: 1.5.8
+CLI UA: antigravity/cli/${getAntigravityCliVersion()} (aidev_client; os_type=linux; arch=amd64; cl=962369648; auth_method=consumer)
+  cl=962369648 os_type=linux arch=amd64 auth_method=consumer
+  platform choices: []
+  Client-Metadata expr: platform":"${process.platform === "win32" ? "WINDOWS" : "MACOS"}"
+  ANTIGRAVITY_ENDPOINT_DAILY: https://daily-cloudcode-pa.sandbox.googleapis.com (line 30)
+  ANTIGRAVITY_ENDPOINT_DAILY_DIRECT: https://daily-cloudcode-pa.googleapis.com (line 32)
+  ANTIGRAVITY_ENDPOINT_AUTOPUSH: https://autopush-cloudcode-pa.sandbox.googleapis.com (line 33)
+  ANTIGRAVITY_ENDPOINT_PROD: https://cloudcode-pa.googleapis.com (line 34)
+
+=== paquete instalado 2.9.11/dist/src/plugin/request.js ===
+Deleted headers: ['x-api-key', 'x-goog-api-key', 'x-goog-user-project']
+Set headers: ['Accept', 'Authorization', 'Retry-After', 'User-Agent', 'anthropic-beta', 'retry-after-ms', 'x-antigravity-cached-content-token-count', 'x-antigravity-candidates-token-count', 'x-antigravity-context-error', 'x-antigravity-prompt-token-count', 'x-antigravity-total-token-count']
+Transformed URL: const transformedUrl = `${baseEndpoint}/v1internal:${rawAction}${streaming ? "?alt=sse" : ""}`;
+Body fields: {'requestType': 'agent', 'userAgent': 'antigravity', 'requestId': '"agent-" + crypto.randomUUID()'}
+
+
+## superficie del fuente (HEAD)
+=== árbol fuente del plugin 2.9.11/constants.ts ===
+CLI version fallback: 1.5.8
+CLI UA: antigravity/cli/${getAntigravityCliVersion()} (aidev_client; os_type=linux; arch=amd64; cl=962369648; auth_method=consumer)
+  cl=962369648 os_type=linux arch=amd64 auth_method=consumer
+  platform choices: []
+  Client-Metadata expr: platform":"${process.platform === "win32" ? "WINDOWS" : "MACOS"}"
+  ANTIGRAVITY_ENDPOINT_DAILY: https://daily-cloudcode-pa.sandbox.googleapis.com (line 35)
+  ANTIGRAVITY_ENDPOINT_DAILY_DIRECT: https://daily-cloudcode-pa.googleapis.com (line 37)
+  ANTIGRAVITY_ENDPOINT_AUTOPUSH: https://autopush-cloudcode-pa.sandbox.googleapis.com (line 38)
+  ANTIGRAVITY_ENDPOINT_PROD: https://cloudcode-pa.googleapis.com (line 39)
+
+=== árbol fuente del plugin 2.9.11/plugin/request.ts ===
+Deleted headers: ['x-api-key', 'x-goog-api-key', 'x-goog-user-project']
+Set headers: ['Accept', 'Authorization', 'Retry-After', 'User-Agent', 'anthropic-beta', 'retry-after-ms', 'x-antigravity-cached-content-token-count', 'x-antigravity-candidates-token-count', 'x-antigravity-context-error', 'x-antigravity-prompt-token-count', 'x-antigravity-total-token-count']
+Transformed URL: const transformedUrl = `${baseEndpoint}/v1internal:${rawAction}${streaming ? "?alt=sse" : ""}`;
+Body fields: {'requestType': 'agent', 'userAgent': 'antigravity', 'requestId': '"agent-" + crypto.randomUUID()'}
+
+
+## citas de codigo (fuente)
+--- src/constants.ts
+47:export const ANTIGRAVITY_ENDPOINT_FALLBACKS = [
+93:export const ANTIGRAVITY_CLI_VERSION_FALLBACK = "1.5.8";
+94:let antigravityCliVersion = ANTIGRAVITY_CLI_VERSION_FALLBACK;
+99:export function getAntigravityCliUserAgent(): string {
+100:  return `antigravity/cli/${getAntigravityCliVersion()} (aidev_client; os_type=linux; arch=amd64; cl=962369648; auth_method=consumer)`;
+115:export function getAntigravityHeaders(): HeaderSet & { "Client-Metadata": string } {
+118:    "X-Goog-Api-Client": "google-cloud-sdk vscode_cloudshelleditor/0.1",
+119:    "Client-Metadata": `{"ideType":"ANTIGRAVITY","platform":"${process.platform === "win32" ? "WINDOWS" : "MACOS"}","pluginType":"GEMINI"}`,
+126:  "X-Goog-Api-Client": "google-cloud-sdk vscode_cloudshelleditor/0.1",
+127:  "Client-Metadata": `{"ideType":"ANTIGRAVITY","platform":"${process.platform === "win32" ? "WINDOWS" : "MACOS"}","pluginType":"GEMINI"}`,
+144:  "X-Goog-Api-Client"?: string;
+145:  "Client-Metadata"?: string;
+153:    "X-Goog-Api-Client": randomFrom(ANTIGRAVITY_API_CLIENTS),
+154:    "Client-Metadata": `{"ideType":"ANTIGRAVITY","platform":"${metadataPlatform}","pluginType":"GEMINI"}`,
+--- src/plugin/request.ts
+8:  getAntigravityCliUserAgent,
+946:  headers.delete("x-api-key");
+950:  headers.delete("x-goog-api-key");
+954:  headers.delete("x-goog-user-project");
+1095:          sessionId = signatureSessionKey;
+1100:          (req as any).sessionId = signatureSessionKey;
+1772:          wrappedBody.requestType = "agent";
+1773:          wrappedBody.userAgent = "antigravity";
+1774:          wrappedBody.requestId = "agent-" + crypto.randomUUID();
+1778:          sessionId = signatureSessionKey;
+1779:          (wrappedBody.request as any).sessionId = signatureSessionKey;
+1790:    headers.set("Accept", "text/event-stream");
+1815:  const userAgent = getAntigravityCliUserAgent();
+1816:  headers.set("User-Agent", userAgent);
+--- src/plugin/project.ts
+3:  ANTIGRAVITY_ENDPOINT_FALLBACKS,
+18:  platform: "PLATFORM_UNSPECIFIED",
+48:    platform: CODE_ASSIST_METADATA.platform,
+132:    "X-Goog-Api-Client": "google-cloud-sdk vscode_cloudshelleditor/0.1",
+133:    "Client-Metadata": getAntigravityHeaders()["Client-Metadata"],
+137:    new Set<string>([...ANTIGRAVITY_LOAD_ENDPOINTS, ...ANTIGRAVITY_ENDPOINT_FALLBACKS]),
+182:  for (const baseEndpoint of ANTIGRAVITY_ENDPOINT_FALLBACKS) {
+--- src/plugin/fingerprint.ts
+41:  platform: string;
+73:const PLATFORM_CHOICES = ["darwin", "win32"] as const;
+74:type PlatformChoice = typeof PLATFORM_CHOICES[number];
+80:function platformToDisplayName(platform: string): "WINDOWS" | "MACOS" {
+84:function generateDeviceId(): string {
+88:function generateSessionToken(): string {
+96:export function generateFingerprint(): Fingerprint {
+97:  const platform = randomFrom(PLATFORM_CHOICES);
+102:    deviceId: generateDeviceId(),
+103:    sessionToken: generateSessionToken(),
+108:      platform: platformToDisplayName(platform),
+124:    deviceId: generateDeviceId(),
+125:    sessionToken: generateSessionToken(),
+130:      platform: platformToDisplayName(platform),
+181:    sessionFingerprint = generateFingerprint();
+191:  sessionFingerprint = generateFingerprint();
+--- src/plugin/version.ts
+31:export const CLI_VERSION_URL = "https://antigravity-cli-auto-updater-974169037036.us-central1.run.app";
+108:  const version = await tryFetchVersion(CLI_VERSION_URL);
+--- src/plugin/accounts.ts
+473:            fingerprint: acc.fingerprint ?? generateFingerprint(),
+1354:    account.fingerprint = generateFingerprint();
+--- src/plugin/quota.ts
+2:  ANTIGRAVITY_ENDPOINT_FALLBACKS,
+4:  getAntigravityCliUserAgent,
+181:  const endpoint = ANTIGRAVITY_ENDPOINT_FALLBACKS[0];
+189:      "User-Agent": getAntigravityCliUserAgent(),
+207:  const endpoint = ANTIGRAVITY_ENDPOINT_FALLBACKS[0];
+215:      "User-Agent": getAntigravityCliUserAgent(),
+--- src/plugin.ts
+5:  ANTIGRAVITY_ENDPOINT_FALLBACKS,
+7:  getAntigravityCliUserAgent,
+498:    "User-Agent": getAntigravityCliUserAgent(),
+518:    response = await fetch(`${ANTIGRAVITY_ENDPOINT_FALLBACKS[0]}/v1internal:streamGenerateContent?alt=sse`, {
+2007:            for (let i = 0; i < ANTIGRAVITY_ENDPOINT_FALLBACKS.length; i++) {
+2014:              const currentEndpoint = ANTIGRAVITY_ENDPOINT_FALLBACKS[i];
+2390:                if (shouldRetryEndpoint && i < ANTIGRAVITY_ENDPOINT_FALLBACKS.length - 1) {
+2609:                if (i < ANTIGRAVITY_ENDPOINT_FALLBACKS.length - 1) {
+
+## changelog: cabeceras retiradas y plataforma
+proyectos/opencode-antigravity-auth/CHANGELOG.md:689:- **Linux Fingerprints** - Removed `linux/amd64` and `linux/arm64` from `ANTIGRAVITY_PLATFORMS` and fingerprint generation. Linux users now masquerade as macOS (Antigravity does not support Linux as a native platform)
+proyectos/opencode-antigravity-auth/CHANGELOG.md:721:- **Fingerprint Headers Simplified** - `buildFingerprintHeaders()` now returns only `User-Agent`. Removed `X-Goog-QuotaUser`, `X-Client-Device-Id`, `X-Goog-Api-Client`, and `Client-Metadata` from outgoing content requests to align with Antigravity Manager behavior
+proyectos/opencode-antigravity-auth/CHANGELOG.md:745:- **Extra Outgoing Headers** - `X-Goog-Api-Client`, `Client-Metadata`, `X-Goog-QuotaUser`, `X-Client-Device-Id` no longer sent on content requests
+
+## captura medida previa (agy 1.5.11)
+27:antigravity/cli/1.5.11 (aidev_client; os_type=linux; arch=amd64; cl=1024248524; auth_method=consumer)
+46:  "project": "aicode-consumers",
