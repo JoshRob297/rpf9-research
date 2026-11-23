@@ -1,0 +1,48 @@
+# Corroboracion independiente: el trailer cifrado NO lleva los nombres (bajo el cifrado ya conocido)
+
+Contexto: un proyecto hermano (zeozeozeo/rpf9 v0.2.0) publico el cifrado de las tablas de
+RPF9 y el material de claves embebido del ejecutable (AES-lineage de tablas permutadas, 14
+rondas, CBC con IV fijo; 9 programas de claves). Reprodujimos su descifrado sobre nuestra
+copia v1.0.2.1 y quedo verificado: las cabeceras recuperadas coinciden exactamente con todas
+nuestras mediciones ciegas (payload/split/trailer y palabras de version/generacion por
+archivo). Este transcript registra el experimento siguiente, motivado por H13 de este
+repositorio (el trailer `[EOF-w0c..EOF)` como posible tabla de nombres).
+
+Pregunta: descifrando el trailer con ese mismo cifrado y ese keyring, ¿aparece estructura de
+nombres o de registros?
+
+Metodo (estatico; ninguna clave ni byte de juego se incluye aqui; solo estadisticas):
+- Se probaron LAS 9 claves del keyring sobre el trailer completo de dos contenedores con
+  (w24=4, w0c=144): story000_bvh4 (5632 B) y core_licenses_data (13536 B).
+- Modos y IV probados por clave: CBC con IV = TAG_IV del proyecto hermano; CBC con IV =
+  ultimo bloque cifrado de la tabla de cabecera; CBC con IV = bloque inmediatamente anterior
+  en el fichero; IV = centinela de 0x40; IV = ceros; IV = primer bloque del propio trailer;
+  y lectura ECB real (D(C_i) = P_i(CBC-ceros-IV) XOR C_{i-1}).
+- Metricas por resultado: entropia de Shannon, runs ASCII >= 4, u32 plausibles (< tamano de
+  fichero), y cabeza de 16 bytes (no incluida aqui; solo agregados).
+
+Resultados (resumen; ~1200 lecturas):
+- Entropias: 6.45 - 6.62 bits/byte en TODAS las claves y TODOS los modos/IV (la entropia del
+  ciphertext del trailer es 6.56 - 6.67) => sin reduccion de entropia en ningun caso.
+- u32 plausibles como offsets/tamanos: 0 de 32 en todas las claves y modos.
+- Runs ASCII >= 4 caracteres: solo coincidencias fortuitas de 4 letras, sin cadenas
+  significativas, sin rutas, sin extensiones, sin tokens.
+- Conclusion: bajo el cifrado actualmente conocido (y sus 9 claves), el trailer NO se
+  descifra a una tabla de nombres ni a registros, ni en lectura CBC (con 6 IVs distintos) ni
+  en lectura ECB. La unica lectura consistente es que el trailer no esta cifrado con este
+  esquema, o no contiene nombres.
+
+Implicacion para H13 de este repositorio:
+- H13 queda REFINADA: la capacidad observada (32 + suma(len(nombre)+1) <= w0c) sigue siendo
+  un ajuste sugestivo, pero el contenido del trailer bajo la clave ahora conocida no produce
+  nombres. En la plataforma Xbox Series, los nombres parecen no almacenarse en el contenedor;
+  la recuperacion de nombres practica es la de canales laterales (payloads XML/PSIN, indices
+  de vocabulario), como ya documentan varias herramientas de la comunidad.
+- No hay conflicto con los resultados estructurales previos (bloques 0..1 comunes entre
+  pares con igual (w24, w20_hi, w0c), divergencia desde el byte 32): esos siguen en pie; lo
+  que cambia es solo la interpretacion de que ahi hubiera cadenas legibles.
+
+Limites honestos: no se probaron esquemas alternativos (XTS, IV derivado de otra fuente,
+otra familia de claves fuera del keyring publicado); el negativo es estricto para el espacio
+probado y asi se declara. No se incluye ningun byte de clave ni de payload en este
+transcript; los experimentos corrieron sobre nuestra propia copia.
