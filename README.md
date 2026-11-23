@@ -34,7 +34,8 @@ RPF9, and how far one can get without the key. The expected output is a document
   that is the language the commands were run in; they are evidence and are not translated.
 - Sample binaries are **not versioned** (see `.gitignore`); only their manifest with hashes is.
 - Documentation ships in pairs: `README.md` (English) and `README.es.md` (Spanish); likewise
-  `docs/RPF9.md`, `docs/NAMES.md`, `docs/INDEX.md` and `docs/NESTED.md` with their `.es.md` counterparts.
+  `docs/RPF9.md`, `docs/NAMES.md`, `docs/INDEX.md`, `docs/NESTED.md`, `docs/PSIN.md` and
+  `docs/COMPARATIVA.md` with their `.es.md` counterparts.
 
 See `METHODOLOGY.md`.
 
@@ -107,6 +108,10 @@ needs a different part of what is published here.
 | [omonkeyz/xbox-emulator](https://github.com/omonkeyz/xbox-emulator) | progress notes for running the builds | the container map, so the notes can point at offsets instead of file names |
 
 The rule is the same for all of them: measured facts and geometry, never the asset manifest.
+
+`docs/COMPARATIVA.md` puts our measurements of PSIN, nested containers and table geometry next to
+three public RPF9 implementations (`rpf9-extract`, `PercyStar`, `rpf9`), read but never run, with a
+`[verified]`/`[hypothesis]` tag on every claim.
 
 ## License
 

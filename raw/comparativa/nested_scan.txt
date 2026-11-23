@@ -1,0 +1,129 @@
+# Command: python3 raw/comparativa/nested_scan.py <10 sample windows>
+# Generated for T-RPF9-COMPARA (evidence for docs/COMPARATIVA.md, section 2 - nested RPF9)
+# Script: raw/comparativa/nested_scan.py, next to this file.
+#
+# Header rule (docs/NESTED.md:11-14): magic 9FPR or RPF9, +0x18 == 0x47a00,
+# +0x1c in {0x150, 0x154, 0x158}, w24 non-zero, subtable below toc_end below
+# 64 MiB, table width 16. Same round of samples as the rest of the repository.
+#
+# "4 KiB-stepped scan" is the discovery loop of rpf9-extract/src/container.rs:74
+# (range from the first multiple of 0x1000 in the gap, step 0x1000) and of
+# zeozeozeo/rpf9 src/archive.rs:78 (offset 0, step 0x1000). Both additionally
+# require the whole container to fit in the buffer (container.rs:32,
+# header.rs:77-85); this script shows the reach of the stepping alone.
+#
+# "byte scan" is what tools/rpf9.py does: every offset from 0x40 on.
+
+### core_restofworld.head.bin  4,194,304 B
+  4 KiB-stepped scan : 2 header(s)
+      0x00000000  w04=0x00aa0 w08=0x00940 w0c=0x00570 id=0xd909d07576a5b6c8 w24=39 w20_hi=1 w2c=1
+      0x00001000  w04=0x02730 w08=0x02210 w0c=0x01350 id=0x8d808d50af36b746 w24=145 w20_hi=1 w2c=1
+  byte scan          : 3 header(s)
+      0x00000000  w04=0x00aa0 w08=0x00940 w0c=0x00570 id=0xd909d07576a5b6c8 w24=39 w20_hi=1 w2c=1
+      0x00000aa0  w04=0x002c0 w08=0x002a0 w0c=0x00070 id=0x162b7cc3d164fea3 w24=2 w20_hi=1 w2c=1  <-- not 4 KiB-aligned
+      0x00001000  w04=0x02730 w08=0x02210 w0c=0x01350 id=0x8d808d50af36b746 w24=145 w20_hi=1 w2c=1
+  found by byte scan only: ['0xaa0']
+
+### core_restofworld001.full.bin  791,984 B
+  4 KiB-stepped scan : 2 header(s)
+      0x00000000  w04=0x003b0 w08=0x00370 w0c=0x000f0 id=0xce81b8e622071e9f w24=6 w20_hi=1 w2c=1
+      0x00001000  w04=0x007b0 w08=0x006e0 w0c=0x00650 id=0xa9c15aec74a20665 w24=22 w20_hi=1 w2c=1
+  byte scan          : 2 header(s)
+      0x00000000  w04=0x003b0 w08=0x00370 w0c=0x000f0 id=0xce81b8e622071e9f w24=6 w20_hi=1 w2c=1
+      0x00001000  w04=0x007b0 w08=0x006e0 w0c=0x00650 id=0xa9c15aec74a20665 w24=22 w20_hi=1 w2c=1
+  found by byte scan only: []
+
+### story000_bvh4.full.bin  5,632 B
+  4 KiB-stepped scan : 1 header(s)
+      0x00000000  w04=0x00340 w08=0x00310 w0c=0x00090 id=0xd9aa45b77362b367 w24=4 w20_hi=1 w2c=1
+  byte scan          : 1 header(s)
+      0x00000000  w04=0x00340 w08=0x00310 w0c=0x00090 id=0xd9aa45b77362b367 w24=4 w20_hi=1 w2c=1
+  found by byte scan only: []
+
+### core_licenses_data.full.bin  13,536 B
+  4 KiB-stepped scan : 2 header(s)
+      0x00000000  w04=0x00330 w08=0x00300 w0c=0x00090 id=0x91959f37afa8be45 w24=4 w20_hi=1 w2c=1
+      0x00001000  w04=0x00320 w08=0x00300 w0c=0x00050 id=0x541009fd3268bc3e w24=2 w20_hi=1 w2c=1
+  byte scan          : 2 header(s)
+      0x00000000  w04=0x00330 w08=0x00300 w0c=0x00090 id=0x91959f37afa8be45 w24=4 w20_hi=1 w2c=1
+      0x00001000  w04=0x00320 w08=0x00300 w0c=0x00050 id=0x541009fd3268bc3e w24=2 w20_hi=1 w2c=1
+  found by byte scan only: []
+
+### data.head.bin  4,194,304 B
+  4 KiB-stepped scan : 3 header(s)
+      0x00000000  w04=0x11060 w08=0x0f510 w0c=0x05870 id=0xc54a08a9fe559378 w24=699 w20_hi=1 w2c=2
+      0x00012000  w04=0x00330 w08=0x00300 w0c=0x00080 id=0x066f4100fa0dcc2b w24=3 w20_hi=2 w2c=1
+      0x00015000  w04=0x0bd80 w08=0x0a2d0 w0c=0x08e40 id=0xde905eb0826cc03a w24=683 w20_hi=1 w2c=2
+  byte scan          : 3 header(s)
+      0x00000000  w04=0x11060 w08=0x0f510 w0c=0x05870 id=0xc54a08a9fe559378 w24=699 w20_hi=1 w2c=2
+      0x00012000  w04=0x00330 w08=0x00300 w0c=0x00080 id=0x066f4100fa0dcc2b w24=3 w20_hi=2 w2c=1
+      0x00015000  w04=0x0bd80 w08=0x0a2d0 w0c=0x08e40 id=0xde905eb0826cc03a w24=683 w20_hi=1 w2c=2
+  found by byte scan only: []
+
+### packs.head.bin  4,194,304 B
+  4 KiB-stepped scan : 4 header(s)
+      0x00000000  w04=0x04550 w08=0x03f40 w0c=0x01c90 id=0x706499ba57fb6798 w24=172 w20_hi=1 w2c=1
+      0x00005000  w04=0x02e20 w08=0x02740 w0c=0x00730 id=0x3ced1125459275e9 w24=194 w20_hi=1 w2c=1
+      0x002d6000  w04=0x01990 w08=0x01610 w0c=0x00740 id=0xe567c178eea449a3 w24=98 w20_hi=1 w2c=1
+      0x00306000  w04=0x2fac0 w08=0x290b0 w0c=0x107a0 id=0x3f6314f3b6172d35 w24=2715 w20_hi=1 w2c=2
+  byte scan          : 4 header(s)
+      0x00000000  w04=0x04550 w08=0x03f40 w0c=0x01c90 id=0x706499ba57fb6798 w24=172 w20_hi=1 w2c=1
+      0x00005000  w04=0x02e20 w08=0x02740 w0c=0x00730 id=0x3ced1125459275e9 w24=194 w20_hi=1 w2c=1
+      0x002d6000  w04=0x01990 w08=0x01610 w0c=0x00740 id=0xe567c178eea449a3 w24=98 w20_hi=1 w2c=1
+      0x00306000  w04=0x2fac0 w08=0x290b0 w0c=0x107a0 id=0x3f6314f3b6172d35 w24=2715 w20_hi=1 w2c=2
+  found by byte scan only: []
+
+### script.head.bin  4,194,304 B
+  4 KiB-stepped scan : 3 header(s)
+      0x00000000  w04=0x00260 w08=0x00240 w0c=0x00080 id=0x86f88eae52bb1570 w24=2 w20_hi=1 w2c=1
+      0x00001000  w04=0x00480 w08=0x00460 w0c=0x00040 id=0x12808742c60a5047 w24=2 w20_hi=1 w2c=1
+      0x000c4000  w04=0x11f10 w08=0x0ef90 w0c=0x062b0 id=0xb1fa1a6ebed3d833 w24=1012 w20_hi=2 w2c=2
+  byte scan          : 3 header(s)
+      0x00000000  w04=0x00260 w08=0x00240 w0c=0x00080 id=0x86f88eae52bb1570 w24=2 w20_hi=1 w2c=1
+      0x00001000  w04=0x00480 w08=0x00460 w0c=0x00040 id=0x12808742c60a5047 w24=2 w20_hi=1 w2c=1
+      0x000c4000  w04=0x11f10 w08=0x0ef90 w0c=0x062b0 id=0xb1fa1a6ebed3d833 w24=1012 w20_hi=2 w2c=2
+  found by byte scan only: []
+
+### common.head.bin  4,194,304 B
+  4 KiB-stepped scan : 1 header(s)
+      0x00000000  w04=0x09580 w08=0x08520 w0c=0x03a10 id=0x4913ebcd0d68945c w24=418 w20_hi=1 w2c=2
+  byte scan          : 1 header(s)
+      0x00000000  w04=0x09580 w08=0x08520 w0c=0x03a10 id=0x4913ebcd0d68945c w24=418 w20_hi=1 w2c=2
+  found by byte scan only: []
+
+### shaders.head.bin  4,194,304 B
+  4 KiB-stepped scan : 1 header(s)
+      0x00000000  w04=0x08640 w08=0x08620 w0c=0x000a0 id=0xefb33e670d31e3f9 w24=3 w20_hi=1 w2c=1
+  byte scan          : 1 header(s)
+      0x00000000  w04=0x08640 w08=0x08620 w0c=0x000a0 id=0xefb33e670d31e3f9 w24=3 w20_hi=1 w2c=1
+  found by byte scan only: []
+
+### textures.head.bin  4,194,304 B
+  4 KiB-stepped scan : 3 header(s)
+      0x00000000  w04=0x00790 w08=0x006c0 w0c=0x00220 id=0x21d5b0110d7631ea w24=22 w20_hi=1 w2c=1
+      0x00001000  w04=0x00260 w08=0x00250 w0c=0x00030 id=0xad3eb42a93ce59f2 w24=1 w20_hi=1 w2c=1
+      0x00227000  w04=0x00480 w08=0x00420 w0c=0x00090 id=0x4fb3e8222f774fae w24=9 w20_hi=1 w2c=1
+  byte scan          : 3 header(s)
+      0x00000000  w04=0x00790 w08=0x006c0 w0c=0x00220 id=0x21d5b0110d7631ea w24=22 w20_hi=1 w2c=1
+      0x00001000  w04=0x00260 w08=0x00250 w0c=0x00030 id=0xad3eb42a93ce59f2 w24=1 w20_hi=1 w2c=1
+      0x00227000  w04=0x00480 w08=0x00420 w0c=0x00090 id=0x4fb3e8222f774fae w24=9 w20_hi=1 w2c=1
+  found by byte scan only: []
+
+Stepped offsets follow rpf9-extract/src/container.rs:74 and
+zeozeozeo/rpf9 src/archive.rs:78 (both step 0x1000 from the start of the
+region). The byte scan follows tools/rpf9.py (_scan_nested_rpf9 starts at
+HEADER_SIZE and tries every offset).
+
+# --- where to look ---
+# core_restofworld.head.bin: the stepped scan finds the outer header at 0x0 and a
+# nested one at 0x1000. The byte scan adds 0xaa0, which is where the outer
+# archive's payload starts (w04 = 0xaa0, docs/RPF9.md:20). Its archive id
+# 0x162b7cc3d164fea3 and its 2 entries match the payload sweep in
+# raw/payload.txt:171, so this is a real nested container, not a false positive.
+# That offset is not a multiple of 0x1000, so it is invisible to a stepped scan.
+#
+# The six 4 MiB windows of the NESTED.md census (data, packs, script, common,
+# shaders, textures) add no non-aligned header in these samples: 15 valid headers,
+# all 4 KiB-aligned. The census alignment of the 122 headers is therefore a
+# property of where the containers sit, not of the stepping; the case above is
+# simply outside those six archives.

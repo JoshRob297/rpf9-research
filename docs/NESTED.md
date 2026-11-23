@@ -50,3 +50,6 @@ solved one". It is now a measured rule with two accounted exceptions, and the ta
 - Six of the 18 high-half-2 headers have `w24` between 3 and 76, where any stride between 8 and 16
   rounds to the same region. Those are consistent with 12 but do not prove it; the thirteen
   `w24 = 1115` cases are what carry the argument.
+
+`docs/COMPARATIVA.md` compares this discovery with the 4 KiB-stepped scan of `rpf9-extract` and
+`rpf9`, including the one sampled container (`core_restofworld @0xaa0`) that the step cannot see.

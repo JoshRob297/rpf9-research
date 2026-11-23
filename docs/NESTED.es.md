@@ -51,3 +51,7 @@ la tabla está en `raw/cabeceras/nested.tsv` con una fila por cabecera.
 - Seis de las 18 cabeceras con mitad alta 2 tienen `w24` entre 3 y 76, donde cualquier paso entre
   8 y 16 redondea a la misma región. Son compatibles con 12 pero no lo prueban; los trece casos de
   `w24 = 1115` son los que sostienen el argumento.
+
+`docs/COMPARATIVA.es.md` compara este descubrimiento con el barrido por pasos de 4 KiB de
+`rpf9-extract` y `rpf9`, incluido el contenedor muestreado (`core_restofworld @0xaa0`) que el paso no
+puede ver.

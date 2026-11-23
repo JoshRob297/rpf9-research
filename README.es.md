@@ -34,7 +34,7 @@ un documento (`docs/RPF9.md`) más un prototipo (`tools/rpf9.py`) que:
 - Los binarios de muestra **no se versionan** (ver `.gitignore`); solo su manifiesto con
   hashes.
 - Documentación en pares: `docs/RPF9.md` (inglés) y `docs/RPF9.es.md` (español); igual con
-  `docs/NAMES.md`, `docs/INDEX.md` y `docs/NESTED.md`.
+  `docs/NAMES.md`, `docs/INDEX.md`, `docs/NESTED.md`, `docs/PSIN.md` y `docs/COMPARATIVA.md`.
 
 Ver `METHODOLOGY.md`.
 
@@ -98,6 +98,10 @@ uno necesita una parte distinta de lo que aquí se publica.
 | [omonkeyz/xbox-emulator](https://github.com/omonkeyz/xbox-emulator) | notas de progreso para correr los builds | el mapa del contenedor, para que las notas apunten a offsets y no a nombres de archivo |
 
 La regla es la misma para todos: hechos medidos y geometría, nunca el manifiesto de contenido.
+
+`docs/COMPARATIVA.es.md` pone nuestras mediciones de PSIN, contenedores anidados y geometría de la
+tabla al lado de tres implementaciones públicas de RPF9 (`rpf9-extract`, `PercyStar`, `rpf9`), leídas
+y nunca ejecutadas, con una etiqueta `[verified]`/`[hypothesis]` en cada afirmación.
 
 ## Licencia
 
