@@ -84,6 +84,45 @@ de las fuentes `name_recover`, para que los conteos de `docs/INDEX.md` sigan rep
 no se resolvió) y `report.json` guarda las listas `conflict`, `collision`, `orphan` y
 `unrecognized` más los conteos por fuente. `--skip` sigue descartando archivos por nombre.
 
+## De una ruta a los bytes
+
+`tools/resolve_path.py` cierra el circuito entre el índice y los archivos: dada una ruta del
+manifiesto devuelve el asset.
+
+```sh
+tools/resolve_path.py --index <idx> --containers <dir> --path "<ruta>" --out asset.bin
+tools/resolve_path.py --index <idx> --containers <dir> --verify 200 --rpf data
+```
+
+Lee por seek en vez de cargar el contenedor, decide la compresión por el primer byte (`0x78` es
+zlib, cualquier otra cosa es crudo) y comprueba el resultado contra el tamaño `inflated` que midió
+el barrido. Los errores llevan razón estable (`path_not_found`, `container_missing`,
+`inflate_failed`, `size_mismatch`) para que quien llama decida por la causa. `--verify` usa semilla,
+así que dos corridas de la misma versión solo difieren si los datos difieren.
+
+Medido sobre `data.rpf` (481 MB, 28,509 streams, 4,639 rutas): `--verify 200` resolvió 200 de 200 y
+una pasada completa de 2,295 rutas / 4,704 menciones falló cero veces, con cada resultado midiendo
+exactamente el tamaño del índice. Detalle y límites en `docs/RESOLVER.es.md`.
+
+Importa porque la TOC de estos contenedores está cifrada: un port no puede pedirle al archivo un
+nombre como hacía el motor original. El índice más este resolutor son esa capa que falta.
+
+## Documentos
+
+| documento | qué mide |
+|---|---|
+| `docs/INDEX.es.md` | cobertura por archivo, por tipo y por contenedor, con los negativos |
+| `docs/RPF9.es.md` | cabecera del contenedor y geometría de la tabla (paso de 9 o 10 bytes, relleno a 16) |
+| `docs/NAMES.es.md` | de dónde salen los nombres y la taxonomía de confianza |
+| `docs/PSIN.es.md` | la cadena de chunks PSIN, medida sobre streams retail |
+| `docs/NESTED.es.md` | contenedores anidados y cómo se encuentran |
+| `docs/TEXTURES.es.md` | la forma del payload `.ttpf` / BCPack |
+| `docs/AUDIO.es.md` | streams de audio en offset cero, y por qué no hay magia de contenedor |
+| `docs/COMPARATIVA.es.md` | nuestras mediciones junto a tres implementaciones públicas de RPF9 |
+| `docs/RESOLVER.es.md` | ruta a bytes, y los límites de hacerlo desde un índice |
+| `docs/INDEX-SQLITE.md` | el mismo merge por SQLite, como comprobación independiente |
+| `docs/DETECCION.md` | el plugin de Antigravity contra su propio CLI, con una regla medida |
+
 ## Proyectos relacionados y qué responde este dato
 
 Este repositorio mide un solo paquete retail. Estos proyectos consumen el mismo formato, y cada

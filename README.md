@@ -94,6 +94,45 @@ normalized path index (one row per version, `estado=conflict` when unresolved) a
 `report.json` holds the `conflict`, `collision`, `orphan` and `unrecognized` lists plus the
 per-source counts. `--skip` still drops files by name.
 
+## From a path to the bytes
+
+`tools/resolve_path.py` closes the loop between the index and the files: given a path from the
+manifest it returns the asset itself.
+
+```sh
+tools/resolve_path.py --index <idx> --containers <dir> --path "<path>" --out asset.bin
+tools/resolve_path.py --index <idx> --containers <dir> --verify 200 --rpf data
+```
+
+It seeks instead of loading the container, decides compression by the first byte (`0x78` is zlib,
+anything else is raw), and checks the result against the `inflated` size the sweep recorded. The
+errors carry stable reasons (`path_not_found`, `container_missing`, `inflate_failed`,
+`size_mismatch`) so a caller can branch on the cause. `--verify` is seeded, so two runs of the same
+version differ only if the data differs.
+
+Measured on `data.rpf` (481 MB, 28,509 streams, 4,639 paths): `--verify 200` resolved 200 of 200,
+and a full pass over 2,295 paths / 4,704 mentions failed zero times, every result measuring exactly
+the size in the index. Details and limits in `docs/RESOLVER.md`.
+
+This matters because the TOC of these containers is encrypted: a port cannot ask the archive for a
+file by name the way the original engine did. The index plus this resolver is that missing layer.
+
+## Documents
+
+| document | what it measures |
+|---|---|
+| `docs/INDEX.md` | per-archive, per-type and per-container name coverage, with the negative results |
+| `docs/RPF9.md` | container header, table region geometry (9 or 10 byte stride, 16-byte padding) |
+| `docs/NAMES.md` | where names come from, and the confidence taxonomy |
+| `docs/PSIN.md` | the PSIN chunk chain, measured on retail streams |
+| `docs/NESTED.md` | nested containers and how they are found |
+| `docs/TEXTURES.md` | the `.ttpf` / BCPack payload shape |
+| `docs/AUDIO.md` | audio streams at offset zero, and why there is no container magic |
+| `docs/COMPARATIVA.md` | our measurements next to three public RPF9 implementations |
+| `docs/RESOLVER.md` | path to bytes, and the limits of doing it from an index |
+| `docs/INDEX-SQLITE.md` | the same merge through SQLite, as an independent check |
+| `docs/DETECCION.md` | the Antigravity plugin against its own CLI, with one measured rule |
+
 ## Related projects and what this data answers
 
 This repository measures one retail package. These projects consume the same format, and each one
@@ -101,7 +140,7 @@ needs a different part of what is published here.
 
 | project | what it does | what this repo answers |
 |---|---|---|
-| [ItsNotRexed/Leonida](https://github.com/ItsNotRexed/Leonida) | native PC recompilation of the Xbox build | per-archive and per-type name coverage (`docs/INDEX.md`), and 155k salted hashes to diff against its own walker |
+| [ItsNotRexed/Leonida](https://github.com/ItsNotRexed/Leonida) | native PC recompilation of the Xbox build | per-archive and per-type name coverage (`docs/INDEX.md`), 168k salted hashes to diff against its own walker, and the resolver a loader can call |
 | [penwin2000/open-vfs](https://github.com/penwin2000/open-vfs) | virtual filesystem for the containers | 22 header fixtures in five formats (`raw/cabeceras/`) and the table-region formula, measured on 22 of 22 |
 | [ivall/xcl](https://github.com/ivall/xcl) | compatibility layer, RDNA2 shaders to DXIL | 25,043 `sgd5_shader_dxbc` streams, 100% of them named, against the 24,064 and 26,503 figures published elsewhere |
 | [R0Y00/Xbox2Windows](https://github.com/R0Y00/Xbox2Windows) | static recompilation research | where texture-bearing streams live per archive, as counts, without names |
